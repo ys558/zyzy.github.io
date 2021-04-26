@@ -1,0 +1,40 @@
+# 侧边栏：
+sidebar:
+  menu:
+    post: #'[btn.blog](/)'
+    wiki: #'[btn.wiki](/wiki/)'
+    notes: #'[笔记](/notes/)'
+    more: #'[更多](/more/)'
+  # logo:
+  #   title: 
+  widgets:
+    # Recent update
+    recent:
+      layout: recent
+      rss: /atom.xml # npm i hexo-generator-feed
+      limit: 5 # Count of posts
+    # TOC (valid only in layout:post/wiki)
+    toc:
+      layout: toc
+      list_number: false
+      min_depth: 2
+      max_depth: 5
+    # welcome
+    welcome:
+      layout: markdown
+      title: 欢迎
+      content: 
+        - 这里记录和分享我的技术成长日志，欢迎留言
+ 
+
+# 评论区
+comments:
+  service: utterances # utterances
+  utterances:
+    repo: xaoxuu/blog-comments
+
+# 文章
+article:
+  # 生成摘要字数：
+  auto_excerpt: 200
+
