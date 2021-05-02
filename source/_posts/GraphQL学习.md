@@ -3,7 +3,7 @@ title: GraphQL学习
 date: 2021-04-20 10:15:27
 tags:
     - GraphQL
-cover: https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.17/articles/https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.20/articles/GraphQL学习/cover.png
+cover: https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL学习/cover.png
 ---
 
 去年自学了GraphQL，这里重新整理一下笔记。国内使用GraphQL的项目毕竟还不多，这里写个demo，做个小小的探索。   
@@ -16,10 +16,10 @@ GraphQL是facebook发明的一套API查询语言，支持多种语言，这里�
 > GraphQL为你的API数据提供了一种完整且易于理解的描述。（GraphQL provides a complete and understandable description of the data in your API）
 
 以上是官网对GraphQL的解释，利用GraphQL可以按需取字段给前端利用，不必取到不需要的字段，见下图解释：  
-![传统RestAPI效率低](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.20/articles/GraphQL学习/0.0.png)
+![传统RestAPI效率低](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL学习/0.0.png)
 
 GraphQL则可以精确查找想要的字段，效率显著提高：
-![GraphQL效率高](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.20/articles/GraphQL学习/0.1.png)
+![GraphQL效率高](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL学习/0.1.png)
 
 下面，结合自己写的demo：https://github.com/ys558/tech-blog-code/tree/master/2020/04-graphql-learn 完成以下完成本篇博客：
 
@@ -34,7 +34,7 @@ query {
 **注意，这种是GraphQL特有的查询语法**
 
 点击运行，( 或快捷键 ctrl+enter ) 后，右边会显示：  
-![hello world](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.20/articles/GraphQL学习/1.2.png)
+![hello world](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL学习/1.2.png)
 
 2. [01helloworld.js](https://github.com/ys558/tech-blog-code/blob/master/2020/04-graphql-learn/01helloworld.js)解析：  
 - `graphqlHTTP` 为 `express-graphql` 库解构的实例
@@ -73,7 +73,7 @@ const schema = new GraphQLSchema({
 }
 ```
 输入以上条件，**通过 books 字段查询其对应的 id, name** 后运行，可以查询出以下结果：
-![hello world](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.20/articles/GraphQL学习/2.png)
+![hello world](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL学习/2.png)
 
 2. [02base.js](https://github.com/ys558/tech-blog-code/blob/master/2020/04-graphql-learn/02base.js) 解析：
 - books查询出来的为一数组，其[标量](https://graphql.org/graphql-js/type/#scalars) 定义为 `GraphQLList`
@@ -129,7 +129,7 @@ const BookType = new GraphQLObjectType({
     }
     ```
     可以得到结果：
-    ![hello world](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.20/articles/GraphQL学习/3.3.png)
+    ![hello world](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL学习/3.3.png)
 
 2. 解析[`03listQuery.js`](https://github.com/ys558/tech-blog-code/blob/master/2020/04-graphql-learn/03listQuery.js) ：  
   - 可以按照上面的方法继续丰富查询，建立一个模拟数据 `author` ，内容如下：
@@ -215,7 +215,7 @@ const BookType = new GraphQLObjectType({
   ```
   
   执行结果如下：  
-  ![单个查询](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.20/articles/GraphQL学习/4.png)   
+  ![单个查询](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL学习/4.png)   
 
   输入以下条件
   ```js
@@ -230,7 +230,7 @@ const BookType = new GraphQLObjectType({
   ```
   
   执行结果如下：  
-  ![单个查询](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.20/articles/GraphQL学习/4.png)   
+  ![单个查询](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL学习/4.png)   
 
 2. [`04singleQuery.js`](https://github.com/ys558/tech-blog-code/blob/master/2020/04-graphql-learn/04singleQuery.js)解析：
 
@@ -256,7 +256,7 @@ const BookType = new GraphQLObjectType({
   },
   ```
   用 `author(id)` 查询结果：
-  ![单个查询](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.20/articles/GraphQL学习/4.2.png)
+  ![单个查询](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL学习/4.2.png)
 
 ## 五、修改数据（MutationType）
 1. 运行`yarn ds5`，浏览器输入：
@@ -269,7 +269,7 @@ const BookType = new GraphQLObjectType({
     }
     ```
     可以看到增加单本书成功：
-    ![单个查询](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.20/articles/GraphQL学习/5.1.png)
+    ![单个查询](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL学习/5.1.png)
     
     输入：
     ```js
@@ -280,10 +280,10 @@ const BookType = new GraphQLObjectType({
     }
     ```
     可以看到增加一个作者成功：
-    ![单个查询](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.20/articles/GraphQL学习/5.2.png)
+    ![单个查询](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL学习/5.2.png)
 
     点击右上角的 < Docs，可以发现该文件的Mutation函数，其中`!`意为必要字段：
-    ![单个查询](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.20/articles/GraphQL学习/5.png)
+    ![单个查询](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL学习/5.png)
 
 
 2. [`05mutationType.js`](https://github.com/ys558/tech-blog-code/blob/master/2020/04-graphql-learn/05mutationType.js)解析： 
