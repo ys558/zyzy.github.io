@@ -27,8 +27,9 @@ CDN （Content Delivery Network/Content Distribution Network）内容分发网�
 
     方法二、推完图片后，直接在你github图片仓库上操作：
 
-    ![`git tag`](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.13/git-version.png)
-  
+  ![请求回来的数据](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/发现一免费CDN，我用来存该站的图/git-version.png)
+
+
 4. 将你放图片链接的位置替换为 `jsdelivr` 举例的CDN格式即可，以我头像的图片举例，用`GitHub`的格式为：
     
     ```bash

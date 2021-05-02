@@ -145,7 +145,7 @@ app.use('/books', booksRouter)
 ```
 
 可在界面看到：   
- ![swaggerUI界面](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.19/articles/SwaggerUI通过swagger-jsdoc在node里的应用和配置/0.png)
+ ![swaggerUI界面](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/SwaggerUI通过swagger-jsdoc在node里的应用和配置/0.png)
 
 ## 自动生成api文档页面：
 
@@ -336,5 +336,5 @@ module.exports = router
 ```
 
 重跑服务，可以发现以下界面：   
- ![swaggerUI界面](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.19/articles/SwaggerUI通过swagger-jsdoc在node里的应用和配置/1.png)   
+ ![swaggerUI界面](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/SwaggerUI通过swagger-jsdoc在node里的应用和配置/1.png)   
 `swagger-jsdoc` 是通过 `openapi` 的3.0版本进行的改动，传统的 `openapi` 是通过独立的 `json` 文件对 swagger进行配置，不在本篇讨论范围，感兴趣的可以看看这篇国外的[demo](https://levelup.gitconnected.com/how-to-add-swagger-ui-to-existing-node-js-and-express-js-project-2c8bad9364ce)

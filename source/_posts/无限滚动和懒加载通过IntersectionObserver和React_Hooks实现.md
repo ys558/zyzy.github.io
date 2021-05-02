@@ -103,7 +103,7 @@ tags:
   ```
 
   - `query` 通过输入框改变，传递给 `useBookSearch(query, pageNum)`，控制台能看到请求回来的数据，如下演示，但这种请求是实时的，即每输入一个字符就会请求一次，会浪费性能，必须优化   
-  ![请求回来的数据](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.18/articles/无限滚动和懒加载通过IntersectionObserver和React_Hooks实现/0.gif)
+  ![请求回来的数据](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/无限滚动和懒加载通过IntersectionObserver和React_Hooks实现/0.gif)
 
 - `useBookSearch` 优化请求性能： `axios` 有个参数 `CancelToken`，可取消重复请求，做如下改动：
   ```js
@@ -130,7 +130,7 @@ tags:
     }, [query, pageNum])
   ```
   改造完成后，继续重新尝试：   
-  ![请求回来的数据](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.18/articles/无限滚动和懒加载通过IntersectionObserver和React_Hooks实现/1.gif)
+  ![请求回来的数据](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/无限滚动和懒加载通过IntersectionObserver和React_Hooks实现/1.gif)
 
 ## 页面UI实现：
   - 针对界面实现的丰富，我们对 `useBookSearch` 函数继续做改造，分别增加以下状态：
@@ -231,7 +231,7 @@ tags:
       }, [loading, hasMore]
     ```
     - 控制台打印了`entries[0].isIntersecting`，当出现`Loading`状态时，该值为`true`, 单当完成加载后为`false`，如下：
-    ![请求回来的数据](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.18/articles/无限滚动和懒加载通过IntersectionObserver和React_Hooks实现/2.gif)
+    ![请求回来的数据](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/无限滚动和懒加载通过IntersectionObserver和React_Hooks实现/2.gif)
 
 ## 贴出完整代码：
   - `App.js`
