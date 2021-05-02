@@ -17,16 +17,19 @@ cover: https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.17/articles/GithubPage�
 去阿里云申请一个自己的域名后绑定原理的[ys558.github.io](https://ys558.github.io/zyzy.github.io/)域名，步骤：
 
 1. 登陆[阿里云的万网](https://wanwang.aliyun.com/domain/)，挑一个喜欢便宜的域名注册，我的域名 [zyzy.info](https://zyzy.info) 一年只花21元，注册完成后选择个人站点，顺便也就开通了阿里云账号，如其他域名服务商，如申请`.me`结尾的个人网站，应该去[GoDaddy](https://au.godaddy.com/)等
+
 2. 依次进入右上角的 **控制台** => **运维管理** 选项卡下找到 **域名** 标签 => 点击 **解析**，如下：  
 ![阿里云域名解析](GithubPage建站心得及所踩的坑/02.png)
 => 点击**添加记录**， 在 **记录值** 处填下`ys558.github.io`，如下，点击确定。这样就把你github.io上的页面绑定了购买的域名下
 ![阿里云域名解析](GithubPage建站心得及所踩的坑/03.png)
+
 3. 用`ping` 也可查询到新绑定的域名网址IP：  
 ![阿里云域名解析](GithubPage建站心得及所踩的坑/04.png)
+
 4. 按以下命令在自己的github仓库中添加CNAME文件，其中填入购买的域名。或者可以在仓库的settings中设置Custom Domain设置好自己的域名，github会自动添加CNAME文件。
     ```shell
     touch CNAME
-    echo 'yucicheung.me'> CNAME
+    echo 'zyzy.info'> CNAME
     ```
 
 
@@ -51,4 +54,37 @@ cover: https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.17/articles/GithubPage�
 
 
 ## 证书错误，不是私密连接
-[cloudfare](https://www.cloudflare.com/zh-cn/)
+
+Github建站好之后，经常会碰到打开页面浏览器显示不是私密链接的情况，搜来搜去，说是GitHub的SSL证书不稳定，不知道是不是墙的原因。
+
+![不是私密连接](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.20/articles/GithubPage建站心得及所踩的坑/0.png)
+
+于是去某宝买了个证书，（p.s. 不差钱也可以直接买阿里云的证书，两年2000多），证书是有有效期的，我买的那家证书一年80元，两年140元，5年300元。选个自己能接受，不太贵的价格即可。一般销量高的店家都有教你怎么配置，我这里把其配置记录了下来：
+
+### 1. 在 `Github Page` 上取消勾选 `Enforce HTTPS` 服务
+
+位置如下图：   
+![取消Github HTTPS 勾选](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.20/articles/GithubPage建站心得及所踩的坑/01.png)
+
+### 2. 将买到的证书在阿里云上设置
+
+如下图顺序设置：
+
+![阿里云设置证书](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.20/articles/GithubPage建站心得及所踩的坑/01.png)
+
+### 3. 申请个 [cloudfare](https://www.cloudflare.com/zh-cn/) 账号，并添加DNS
+
+[cloudfare](https://www.cloudflare.com/zh-cn/) 我的cloudfare是以前注册的，忘了一步步截图，但有中文界面跟着提示操作即可，不会很难，注册完成后，在以下界面操作：
+
+找到github的ipv4的地址为以下几个，也不知道访问时会分配到哪个ip，索性A类地址全部添加上，像阿里云以下，把 `CHAME` 类地址也添加上，如下：   
+
+![DNS添加记录](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.20/articles/GithubPage建站心得及所踩的坑/03.png)
+
+
+![ SSL/TSL 选择完全 ](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.20/articles/GithubPage建站心得及所踩的坑/04.png)
+
+### 4. 返回阿里云添加 [cloudfare](https://www.cloudflare.com/zh-cn/) 申请的DNS服务器
+
+
+![阿里云的DNS修改操作](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.20/articles/GithubPage建站心得及所踩的坑/05.png)   
+![从 cloudfare 复制DNS ](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.20/articles/GithubPage建站心得及所踩的坑/06.png)
