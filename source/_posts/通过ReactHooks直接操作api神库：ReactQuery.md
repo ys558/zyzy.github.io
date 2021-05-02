@@ -1,10 +1,12 @@
 ---
 title: 通过ReactHooks直接操作api神库：ReactQuery
+tags:
+  - React Query
+cover: >-
+  https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.20/articles/通过ReactHooks直接操作api神库：ReactQuery/cover.png
 date: 2021-04-26 10:17:07
-tags: 
-    - React Query
-cover: https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.20/articles/通过ReactHooks直接操作api神库：ReactQuery/cover.png
 ---
+
 
 [React Query](https://react-query.tanstack.com/) 是一个以react hooks为基础进行异步获取，缓存和更改数据的库，[react query仓库](https://github.com/tannerlinsley/react-query)文档原文描述：
 
@@ -242,7 +244,7 @@ export const BooksList = () => {
 ```
 
 此时界面可看到效果：   
-![1](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.20/articles/通过ReactHooks直接操作api神库：ReactQuery/01.gif)
+![1](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/通过ReactHooks直接操作api神库：ReactQuery/01.png)
 
 ## 每条记录单独抽离做模块 `src\BookList\BookItem.jsx`   
 ```js
@@ -273,11 +275,11 @@ data.map(({author, title, id}) =>
 
 看看页面的效果：   
 
-![2](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.20/articles/通过ReactHooks直接操作api神库：ReactQuery/02.gif)
+![2](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/通过ReactHooks直接操作api神库：ReactQuery/02.png)
 
-## 【 [**useMutation**](https://react-query.tanstack.com/reference/useMutation) 】和【 [**queryClient**](https://react-query.tanstack.com/reference/useQueryClient) 】 的应用 —— 删除图书接口   
+## 【 [**useMutation**](https://react-query.tanstack.com/reference/useMutation) 】和【 [**queryClient**](https://react-query.tanstack.com/reference/useQueryClient) 】 的应用 —— 删除图书   
 
-在 `src\api.js` 增加删除接口：
+### 在 `src\api.js` 增加删除接口：
 ```js
 export const removeBook = async id => {
   const response = await fetch(`${process.env.REACT_APP_API_SERVER}/books/${id}`, {
@@ -288,6 +290,7 @@ export const removeBook = async id => {
 }
 ```
 
+### 为删除图书修改界面
 并在 `src\BookList\BookList.jsx` 里增加相应的 [**useMutation**](https://react-query.tanstack.com/reference/useMutation) 和 [**queryClient**](https://react-query.tanstack.com/reference/useQueryClient) 的写法：   
 
 ```js
@@ -316,9 +319,10 @@ const remove = async () => {
 简言之，`queryClient.invalidateQueries('books')` 可清除旧 'books' 的显示缓存，并直接刷新最新的 'books' 接口数据，如果不加，页面就不会刷新，需要手动刷新
 
 
-## 新建图书接口
+## 变更一本图书信息
 
-`src\api.js` 增加获取一本书的接口：
+### `src\api.js` 增加获取一本书的接口：   
+
 ```js
 export const getBook = async ({ queryKey }) => {
   // useQuery 传过来的参数：
@@ -330,7 +334,8 @@ export const getBook = async ({ queryKey }) => {
 }
 ```
 
-`src\api.js` 增加 `updateBook` 接口：
+### `src\api.js` 增加 `updateBook` 接口：   
+
 ```js
 export const updateBook = async ({ id, ...data }) => {
   const response = await  fetch(`${process.env.REACT_APP_API_SERVER}/books/${id}`, {
@@ -346,7 +351,7 @@ export const updateBook = async ({ id, ...data }) => {
 } 
 ```
 
-新建 `src\shared\BookForm.jsx` 用做更新图书的输入界面：
+### 新建 `src\shared\BookForm.jsx` 用做更新图书的输入界面：
 
 ```js
 import { Box, Button } from 'rebass/styled-components'
@@ -429,3 +434,53 @@ export * from './BookForm'
 export * from './NavBar'
 ```
 
+看看页面的效果：
+![添加书籍](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/通过ReactHooks直接操作api神库：ReactQuery/03.gif)
+
+## 新建一本图书
+
+### `src\api.js` 里添加
+
+```js
+export const createBook = async (data) => {
+  const response = await fetch(`${process.env.REACT_APP_API_SERVER}/books/`, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify(data)
+  })
+
+  if (!response.ok) throw new Error(response.json().message)
+
+  return response.json()
+}
+```
+
+### 更改创建图书界面 `src\CreateBook.jsx` 如下：
+
+```js
+import { useMutation } from "react-query"
+import { useHistory } from "react-router-dom"
+import { Box, Heading } from "rebass"
+import { createBook } from "../api"
+import { BookForm, Container, } from '../shared'
+
+export const CreateBook = () => {
+  const history = useHistory()
+
+  const { mutateAsync, isLoading } = useMutation(createBook)
+  const onFormSubmit = async data => {
+    await mutateAsync(data)
+    history.push('/')
+  }
+
+  return <Container>
+    <Box sx={{ py: 3 }}>
+      <Heading sx={{ marginBottom: 3 }}>Create New Book</Heading>
+      <BookForm onFormSubmit={onFormSubmit} isLoading={isLoading} />
+    </Box>
+  </Container>
+}
+```
+
+看看页面的效果：
+![添加书籍](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/通过ReactHooks直接操作api神库：ReactQuery/04.gif)

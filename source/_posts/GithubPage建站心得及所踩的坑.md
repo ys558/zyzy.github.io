@@ -65,20 +65,24 @@ Github建站好之后，经常会碰到打开页面浏览器显示不是私密�
 
 ![不是私密连接](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.20/articles/GithubPage建站心得及所踩的坑/00.png)
 
-于是去某宝买了个证书，（p.s. 不差钱也可以直接买阿里云的证书，两年2000多），证书是有有效期的，我买的那家证书一年80元，两年140元，5年300元。选个自己能接受，不太贵的价格即可。一般销量高的店家都有教你怎么配置，我这里把其配置记录了下来：
+有两个方法可以解决：一是申请 cloudfare 的免费证书，二是自己买证书，两种方法都介绍以下
 
-### 1. 在 `Github Page` 上取消勾选 `Enforce HTTPS` 服务
+### 方法一： 某宝买证书
+去某宝买了证书，（p.s. 不差钱也可以直接买阿里云的证书，两年2000多），证书是有有效期的，我买的那家证书一年80元，两年140元，5年300元。选个自己能接受，不太贵的价格即可。一般销量高的店家都有教你怎么配置，我这里把其配置记录了下来：
+
+#### 1. 在 `Github Page` 上取消勾选 `Enforce HTTPS` 服务
 
 位置如下图：   
 ![取消Github HTTPS 勾选](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.20/articles/GithubPage建站心得及所踩的坑/01.png)
 
-### 2. 将买到的证书在阿里云上设置
+#### 2. 将买到的证书在阿里云上设置
 
-如下图顺序设置：
+如下图顺序设置便可完成：
 
 ![阿里云设置证书](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.20/articles/GithubPage建站心得及所踩的坑/01.png)
 
-### 3. 申请个 [cloudfare](https://www.cloudflare.com/zh-cn/) 账号，并添加DNS
+### 方法二：蹭 cloudfare 的免费证书
+#### 1. 申请个 [cloudfare](https://www.cloudflare.com/zh-cn/) 账号，并添加DNS
 
 [cloudfare](https://www.cloudflare.com/zh-cn/) 我的cloudfare是以前注册的，忘了一步步截图，但有中文界面跟着提示操作即可，不会很难，注册完成后，在以下界面操作：
 
@@ -89,7 +93,7 @@ Github建站好之后，经常会碰到打开页面浏览器显示不是私密�
 
 ![ SSL/TSL 选择完全 ](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.20/articles/GithubPage建站心得及所踩的坑/04.png)
 
-### 4. 返回阿里云添加 [cloudfare](https://www.cloudflare.com/zh-cn/) 申请的DNS服务器
+### 2. 返回阿里云添加 [cloudfare](https://www.cloudflare.com/zh-cn/) 申请的DNS服务器
 
 
 ![阿里云的DNS修改操作](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.20/articles/GithubPage建站心得及所踩的坑/05.png)   
