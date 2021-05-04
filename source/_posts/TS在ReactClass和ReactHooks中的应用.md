@@ -2,6 +2,9 @@
 title: TS在ReactClass和ReactHooks中的应用
 date: 2021-05-04 01:15:25
 tags:
+    - type script
+    - React
+cover: https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.23/articles/TS在ReactClass和ReactHooks中的应用/cover.jpg
 ---
 
 
@@ -33,7 +36,7 @@ yarn add typescript @types/node @types/react @types/react-dom @types/jest
 ### 安装一个新的库，需配置 `*.d.ts` 文件：
 外部`npm install`一个库时，需要单独创建一个`.d.ts`结尾的文件, 否则报错, 如：  
 `touch lib.d.ts`:
-```tsx
+```ts
 declare module 'lodash'
 ```
 ## 初学者的编写利器 —— `vs code` 中的提示  
@@ -43,7 +46,7 @@ declare module 'lodash'
 
 ## 最外层 **index.tsx**
 
-```tsx
+```ts
 import React from 'react';
 import ReactDOM from 'react-dom';
 import App from './App';
@@ -68,7 +71,7 @@ ReactDOM.render(
 ## 组件
 
 ### Function 组件
-```tsx
+```ts
 const App: React.FC = () => null
 ```
 
@@ -77,16 +80,20 @@ vs code 里的提示：
 ![vs code 提示](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.22/articles/TS在ReactClass和ReactHooks中的应用/3.png)
 
 ### Class 组件
-```tsx
-// 没啥好说的，写到烂了
-export class ClassTS extends React.Component { }
+```ts
+// 这个没什么好说的，写到烂了
+export class ClassTS extends React.Component {
+  public render(): React.ReactNode {
+    return null
+  }
+ }
 ```
 
 ## props
 
 ### Function 组件里的props   
 
-```tsx
+```ts
 // 1，直接写：
 export const TextField: React.FC<{ text: string }> = () => {
   return <div><input type="text"/></div>
@@ -104,7 +111,7 @@ export const TextField: React.FC<Props> = () => {
 
 其中，接口也可随意扩展及定义子接口，如：  
 
-```tsx
+```ts
 interface Person {
   firstName: string
   lastName: string
@@ -122,7 +129,7 @@ interface Props {
 
 ### Class 组件里的 props
 
-```tsx
+```ts
 // 1，直接写, 两个参数间用逗号或分号隔开均可：
 export class ClassTS extends React.Component <{ text: string, age?: number }> { }
  
@@ -152,7 +159,7 @@ React特有的类型，React.FormEvent<HTMLInputElement>，虚拟DOM把所有原
 
 ![vs code 提示](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.22/articles/TS在ReactClass和ReactHooks中的应用/4.gif)
 
-```tsx
+```ts
   handleChange = ( e : React.FormEvent<HTMLInputElement> ) => {
     const { name, value } : any = e.target
     this.setState({ [name]: value })
@@ -163,7 +170,7 @@ React特有的类型，React.FormEvent<HTMLInputElement>，虚拟DOM把所有原
 ## 函数组件的 hooks
 
 ### ***useState***
-```tsx
+```ts
 // 或用 | ，不用 ||
 const [count, setCount] = useState < string | null | { text: string } >({ text: 'hello' })
 
@@ -176,14 +183,14 @@ const [count, setCount] = useState < number | TextNode >(5)
 
 ### ***useRef***
 
-```tsx
+```ts
 // 因为ref的目标是一个input框，所以用 <HTMLInputElement>
 // 如果打上ref的是<div></div>, 则用 <HTMLDivElement>
 const inputRef = useRef<HTMLInputElement>(null)
 
 ```
 另外，handleChange
-```tsx
+```ts
 // 如果是Props传过来，并且定义了interface接口，则要注明：
 interface Props {
   handleChange: ( event: React.ChangeEvent<HTMLInputElement> ) => void
@@ -193,7 +200,7 @@ interface Props {
 ```
 
 ### ***useReducer***
-```tsx
+```ts
 interface Todos {
   text: string
   complete: boolean
@@ -222,7 +229,7 @@ const [todos, dispatch] = useReducer(TodoReducer, [])
 
 将 hooks 函数 `setXXX` 作为参数传参，这种props是react独有的，`React.Dispatch<React.SetStateAction<number>>` 
 
-```tsx
+```ts
 interface Props {
   children:(
     count: number,

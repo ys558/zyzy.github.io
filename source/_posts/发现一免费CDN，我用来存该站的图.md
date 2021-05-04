@@ -3,7 +3,7 @@ title: 发现一免费CDN，我用来存该站的图
 date: 2021-04-22 10:25:24
 tags:
     - CDN
-cover: https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.17/articles/发现一免费CDN，我用来存该站的图/cover.png
+cover: https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.23/articles/发现一免费CDN，我用来存该站的图/cover.png
 ---
 
 先上网址：https://www.jsdelivr.com/?docs=gh 

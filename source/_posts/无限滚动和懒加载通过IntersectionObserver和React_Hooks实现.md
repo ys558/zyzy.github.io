@@ -5,6 +5,7 @@ tags:
     - React
     - React Hooks
     - IntersectionObserver
+cover: https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.23/articles/无限滚动和懒加载通过IntersectionObserver和React_Hooks实现/cover.jpg
 ---
 
 用React Hooks做项目有一段时间了，炒鸡喜欢，这里结合 `IntersectionObserver` 原生js api及各种`hooks`，做个简单的无限滚动+懒加载页面，关于 `IntersectionObserver`， 阮大神的[这篇](http://www.ruanyifeng.com/blog/2016/11/intersectionobserver_api.html)博客文章里有非常详尽的描述  

@@ -6,9 +6,10 @@ tags:
     - 后端
     - Nodejs
     - swagger-jsdoc
+cover: https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.23/articles/SwaggerUI通过swagger-jsdoc在node里的应用和配置/cover.png
 ---
 
-[SwaggerUI](https://swagger.io/)，在Java里应该是常用工具，能根据api文件自动生成网页版的api文档界面，感觉挺有意思的，本篇分享一下在node里的简单配置方法，顺手搭建了个简单的服务。   
+[SwaggerUI](https://swagger.io/)，在Java里应该是常用工具，能根据api文件自动生成网页版的api文档界面，感觉挺有意思的，其实他支持各种语言，本篇分享一下在node里的简单配置方法，顺手搭建了个简单的服务。   
 （p.s. 本篇后续有续篇，利用本篇的服务，介绍一下前端的状态管理组件React Query的玩法，配合本篇搭建的服务使用。）
 
 <!-- more -->
@@ -149,7 +150,7 @@ app.use('/books', booksRouter)
 
 ## 自动生成api文档页面：
 
-参照其[文档](https://swagger.io/docs/specification/components/)，比较意思的是[swagger-jsdoc](https://github.com/Surnet/swagger-jsdoc)，他将多行注释里的api配置转换为页面的文档配置，我们将 `route/books.js` 改写为以下格式：
+参照其[文档](https://swagger.io/docs/specification/components/)，比较有意思的是[swagger-jsdoc](https://github.com/Surnet/swagger-jsdoc)，他将多行注释里的api配置转换为页面的文档配置，我们将 `route/books.js` 改写为以下格式：
 
 ```js
 /**

@@ -2,8 +2,7 @@
 title: 通过ReactHooks直接操作api神库：ReactQuery
 tags:
   - React Query
-cover: >-
-  https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.20/articles/通过ReactHooks直接操作api神库：ReactQuery/cover.png
+cover: https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.23/articles/通过ReactHooks直接操作api神库：ReactQuery/cover.png
 date: 2021-04-26 10:17:07
 ---
 

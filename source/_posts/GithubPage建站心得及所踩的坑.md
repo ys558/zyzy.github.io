@@ -4,7 +4,7 @@ date: 2021-04-19 10:46:18
 tags:
     - Hexo
     - Github Page
-cover: https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.17/articles/GithubPage建站心得及所踩的坑/cover.png
+cover: https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.23/articles/GithubPage建站心得及所踩的坑/cover.jpg
 
 ---
 

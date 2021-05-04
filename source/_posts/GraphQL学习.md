@@ -3,7 +3,7 @@ title: GraphQL学习
 date: 2021-04-20 10:15:27
 tags:
     - GraphQL
-cover: https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL学习/cover.png
+cover: https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.23/articles/GraphQL学习/cover.png
 ---
 
 去年自学了GraphQL，这里重新整理一下笔记。国内使用GraphQL的项目毕竟还不多，这里写个demo，做个小小的探索。   
