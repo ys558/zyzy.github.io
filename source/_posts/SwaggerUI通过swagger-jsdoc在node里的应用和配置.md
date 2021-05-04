@@ -6,7 +6,7 @@ tags:
     - 后端
     - Nodejs
     - swagger-jsdoc
-cover: https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.23/articles/SwaggerUI通过swagger-jsdoc在node里的应用和配置/cover.png
+cover: https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.23/articles/SwaggerUI通过swagger-jsdoc在node里的应用和配置/cover.jpg
 ---
 
 [SwaggerUI](https://swagger.io/)，在Java里应该是常用工具，能根据api文件自动生成网页版的api文档界面，感觉挺有意思的，其实他支持各种语言，本篇分享一下在node里的简单配置方法，顺手搭建了个简单的服务。   
