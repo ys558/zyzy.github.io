@@ -61,7 +61,8 @@ yarn add -D typescript ts-loader fork-ts-checker-webpack-plugin
   - `'preserve'` 和 `'react-native'` 模式下：TS 会将 tsx 编译成 jsx 后，不再将 jsx 编译成 js，保留 jsx 。保留 jsx 时，就需要在`webpack.config.js` - `module` -  `ts-loader` 的前面加上 `babel-loader` 去处理 jsx语法
 
 - `"moduleResolution"` 须配置为 `"node"`， 否则会报错如下   
-![引导ts去node文件夹里找 React](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.28/articles/脱离脚手架webpack配制React+typescript项目/02.png)
+
+![引导ts去node文件夹里找 React](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.29/articles/脱离脚手架webpack配制React+typescript项目/02.png)
 
 
 #### `webpack.config.js` 文件配置   
