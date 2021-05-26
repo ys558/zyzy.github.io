@@ -1,0 +1,424 @@
+---
+title:  Dart语法自学笔记（一）
+date: 2021-05-25 08:22:49
+tags: 
+    - Dart
+    - Flutter
+    - 跨端
+cover: https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.33/articles/Dart语法自学笔记（一）/cover3.jpg
+---
+
+flutter框架从19年开始就火了，主要用于跨端解决方案，一套代码可以覆盖ios，Android和Web，据说法执行效率很高，因去掉了像React Native那样的转译层，直接作用于底层，那必须学起来。
+
+flutter其framework层面调用的是Dart，一新的静态语言，和js炒鸡像，本文从着重讲解Dart的基础语法，包括基础数据解构，常用api及循环，   
+不罗列所有基础语法点，只挑一些有特点演示。
+
+<!-- more -->
+
+本文的示例代码，放在这个 [仓库](https://github.com/ys558/dart-learn)，本文阐述了 01-06 的代码
+
+## 安装 Dart
+
+[官网](https://dart.dev/get-dart)上有命令行的安装方法，我用win平台，可以直接从[这里](https://gekorm.com/dart-windows/)下载一个SDK安装包，直接下一步下一步安装完成。
+
+安装完成后可以在命令行检验版本是否安装成功：
+
+> C:\WINDOWS\System32>dart --version
+> Dart SDK version: 2.13.0 (stable) (Wed May 12 12:45:49 2021 +0200) on "windows_x64"
+
+我用 `vs code` 开发，安装 插件 `Dart` ，`Code Runner`
+
+## [hello world](https://github.com/ys558/dart-learn/blob/master/01-hello-world.dart)
+
+先来个 `hello world`，发现和 `go` 语言语法有点像，
+- 同样是主入口函数 `main(){}` 主导着整个文件的执行
+- 一个语句完成须强行加 `;`
+
+```dart
+// void 可省略
+void main(){
+  print('hello world');
+}
+```
+
+- 运行
+
+命令行里直接跑 `dart <DartDoc>.dart`，就可以看到打印的 `hello world`
+
+> E:\study\code\2021\dart-learn>dart 01-hello-world.dart
+> hello world
+
+## [变量 `var` 常量 `const` `final` ](https://github.com/ys558/dart-learn/blob/master/02-var-const.dart)
+
+dart类似 `ts` 有类型检查功能，
+
+```dart
+String str1 = '你好';
+print(str1); // 你好
+
+int num1 = 123;
+print(num1); // 123
+```
+
+但 dart 也可自动推断类型，也可以无须声明直接定义，类似 `js` ：
+```dart
+var str = 'hehe';
+print(str); // hehe
+
+const e = 2.14;
+print(e); // 2.14
+```
+
+dart 有一个惰性常量 `final`，其和普通常量 `const` 的区别：
+- `final` 可以只定义，不赋值；`const` 则不可以
+- `final` 只有在运行时才会初始化
+
+例如定义日期，实时生成的，只能用 `final`
+
+```dart
+final timeNow;
+timeNow = new DateTime.now();
+print(timeNow);
+// 2021-05-24 12:53:04.819814
+```
+
+## [数据类型](https://github.com/ys558/dart-learn/blob/master/03-String-int-long-bool-List-Map-if.dart)
+
+### dart不像js，不能进行类型自动转换，需要手动进行转换
+```dart
+print('string' + 1); // 错误
+
+// 报错：
+// Error: A value of type 'int' can't be assigned to a variable of type 'String'.
+```
+
+### `bool`
+
+布尔类型为一种单独类型，不同于js，不能转换为0，1
+
+```dart
+  bool k = true;
+  print(k); // true
+```
+
+### `int` `double`
+
+整数类型和浮点类型，没啥好讲的
+
+### `String` 
+  - 单行字符串。可以单引号`' '`或双引号`" "`定义；
+  - 换行的字符串。类似 `Python` ，需用三单引`''' '''` 或 三双引`""" """`；
+  - 占位符用 `$`，单行或多行字符串均可使用；
+
+```dart
+  String str = '1223';
+  var str2 = '''
+  line1: hehe
+  line2: haha
+  ''';
+
+  print('$str + $str2');
+  print('-------------');
+  print(str + str2);
+```
+
+结果：   
+> 1223 +   line1: hehe
+>   line2: haha
+>   
+> -------------
+> 1223  line1: hehe
+>   line2: haha
+
+### `List`
+
+#### 定义List
+
+```dart
+List l = ['aaa', 3, true];
+print(l.length); // 3
+
+const l2 = ['vvv', 'xx'];
+print('$l $l2'); // [aaa, 2, true] [vvv, 5]
+
+// 增加元素 .add() 方法：
+List l3 = <String>['foo', 'bar'];
+l3.add('fee'); // [foo, bar, fee]
+```
+
+#### 创建固定长度List，`List.filled(length, 填充的元素)`，不能增加数据使用 ~~`add()`~~
+```dart
+// <String> 可省略
+List l5 = List<String>.filled(3, '');
+print(l5); // [, , ]
+```
+
+#### 常用List方法:
+##### <a id='ListToList'>将一个现有List反转 `.reversed.toList()`</a>
+```dart
+List a = ['12', '23', '34', '45'];
+print(a.reversed);
+// (45, 34, 23, 12)
+print(a.reversed.toList());
+// [45, 34, 23, 12]
+```
+
+
+
+##### 替换元素 `fillRange(开始, 结束, 替换的元素)` 插入 `insert(插入位置，插入元素)` `insertAll(插入位置，插入多个元素)`
+
+```dart
+List l = ['12', '23', '34', '45'];
+l.fillRange(1,3, 'c');
+print(l); // [12, c, c, 45]
+ 
+l.insert(3, '单个元素');
+print(l); // [12, c, c, 单个元素, 45]
+
+l.insertAll(2, ['元素1', '元素2']);
+print(l); // [12, c, 元素1, 元素2, c, 单个元素, 45]
+```
+
+##### List ——> String： `.join()`；String ——> List：`.split()` 
+
+```dart
+List a = [12, 'CC', 'zengjia', 'hehe', 'haha', 'CC', 67];
+var b = a.join('-');
+print(b);
+// 12-CC-zengjia-hehe-haha-CC-67
+print(b is String);
+// true
+var c = b.split('-');
+print(c);
+// [12, CC, zengjia, hehe, haha, CC, 67]
+print(c is List);
+// true
+```
+
+### <a id="SetToList">`Set`</a>
+
+和 `js` 的 `Set` 类似
+
+- 最主要的功能就是去除数组重复内容
+- 没有顺序且不能重复的集合，所以不能通过索引去获取值
+
+```Dart
+List l = ['a', 'b', 'a', 'b', 'c'];
+Set ss = new Set();
+ss.addAll(l);
+print(ss); // {a, b, c}
+print(ss.toList()); // [a, b, c]
+```
+
+### `Map`
+
+类似 `js` 的obj，定义`Map`两种方法：
+
+```dart
+var p = {'name': 'zhangsan', 'age':20};
+print(p); // {name: zhangsan, age: 20}
+
+var p2 = new Map();
+print(p2); // {}
+```
+
+**注意！`Map` 不能用点 `.` 运算，只能用属性选择器 `[]`**
+
+```dart
+print(p['age']);  // 20
+```
+
+#### `keys.toList()` `values.toList()` 让键或值变成数组
+
+```dart
+Map p = {'name': 'zhangsan', 'age':20};
+
+print(person.keys.toList()); 
+// [name, age]
+print(person.values.toList());
+// [xxx, 20]
+print(person.entries);
+// (MapEntry(name: xxx), MapEntry(age: 20))
+```
+
+### `is` 关键字判断类型
+
+```dart
+String str = '1223';
+
+if (str is String) print('string类型');
+else if(str is int) print('int类型');
+else print('其他');
+
+// string类型
+```
+
+### 可迭代数据的通用方法
+#### 拼接 `.addAll()`
+
+注意：`List` 和 `Map` 拼接可在原来的基础上拼接，其内存指向不变，`Set` 拼接则需重新 `new` 一个对象
+
+```dart
+// List 拼接：
+List a = ['12', '23', '34', '45'];
+a.addAll(['67','89']);
+print(a);
+// [12, 23, 34, 45, 67, 89]
+
+
+// Set 拼接：
+List l = ['a', 'b', 'a', 'b', 'c'];
+Set ss = new Set();
+ss.addAll(l);
+print(ss); // {a, b, c}
+print(ss.toList()); // [a, b, c]
+
+// Map 拼接：
+Map m = {'name':'Tom','Id':'E1001'};
+m.addAll({'dept':'HR','email':'tom@xyz.com'});
+print(m);
+// {name: Tom, Id: E1001, dept: HR, email: tom@xyz.com}
+```
+
+#### 转换为数组 `.toList()`
+
+见上面提过的例子具有涉及: [List](#ListToList)， [Set](#SetToList)
+
+#### 转换为字符串 `.toString()`
+
+List，Set，Map均有此功能
+
+
+## 两个特殊[运算符](https://github.com/ys558/dart-learn/blob/master/04-%E8%BF%90%E7%AE%97%E7%AC%A6.dart)
+
+dart的运算符，除了这里提到的两种符号，其他和 `js` 一样
+
+### `~/` 和 `~/=` 
+
+- 取整符号 `~/`，很简单：
+
+```dart
+int a = 12;
+int b = 5;
+print(a~/b);
+// 2
+```
+- 另外，和大多数语言一样，dart里没有三等符号，只有两等 `==`
+
+### 是否为空赋值 `??=`
+
+`??=` 表示，如果值不为空，则赋值为新值；如果不为空，则用原值；   
+
+```dart
+b??=89;
+print(b);
+// 5
+var c = 45;
+c ??= 8;
+print(c);
+// 45
+```
+
+## 类型转换 String ——> Number ： `int.parse()` 和 `double.parse()`
+
+```dart
+String y = '123';
+var m = int.parse(y);
+print(m is int);
+// true
+
+String u = '23.345';
+var x = double.parse(u);
+print(x is double);
+// true
+```
+
+## `isEmpty` 和 `isNotEmpty` 判断字符串是否为空；`isNaN` 判断数值是否合法
+
+```dart
+var er = 'xxx';
+var xu = 0/0;
+if(er.isEmpty) print('str为空'); else print('str不为空');
+// str不为空
+
+if(xu.isNaN){
+  print('xu不合法');
+}else{
+  print('xu合法');
+}
+// xu不合法
+```
+
+## 循环
+和 `js` 相似度达到 95%
+
+### `for`， `for in`
+dart没有 `for of ` 循环，`for` `for in`和 `js` 基本一样的写法
+
+
+```dart
+// 例：打印1到9之间所有偶数：
+for (int i=1; i<=9; i++) {
+  if (i%2 == 0) {
+    print(i);
+  }
+}
+
+// p.s. 如果在同一行写可省略花括号 `{}` 
+for (int i in [1,2,3,4,5,6,7,8,9]) if(i%2 == 0) print(i);
+```
+
+以上均输出：
+> 2
+> 4
+> 6
+> 8
+
+### `forEach`
+
+```dart
+// 循环List
+const l2 = [2,3];
+l2.forEach((el) {
+  print(el);
+});
+// 2
+// 3
+
+// 循环Map
+Map m = {'a':1, 'b':2};
+m.forEach((key, value) {
+  print('$key --- $value');
+});
+// a --- 1
+// b --- 2
+
+// 或可写为 箭头函数 =>
+// m.forEach((key, value) =>  print('$key --- $value'));
+```
+
+## `List`， `Set` 的通用方法: `where`，`any`，`every`
+
+一个比较有趣的方法，类似条件语句，用于特定元素的查找   
+和 `js` 的数组方法的 `.some()` `.every()`等方法类似
+
+```dart
+// List
+List l3 = [2,3,6,8];
+var ll = l3.where((item) => item >3);
+print(ll); // (6, 8)
+print(ll.toList()); // [6, 8]
+
+print(l3.any((item) => item >=3)); // true
+print(l3.every((item) => item % 2 == 0 || item % 3 == 0 )); // true
+l3.removeWhere((item) => item < 7 );
+print(l3); // [8]
+
+// Set
+Set s2 = {2, 3, 4, 2, 8, 9, 8};
+bool ss = s2.any((item) => item < 1);
+print(ss); // false
+print(s2.where((item) => item > 3)); // (4, 8, 9)
+print(s2.every((item) => item <= 10)); // true
+```
+
