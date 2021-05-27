@@ -2,6 +2,9 @@
 title: Dart语法自学笔记（二）
 date: 2021-05-26 17:10:54
 tags:
+    - Dart
+    - flutter
+cover: https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.26/articles/脱离脚手架webpack配制React+typescript项目/cover2.png
 ---
 
 本篇介绍Dart的函数，类，抽象类，接口，泛型及库的使用
