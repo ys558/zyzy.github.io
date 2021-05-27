@@ -4,7 +4,7 @@ date: 2021-05-26 17:10:54
 tags:
     - Dart
     - flutter
-cover: https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.26/articles/脱离脚手架webpack配制React+typescript项目/cover2.png
+cover: https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.33/articles/Dart语法自学笔记（一）/cover3.jpg
 ---
 
 本篇介绍Dart的函数，类，抽象类，接口，泛型及库的使用
@@ -212,7 +212,7 @@ p1..name = '李四'
 
 可利用 vs code 里的快捷方式进行操作，不用自己写：
 
-![dart 继承的vs code操作](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.34/articles/Dart语法自学笔记（二）/01.png)
+![dart 继承的vs code操作](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.34/articles/Dart语法自学笔记（二）/01.gif)
 
 ### `super` 关键字
 
