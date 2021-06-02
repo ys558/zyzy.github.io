@@ -28,8 +28,71 @@ Web性能优化出处最早估计源自这篇文章[Best Practices for Speeding 
 - 少执行代码
 
 
+大概优化点，实际工作种还要结合场景才能做出优化：
+- DNS 通过缓存减少DNS查询时间
+- 网络请求过程走最近的网络环境
+- 相同静态资源是否可缓存
+- 减小http请求大小
+- 减少http请求
+- 服务的渲染
+
+# 资源合并与压缩：
+## HTML压缩
+
+原理：将HTML里的空格，换行符，制表符等去掉
+
+方法：
+1. node作为构建工具，提供了 [html-minifier](https://www.npmjs.com/package/html-minifier) 工具，webpack的 [HTMLMinifierWebpackPlugin](HtmlMinimizerWebpackPlugin) 中内置了该构建工具
+2. 后端模板引擎渲染压缩，如ejs模板，`express` 的 `renderFile() `
+
+## CSS压缩
+
+原理：
+- 除了像HTML一样删除空格，换行符等之外
+- 删除无效代码
+- css语义合并
+
+方法：   
+
+1. [html-minifier](https://www.npmjs.com/package/html-minifier) 可以对html中的内联css样式进行压缩，需配置其中的选项
+2. [clean-css](https://www.npmjs.com/package/clean-css) 对 css 的压缩
+3. Webpack 的 [CssMinimizerWebpackPlugin](https://webpack.js.org/plugins/css-minimizer-webpack-plugin/#root)
 
 
+## JS压缩与混乱
+
+原理：
+- 删除无效字符
+- 删除注释
+- 代码语义化的缩减和优化
+- 代码保护
+
+方法：
+1. [html-minifier](https://www.npmjs.com/package/html-minifier) 可以对html中的js进行压缩，需配置其中的选项
+2. [uglifyjs3](https://www.npmjs.com/package/uglify-js)
+
+## JS文件合并
+
+如果不合并请求会有以下影响
+![文件合并](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web性能优化/00.png)
+
+但合并请求也不是万能的，其缺点体现在：
+- 首屏渲染的问题   
+现在的前端都用类似react或者vue等前端框架，如果使用vue或者react没有进行服务端渲染的操作，而且服务端合并请求的JS文件又比较大，那么请求回来的JS加载完成后，才会执行react或vue的框架代码在客户端加载渲染，那么首屏白屏的时间就会比较久
+
+- 缓存失效的问题
+现在的打包用webpack都会加上md5戳，用于标识单个js文件是否发生改变，如果JS合并了，就会使原先的md5戳失效，就得重新加载
+
+针对合并带来的负面效果，应遵循以下原则：
+
+- 公共库合并   
+公共库代码比较少做频繁变动，应单独打包为一个js文件，和业务代码的js文件分开，避免公共库的缓存失效
+
+- 不同页面的合并   
+这种发生在vue或react的单页面应用，通常我们打包出来的单页应用只有一个js文件，但这种方法在效率提升来说有阻碍，最好的方法是每个页面打包为一个js文件，当某页面被路由到加载到时，才去加载对应页面的js文件，这种方式在webpack中有相应的解决方案，就是[ `loadable` 异步加载组件](https://www.webpackjs.com/api/module-methods/#import-)
+
+
+文件合并的方法：
 ## 网页性能检测工具
 
 首先应明确检测网页所需的工具，这里列举了3种方法：
