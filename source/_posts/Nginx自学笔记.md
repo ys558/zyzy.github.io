@@ -5,7 +5,7 @@ tags:
     - 后端
     - Nginx
     - 反向代理
-cover: https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx自学笔记/cover2.png
+cover: https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Nginx自学笔记/cover2.png
 ---
 Ngix这几年太火了，在不久的将来会超过Apache，由于他的底层用epoll，现在多用于服务器端的反向代理和负载均衡 ，强大的并发性能使其基本上没有项目不用他。
 本篇把 Ngix 的基础配置撸了一遍，记下来以免以后忘了。
