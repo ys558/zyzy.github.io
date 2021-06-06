@@ -4,7 +4,7 @@ date: 2021-05-30 17:38:14
 tags:
     - 面试
     - Web性能优化
-cover: https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Web性能优化/cover.jpg
+cover: https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web性能优化/cover.jpg
 ---
 
 本文根据这篇文章：[Best Practices for Speeding Up Your Web Site](https://developer.yahoo.com/performance/rules.html)，被称作"雅虎35条军规"，虽里面有的东西虽说也已经过时，但可以由此窥探前端发展的历程，一些过时的建议会略去解释
