@@ -2,9 +2,12 @@
 title: Web性能优化（持续更新）
 date: 2021-05-30 17:38:14
 tags:
+    - 面试
+    - Web性能优化
+cover: https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Web性能优化/cover.jpg
 ---
 
-Web性能优化出处最早估计源自这篇文章[Best Practices for Speeding Up Your Web Site](https://developer.yahoo.com/performance/rules.html)，被大家称作"雅虎35条军规"，里面有的东西虽说也已经过时了，但我们可以由此窥探前端发展的历程，本文结合"35条"进行阐述，一些过时的建议会略去
+本文根据这篇文章：[Best Practices for Speeding Up Your Web Site](https://developer.yahoo.com/performance/rules.html)，被称作"雅虎35条军规"，虽里面有的东西虽说也已经过时，但可以由此窥探前端发展的历程，一些过时的建议会略去解释
 
 <!-- more -->
 ## 一道面试题引发的前端性能优化思考
@@ -20,13 +23,13 @@ Web性能优化出处最早估计源自这篇文章[Best Practices for Speeding 
 - 解析 html 为 DOM-tree
 - 解析 CSS 为 CSS-tree
 - DOM-tree + CSS-tree 生成 render-tree 绘图
+- 根据页面节点的改变，样式的改变等，发生重绘与回流
 
 所谓的性能优化，就是上面的步骤加在一起，时间尽可能短，所以在这个过程种3点关键的优化因素：
 
 - 减少http请求，缩小http请求大小
 - 减少文件大小
 - 少执行代码
-
 
 大概优化点，实际工作种还要结合场景才能做出优化：
 - DNS 通过缓存减少DNS查询时间
@@ -36,68 +39,11 @@ Web性能优化出处最早估计源自这篇文章[Best Practices for Speeding 
 - 减少http请求
 - 服务的渲染
 
-# 资源合并与压缩：
-## HTML压缩
-
-原理：将HTML里的空格，换行符，制表符等去掉
-
-方法：
-1. node作为构建工具，提供了 [html-minifier](https://www.npmjs.com/package/html-minifier) 工具，webpack的 [HTMLMinifierWebpackPlugin](HtmlMinimizerWebpackPlugin) 中内置了该构建工具
-2. 后端模板引擎渲染压缩，如ejs模板，`express` 的 `renderFile() `
-
-## CSS压缩
-
-原理：
-- 除了像HTML一样删除空格，换行符等之外
-- 删除无效代码
-- css语义合并
-
-方法：   
-
-1. [html-minifier](https://www.npmjs.com/package/html-minifier) 可以对html中的内联css样式进行压缩，需配置其中的选项
-2. [clean-css](https://www.npmjs.com/package/clean-css) 对 css 的压缩
-3. Webpack 的 [CssMinimizerWebpackPlugin](https://webpack.js.org/plugins/css-minimizer-webpack-plugin/#root)
-
-
-## JS压缩与混乱
-
-原理：
-- 删除无效字符
-- 删除注释
-- 代码语义化的缩减和优化
-- 代码保护
-
-方法：
-1. [html-minifier](https://www.npmjs.com/package/html-minifier) 可以对html中的js进行压缩，需配置其中的选项
-2. [uglifyjs3](https://www.npmjs.com/package/uglify-js)
-
-## JS文件合并
-
-如果不合并请求会有以下影响
-![文件合并](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web性能优化/00.png)
-
-但合并请求也不是万能的，其缺点体现在：
-- 首屏渲染的问题   
-现在的前端都用类似react或者vue等前端框架，如果使用vue或者react没有进行服务端渲染的操作，而且服务端合并请求的JS文件又比较大，那么请求回来的JS加载完成后，才会执行react或vue的框架代码在客户端加载渲染，那么首屏白屏的时间就会比较久
-
-- 缓存失效的问题
-现在的打包用webpack都会加上md5戳，用于标识单个js文件是否发生改变，如果JS合并了，就会使原先的md5戳失效，就得重新加载
-
-针对合并带来的负面效果，应遵循以下原则：
-
-- 公共库合并   
-公共库代码比较少做频繁变动，应单独打包为一个js文件，和业务代码的js文件分开，避免公共库的缓存失效
-
-- 不同页面的合并   
-这种发生在vue或react的单页面应用，通常我们打包出来的单页应用只有一个js文件，但这种方法在效率提升来说有阻碍，最好的方法是每个页面打包为一个js文件，当某页面被路由到加载到时，才去加载对应页面的js文件，这种方式在webpack中有相应的解决方案，就是[ `loadable` 异步加载组件](https://www.webpackjs.com/api/module-methods/#import-)
-
-
-文件合并的方法：
 ## 网页性能检测工具
 
 首先应明确检测网页所需的工具，这里列举了3种方法：
 
-### window.performance
+### `window.performance`
 
 打开任意网页，控制台输入以下代码，
 可以看到 `window.performance` 所获取到的东西，我们主要看他的`timing`属性，用开始时间减去结束时间得出各种资源加载的时间。以下的数值都算是比较粗略的数值
@@ -132,6 +78,9 @@ console.log({
 ### Chrome自带的performance检测工具
 ### 自动化检测利器—— `lighthouse` —— 自动生成网页性能报告，并有优化建议
 
+符合谷歌的 PWA 标准的检测，关于PWA的概念，点击[这里](#PWA标准)
+
+方法一，直接安装 npm 库
 ```shell
 npm i -g lighthouse
 ```
@@ -141,25 +90,126 @@ npm i -g lighthouse
 lighthouse <需要测试的网页链接>
 ```
 
-# [雅虎35条](https://developer.yahoo.com/performance/rules.html)
+方法二，浏览器也自带 `lighthouse` 功能，以下是 `Edge` 浏览器
+
+![文件合并](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web性能优化/04.png)
+
+## 浏览器的重绘与回流
+
+## 资源合并与压缩：   
+现代化的前端跑不掉资源压缩这一步，平时工程化用的 `webpack` 就是一款压缩工具
+### HTML压缩
+
+原理：将HTML里的空格，换行符，制表符等去掉
+
+方法：
+1. node作为构建工具，提供了 [html-minifier](https://www.npmjs.com/package/html-minifier) 工具，webpack的 [HTMLMinifierWebpackPlugin](https://webpack.docschina.org/plugins/html-minimizer-webpack-plugin/#root) 中内置了该构建工具
+2. 后端模板引擎渲染压缩，如ejs模板，`express` 的 `renderFile() `
+
+### CSS压缩
+
+原理：
+- 除了像HTML一样删除空格，换行符等之外
+- 删除无效代码
+- css语义合并
+
+方法：   
+
+1. [html-minifier](https://www.npmjs.com/package/html-minifier) 可以对html中的内联css样式进行压缩，需配置其中的选项
+2. [clean-css](https://www.npmjs.com/package/clean-css) 对 css 的压缩
+3. Webpack 的 [CssMinimizerWebpackPlugin](https://webpack.js.org/plugins/css-minimizer-webpack-plugin/#root)
+
+
+### JS压缩与混乱
+
+原理：
+- 删除无效字符
+- 删除注释
+- 代码语义化的缩减和优化
+- 代码保护
+
+方法：
+1. [html-minifier](https://www.npmjs.com/package/html-minifier) 可以对html中的js进行压缩，需配置其中的选项
+2. [uglifyjs3](https://www.npmjs.com/package/uglify-js)
+
+### JS文件合并
+
+如果不合并请求会有以下影响
+![文件合并](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web性能优化/00.png)
+
+但合并请求也不是万能的，其缺点体现在：
+- 首屏渲染的问题   
+现在的前端都用类似react或者vue等前端框架，如果使用vue或者react没有进行服务端渲染的操作，而且服务端合并请求的JS文件又比较大，那么请求回来的JS加载完成后，才会执行react或vue的框架代码在客户端加载渲染，那么首屏白屏的时间就会比较久
+
+- 缓存失效的问题
+现在的打包用webpack都会加上md5戳，用于标识单个js文件是否发生改变，如果JS合并了，就会使原先的md5戳失效，就得重新加载
+
+针对合并带来的负面效果，应遵循以下原则：
+
+- 公共库合并   
+公共库代码比较少做频繁变动，应单独打包为一个js文件，和业务代码的js文件分开，避免公共库的缓存失效
+
+- 不同页面的合并   
+这种发生在vue或react的单页面应用，通常我们打包出来的单页应用只有一个js文件，但这种方法在效率提升来说有阻碍，最好的方法是每个页面打包为一个js文件，当某页面被路由到加载到时，才去加载对应页面的js文件，这种方式在webpack中有相应的解决方案，就是[ `loadable` 异步加载组件](https://www.webpackjs.com/api/module-methods/#import-)
+
+
+## [雅虎35条的链接](https://developer.yahoo.com/performance/rules.html)， 从中挑出一些点来讲，如下：
 
 ## Image *
 
 之所以把图片放在最前，因为优化图片的效率是比较大的
 
-### Optimize Images *
-图片主要就是压缩和优化
+### Optimize Images * 图片优化 
 
-pngcrush 或其他工具压缩png。在线压缩工具 https:/ tinypng.com/   
-jpegtran或其它工具压缩jpeg。   
-大图用jpg   
-SVG矢量图：类似XML的图片（用来绘制地图，股票K线图等）   
-Webp google开发的一种全能的图片显示技术，但浏览器的兼容性不太好   
+1. 各种图片格式的应用场景：   
+    1.1 png 大部分需要使用透明的场景   
+    pngcrush 或其他工具压缩png。在线压缩工具 https:/ tinypng.com/   
 
-- 渐进式显示
-- 懒加载
+    1.2 jpg 大部分不需要透明的场景   
+    jpegtran或其它工具压缩jpeg，大图用jpg    
+
+    1.3 SVG矢量图，类似XML语法，内嵌在html里的代码图片（用来绘制地图，股票K线图等），可使用 [阿里的iconfont](https://www.iconfont.cn/) 解决icon问题   
+    [SVG的教程](https://www.w3school.com.cn/svg/index.asp)
+
+    例如画一个长方形：
+    ```html
+    <svg width="100%" height="100%" version="1.1" xmlns="http://www.w3.org/2000/svg">
+
+        <rect width="300" height="100"
+        style="fill:rgb(0,0,255);stroke-width:1;
+        stroke:rgb(0,0,0)" />
+
+    </svg>
+    ```
+
+    1.4 Webp 安卓可全用   
+    google在2010年开发的一种全能的图片，但safari浏览器 和 webview 的兼容性不太好   
+
+    1.5 png ——> Webp 格式网站：[智图](https://zhitu.isux.us/)
+
+
+2. Image inline，即将图片内容内嵌到html里，减少网站的HTTP请求数量，多用于移动端和小图标：   
+![淘宝移动端大量使用image inline](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web性能优化/01.png)   
+
+如何将图片转换为base64编码内嵌到html中，有一个[在线转换网站](https://www.vgot.net/test/image2base64.php)
+，在html文件图片所在的src=""中添加data:image/jpg;base64,（注：这里是jpg格式，你可以改写成你编码图片的类型）
+，将你编码的Base64代码复制到image/jpg;base64, 的后面，然后用浏览器运行即可。
+
+当然还可以像taobao主页一样，嵌入到css的属性中使用：
+![inline image 可以通过css属性设置](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web性能优化/02.png)
+
+![sprite cow 复制上面这块代码去粘贴即可](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web性能优化/03.png)
+
+[3. 懒加载](#懒加载)
+
+
+[4. 预加载](#预加载)
+
+ 
 
 ### Optimize CSS Sprites
+
+**实际上，随着带宽的普遍提高，现在不少网站都不用雪碧图了，特别是PC端，移动端用的还相对比PC端多些。但仍有网站在使用他。而雪碧图在应用上也有缺点，如果过多图标集合在一个图的话，则会出现如果该图片请求后读取不出，所有应用到该图片的图标全部会失效**
 
 > - Arranging the images in the sprite horizontally as opposed to vertically usually results in a smaller file size.   
 > - Combining similar colors in a sprite helps you keep the color count low, ideally under 256 colors so to fit in a PNG8.   
@@ -168,6 +218,8 @@ Webp google开发的一种全能的图片显示技术，但浏览器的兼容性
 - 雪碧图最好竖放，避免横放，达到最小尺寸
 - 相似图片合并，颜色相近的合并，颜色数会更少
 - 移动端的雪碧图减少空隙
+
+- 雪碧图的生成，用这个[网站](http://www.spritecow.com/)
 
 
 选择器性能
@@ -199,24 +251,112 @@ Webp google开发的一种全能的图片显示技术，但浏览器的兼容性
 
 避免重定向
 
-### Make Ajax Cacheable
 
-使得 Ajax进行缓存
+### <a id="懒加载">Postload Components * 懒加载组件</a>
 
-### Postload Components
+图片进入可视区域后再请求图片资源。适用于电商等图片很多，页面很长的业务场景
+减少无效资源的加载 
+并发加载的资源过多会阻塞js的加载，影响网站正常使用
 
-后加载组件
+案例可以看我的另一篇文章，关于[JS IntersectionObserver Api](https://zyzy.info/2021/04/23/%E6%97%A0%E9%99%90%E6%BB%9A%E5%8A%A8%E5%92%8C%E6%87%92%E5%8A%A0%E8%BD%BD%E9%80%9A%E8%BF%87IntersectionObserver%E5%92%8CReact_Hooks%E5%AE%9E%E7%8E%B0/)，可以这个将这个api用于懒加载
 
-### Preload Components
+下面结合`react` 写一个懒加载案例
+```js
+import React from 'react'
+import './Lazyload.css'
+import { v4 as uuidv4 } from 'uuid'
 
-预加载组件
+/* 
+总体思路：
+1. 先创建图片占位符
+2. 创建 IntersectionObserver 对象监听这些图片占位符
+*/
+const refs = [] // 图片的 ref（操作dom时用）
+const images = []
 
-### Reduce the Number of DOM Elements
-### Split Components Across Domains
-### Minimize Number of iframes
-### Avoid 404s
+for (let i=0; i<4; i++) {
+  const ref = React.createRef() 
+  refs.push(ref)
+  images.push(<div className='image-box' key={uuidv4()}>
+        <img ref={ ref } data-src={`https://pschina.github.io/src/assets/images/${i}.jpg`} />
+      </div>)
+}
 
-## Server
+const LazyLoadPage = ()=>{
+  const io = new IntersectionObserver( entries =>{
+    entries.forEach((item)=>{ 
+      if (item.intersectionRatio <= 0 ) return // intersectionRatio 是可见度 如果当前元素不可见就结束该函数。
+      item.target.src = item.target.dataset.src
+    })
+  // [0.01] 这是触发时机 0.01代表出现 1%的面积出现在可视区触发一次回掉函数
+  // threshold = [0, 0.25, 0.5, 0.75]  表示分别在0% 25% 50% 75% 时触发回掉函数
+  }, [0.01] );
+
+  const onload = ()=> refs.forEach( i => io.observe(i.current) )
+  
+
+  return <div className='box'>
+    {images}
+    <img onError={onload} src="" />
+  </div>}
+
+export default LazyLoadPage
+```
+
+### <a id="预加载">Preload Components * 预加载组件</a>
+
+方法一，加载时另 `display` 为 `none`
+```html
+<img src="http://xxx.xxx" style="display: none" />
+```
+
+方法二，利用 `new Image()`
+```js
+var img = new Image()
+img.src = 'http://xxx.xxx/'
+```
+
+方法三，`XHLHttpRequest` 对象，这种方法有跨域问题
+```js
+var xmlhttprequest = new XMLHttpRequest()
+
+xmlhttprequest.onreadystatechange = callback
+xmlhttprequest.onprogress = progressCallback
+xmlhttprequest.open('GET', 'http://image.baidu.com/mouse.jpg', true)
+xmlhttprequest.send()
+
+function callback () {
+  if (xmlhttprequest.readyState == 4 && xmlhttprequest.status == 200 ) {
+    var reponseText = xmlhttprequest.responseText
+  }else{
+    console.log('Request was unsuccessful:' + xmlhttprequest.status)
+  }
+}
+
+function progressCallback (e) {
+  e = e || event
+  if ( e.lengthComputable) console.log(`Receievd ${e.loaded} of ${e.total} bytes`)
+}
+```
+
+方法四，使用库 [`PreloadJS`](http://www.createjs.cc/preloadjs/) 进行预加载
+```js
+var queue = new createjs.LoadQueue(false)
+
+queue.on('complete', handleComplete, this)
+
+queue.loadManifest([
+  {id: 'myImg', src:'http://pic26.nipic.com/20121213/6168183_004444903000_2.jpg'},
+  {id: 'myImg2', src:'http://pic9.nipic.com/20100814/2839526_193147158170_2.jpg'},
+])
+
+function handleComplete () {
+  var img = queue.getResult('myImg')
+  document.body.appendChild(img)
+}
+```
+
+## Server 服务端优化
 
 ### Use a Content Delivery Network (CDN) *
 
@@ -298,11 +438,7 @@ If-None-Match: "10c24bc-4ab-457e1c1f"
 HTTP/1.1 304 Not Modified
 ```
 
-### Flush Buffer Early
-### Use GET for Ajax Requests
-### Avoid Empty Image src
-
-## Cookie
+## Browser Storage * 浏览器存储优化
 ### Reduce Cookie Size *
 
 > Eliminate unnecessary cookies    
@@ -310,30 +446,80 @@ HTTP/1.1 304 Not Modified
 > Be mindful of setting cookies at the appropriate domain level so other > sub-domains are not affected   
 > Set an Expires date appropriately. An earlier Expires date or none removes the cookie sooner, improving the user response time   
 
-Cookie是请求头的一个字段，如果存储的信息过多过大，必然会影响性能，减少Cookie体积大小，只存储用户id等简单信息    
-设置合适的 `expire` 字段让cookie过期
+1. Cookie是请求头的一个字段，如果存储的信息过多过大，必然会影响性能，减少Cookie体积大小，只存储用户id等简单信息    
+2. 设置合适的 `expire` 字段让cookie过期
+3. 设置cookie时，应注意设置头部字段 `Set-Cookie：httponly`，只允许http通信，这样才不会被js篡改 
+4. cookie由于是种在域名下的，请求头的一个字段，所以单独带在域名中会造成CDN的流量产生不必要的损耗，解决方法是 **CDN域名和主站域名独立开来**
+
+### LocalStorage *
+1. HTML5专门设计出来用于浏览器存储的
+2. 大小为5Mb左右，比cookie的4kb大很多
+3. 不进行通信
+4. 接口封装相较于cookie较好
+5. 浏览器本地缓存方案 
+
+### SessionStorage *
+1. 会话级别的浏览器存储
+2. 大小5M左右
+3. 不进行通信
+4. 接口封装相
+5. 对于表单信息的维护，关闭浏览器的标签页，SessionStorage会自动清空    
+优化点：
+1. 例如用户注册页面，需要填写很多东西，如果用户还没提交但刷新了该页面，用户体验会不好
+2. 而此时可将用户所填的信息存储到SessionStorage里，用户刷新页面时，所填写的东西也不会清空。
+
+### IndexDB
+1. 是一种低级API，用于客户端存储大量结构化数据。说白了，就是浏览器的数据库
+2. 使用的网站较少
+
+### Service Worker *
+1. Service Worker 是运行在浏览器背后的独立线程，一般可以用来实现缓存功能。
+2. 使用 Service Worker的话，传输协议必须为 HTTPS。因为 Service Worker 有拦截和处理网络请求的能力，所以必须使用 HTTPS 协议来保障安全。
+3. 简单点说，就是缓存js文件到浏览器里，让客户端有大量处理js的能力。
+4. 例如，现在的Three.js 或 WebGL可以用于3D的渲染，但3D图的js脚本及数据占用资源比较多，一个脚本可达几Mb，可以用Service Worker将其缓存起来执行。
+5. 利用拦截和处理网络请求的能力，可以实现离线应用功能。
+
+检查工具：在chrome浏览器输入    
+`chrome://serviceworker-internals/` 检查所有 service worker
+![sprite cow 复制上面这块代码去粘贴即可](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web性能优化/06.png)
+
+`chrome://inspect/#service-workers` 检查正在运行的 service worker   
+![sprite cow 复制上面这块代码去粘贴即可](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web性能优化/05.png)
 
 
-### Use Cookie-Free Domains for Components
 
+### <a id="PWA标准">Progressive Web Apps 渐进式 Web 应用</a>   
+1. PWA 标准由 谷歌提出的移动端的标准。例如，在移动端的弱网环境下，你站点的加载速度。离线环境下，能不能有基本的页面访问
+2. 可靠：在没有网络环境中也能提供基本的页面访问
+3. 快速：因为Web App是一个增量加载的过程，不同于iOS或者安卓的原生开发，Web App加载必受到网络条件的制约
+4. 融入（Engaging）：将其能力对标原生APP，应用可以被添加到手机桌面，并和普通应用一样有全屏，推送等特性
 
 ## CSS
+
+CSS是存在CSS阻塞的，
+- css 如果在 head 中以 link 方式引入会阻塞页面的渲染
+- css 阻塞js的执行
+- 但 css 不阻塞外部脚本的加载
 
 ### Put Stylesheets at Top *
 > While researching performance at Yahoo!, we discovered that moving stylesheets to the document HEAD makes pages appear to be loading faster. This is because putting stylesheets in the HEAD allows the page to render progressively.
 
 将样式表放在头部，可以让页面逐步呈现
 
-### Avoid CSS Expressions
 ### Choose `<link>` Over @import
 
 > In IE @import behaves the same as using <link> at the bottom of the page, so it's best not to use it.
 
 在IE浏览器中 `@import` 和 `<link>` 是一样的，位于底部执行，这和我们推荐的CSS放在HEAD中执行背道而驰，所以少用 `@import`
 
-### Avoid Filters
 
 ## JavaScript
+
+JS 阻塞
+
+- 直接引入js阻塞页面的渲染，所以才有后面
+- js不阻塞资源加载
+- js按顺序执行，阻塞后续js逻辑执行
 
 ### Put Scripts at Bottom *
 > The problem caused by scripts is that they block parallel downloads.
@@ -341,6 +527,20 @@ Cookie是请求头的一个字段，如果存储的信息过多过大，必然�
 > While a script is downloading, however, the browser won't start any other downloads, even on different hostnames.
 
 JS的加载本身就是一种阻塞，所以尽量让HTML+CSS先把页面渲染出来，再执行 底部的`<script></script>` 标签
+
+```html
+<!DOCTYPE HTML>
+<html>
+    <head>
+        <title> </title>
+    </head>
+    <body>
+    <div></div>
+
+    <script type="text/javascript" src=""></script>    
+    </body>
+</html>
+```
 
 ### Make JavaScript and CSS External
 
@@ -358,9 +558,6 @@ JS的加载本身就是一种阻塞，所以尽量让HTML+CSS先把页面渲染�
 
 最小化 JS 和 CSS，现在我们多用 webpack等打包工具来做到这一步
 
-### Remove Duplicate Scripts
-
-删除重复的JS脚本
 
 ### Minimize DOM Access *
 
@@ -372,15 +569,3 @@ JS的加载本身就是一种阻塞，所以尽量让HTML+CSS先把页面渲染�
 
 最小化DOM访问，尽可能少的进行DOM操作，这点可以从现在的`React` `Vue`等MVVM框架体现出来
 
-### Develop Smart Event Handlers
-
-## Mobile
-
-### Keep Components Under 25 KB
-### Pack Components Into a Multipart Document
-
-# 新增内容
-
-## API
-
-### 利用
