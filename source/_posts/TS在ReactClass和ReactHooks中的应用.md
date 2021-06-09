@@ -13,6 +13,8 @@ cover: https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.23/articles/TS在ReactCl
 
 <!-- more -->
 
+## 自己写的 [TypeScript demo](https://github.com/ys558/typescript-learning)，TS基础内容可以翻看该仓库
+
 ## 安装
 
 ### 新项目，只需带`--template typescript`参数即可：
