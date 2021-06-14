@@ -4,9 +4,11 @@ date: 2021-06-08 09:28:59
 tags:
     - Electron
     - React
-cover: https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.37/articles/Electron配置React或Vue实践/cover2.webp
+    - Webpack
+    - Vue
+cover: https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.38/articles/Electron配置React或Vue实践/cover3.png
 ---
-本篇介绍在 `Electron` 中配置 `React` 或者 `Vue` 框架开发，毕竟现在多是用框架开发当道，`Electron` 也不可能配置框架在里面，所以只好自己动手用 `Webpack` 来搞
+本篇介绍在 `Electron` 中配置 `React` 或者 `Vue` 框架开发，毕竟现在前端多是用框架开发，其实已早有[现成的模板配置](#模板配置)，自己动手用 `Webpack` 来搭建能更好的熟悉配置的过程。
 <!-- more -->
 
 ## Electron 基础配置   
@@ -105,9 +107,7 @@ app.whenReady().then(() => {
 
 ![Electron 界面](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.37/articles/Electron配置React或Vue实践/00.png)
 
-## Electron + `React`
-
-### 配置 React
+## React
 
 ```bash
 npm install react
@@ -368,8 +368,61 @@ const createWindow = () => {
 },
 ```
 
-## 报错处理
+### 报错处理
 
 > 如果出现报错：Uncaught ReferenceError: require is not defined，请检查你是否在主进程中添加这行代码，如果添加了，请确保你搭建项目的 Electron 与本应用的版本一致(当前项目的 Electron@^11.1.1)
 
 > 请自检查一下你的版本是否正确，进入 node_modules，找到 electron，看看 package.json 中的 version 是否是 11.1.1。
+
+## Vue
+
+
+## <a id="模板配置">现成模板</a>：[electron-react-boilerplate](https://github.com/electron-react-boilerplate/electron-react-boilerplate) 和 [electron-vue](https://github.com/SimulatedGREG/electron-vue)
+Vue 或 React 均有一个现成的模板可用，这两个该模板共同好处是，只需要一个终端，便可跑起`ELectron`的主进程和渲染进程，集成度更高，下面我们来看一下这两个模板的配置。
+
+### [electron-react-boilerplate](https://github.com/electron-react-boilerplate/electron-react-boilerplate) 两个终端集成原理
+
+[electron-react-boilerplate](https://github.com/electron-react-boilerplate/electron-react-boilerplate) 集成两个终端是使用了webpack的一个api [webpack deverserve before api](https://webpack.js.org/configuration/dev-server/#devserverbefore)，在其源码文件[webpack.config.renderer.dev.babel.js](https://github.com/electron-react-boilerplate/electron-react-boilerplate/blob/main/.erb/configs/webpack.config.renderer.dev.babel.js)里可以看到配置
+
+```js
+import { spawn, execSync } from 'child_process'
+
+export default merge(baseConfig, {
+  ...
+  before() {
+    console.log('Starting Main Process...');
+    // 利用node的 spawn api 跑一个 start:main 的子进程
+      spawn('npm', ['run', 'start:main'], {
+        shell: true,
+        env: process.env,
+        stdio: 'inherit',
+      })
+        .on('close', (code) => process.exit(code))
+        .on('error', (spawnError) => console.error(spawnError));
+  },
+}
+```
+
+`webpack.devserver.before` api 类似于 `webpack` 的生命周期函数，还有一个 [`webpack.devserver.after`](https://webpack.js.org/configuration/dev-server/#devserverafter)
+### [electron-vue](https://github.com/SimulatedGREG/electron-vue) 两个终端集成原理
+
+electron-vue 是因为这个的脚本[dev-runner.js](https://github.com/SimulatedGREG/electron-vue/blob/master/template/.electron-vue/dev-runner.js)，利用 [`Promise.all()`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/Promise/allSettled)，函数进行调用，把两个终端操作融合到一起：
+
+```js
+...
+
+function init () {
+  greeting()
+
+  // startRender() 利用
+  Promise.all([startRenderer(), startMain()])
+    .then(() => {
+      startElectron()
+    })
+    .catch(err => {
+      console.error(err)
+    })
+}
+
+init()
+```
