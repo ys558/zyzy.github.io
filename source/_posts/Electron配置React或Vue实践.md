@@ -1,12 +1,12 @@
 ---
-title: Electron配置React或Vue实践（未完，Vue部分待更新）
+title: Electron配置React或Vue实践（Vue部分待更新）
 date: 2021-06-08 09:28:59
 tags:
     - Electron
     - React
     - Webpack
     - Vue
-cover: https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.38/articles/Electron配置React或Vue实践/cover3.png
+cover: https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.39/articles/Electron配置React或Vue实践/cover3.png
 ---
 本篇介绍在 `Electron` 中配置 `React` 或者 `Vue` 框架开发，毕竟现在前端多是用框架开发，其实已早有[现成的模板配置](#模板配置)，自己动手用 `Webpack` 来搭建能更好的熟悉配置的过程。
 <!-- more -->
@@ -402,6 +402,8 @@ export default merge(baseConfig, {
   },
 }
 ```
+
+其实很简单，利用了node的`child_process` api 新开了个进程，让渲染进程跑在该进程之上   
 
 `webpack.devserver.before` api 类似于 `webpack` 的生命周期函数，还有一个 [`webpack.devserver.after`](https://webpack.js.org/configuration/dev-server/#devserverafter)
 ### [electron-vue](https://github.com/SimulatedGREG/electron-vue) 两个终端集成原理
