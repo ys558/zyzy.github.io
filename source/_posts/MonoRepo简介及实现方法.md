@@ -6,7 +6,7 @@ tags:
   - yarn
   - lerna
   - conventional commit
-cover: 'https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.43/articles/mono repo简介及实现方法/cover.jpeg'
+cover: 'https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.43/articles/monorepo简介及实现方法/cover.jpeg'
 ---
 
 本文介绍私有仓库包的管理模式 mono repo
