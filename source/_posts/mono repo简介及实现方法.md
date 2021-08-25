@@ -5,7 +5,8 @@ tags:
   - mono repo
   - yarn
   - lerna
-cover: 'https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/mono repo简介及实现方法/cover.png'
+  - conventional commit
+cover: 'https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.43/articles/mono repo简介及实现方法/cover.jpeg'
 ---
 
 本文介绍私有仓库包的管理模式 mono repo
@@ -18,7 +19,7 @@ cover: 'https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/mono repo�
 
 例如我们平时熟悉的react，babel等库的源码，都是采用mono repo进行仓库管理。
 
-我们需要用到两个库，`yarn workspace` 和 `lerna`， 他们各自的功能，前者用于依赖管理，后者用于处理发布问题。
+我们需要用到两个库，`yarn workspace` 和 `lerna`， 前者用于依赖管理，后者用于处理发布问题，在版本发布这块，使用`lerna`更方便，可用于替代一部分的git的功能。
 
 ## `yarn workspaces` 管理依赖
 
@@ -92,7 +93,7 @@ $ ls node_modules/
 '@mono-repo-by-yarn-lerna'/
 ```
 
-![ yarn workspace 管理依赖](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/monorepo简介及实现方法/01.png)
+![ yarn workspace 管理依赖](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.43/articles/monorepo简介及实现方法/01.png)
 
 运行 `node server/index.js` 可以看到运行的结果：
 ```bash
@@ -102,7 +103,7 @@ hello fr common
 
 如果此时我们再在 server 文件夹里添加其他模块，例如 `babel`，运行 `yarn add babel`，
 
-![ yarn workspace 管理依赖 ](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/monorepo简介及实现方法/02.png)
+![ yarn workspace 管理依赖 ](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.43/articles/monorepo简介及实现方法/02.png)
 
 会发现 server 文件夹里的 `node_modules` 只放了 babel 的一些执行文件，其余 babel 的核心文件全部被移动到根目录里的 `node_modules`，以此达到集中管理依赖的目的
 
@@ -134,7 +135,7 @@ hello fr common
 }
 ```
 
-![ lerna运行后，会收集所有子包script里对应同名的命令一起执行 ]('https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/monorepo简介及实现方法/03.png')
+![ lerna运行后，会收集所有子包script里对应同名的命令一起执行 ](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.43/articles/monorepo简介及实现方法/03.png)
 
 如果要执行单个 `package.json` 里的命令，则需加上 `--scope=@包名`，如
 
@@ -144,11 +145,27 @@ hello fr common
   }
 ```
 
-![ 加上 --scope= 指定运行包名 ]('https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/monorepo简介及实现方法/04.png')
+![ 加上 --scope= 指定运行包名 ](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.43/articles/monorepo简介及实现方法/04.png)
 
 如指定多个模块，只需放在`{}`里，如：
 ```json
   "scripts": {
-    "test": "lerna run test --scope={@mono-repo-by-yarn-lerna/common, @mono-repo-by-yarn-lerna/server}"
+    "test-since": "lerna run test --scope={@mono-repo-by-yarn-lerna/common,@mono-repo-by-yarn-lerna/server}"
+  }
+```
+### lerna version 发布版本
+接上面，用 `new-version` 命令进行发版，执行的是 `lerna version`。
+后面的参数 [`convential commits`](https://www.conventionalcommits.org/en/v1.0.0/) 是一个用于优化 git commit 内容的库，可以添加commits标题正文注脚什么的，挺有趣，vs code 里也有同名的插件
+
+![ 执行 new-version 命令后会生成版本信息 ](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.43/articles/monorepo简介及实现方法/06.png)
+
+![ 同时，各个模块也会生成一个 `CHANGELOG.md` 文件 ](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.43/articles/monorepo简介及实现方法/07.png)
+
+![ 远程的git仓库会生成相应的版本号 ](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.43/articles/monorepo简介及实现方法/08.png)
+
+test 脚本加上 `--since` 参数可以看到提交版本的历史：
+```json
+  "scripts": {
+    "test": "lerna run test --since"
   }
 ```
