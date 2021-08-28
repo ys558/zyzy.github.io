@@ -1,0 +1,126 @@
+---
+title: react-ssr服务端渲染
+date: 2021-08-27 22:02:07
+tags:
+  - ssr
+  - react
+---
+
+服务端渲染能解决首屏加载过慢的问题，近年来这是一个趋势，这里写一个react的demo，以免忘了。
+
+<!-- more -->
+
+## 用脚手架初始化项目
+
+这部分不解释，用脚手架快速生成一个app
+
+！注意: create-react-app 新版本生成的 App.js 已经没有 `import React from 'react'`，我们必须把它加回来，否则服务端渲染会报错：
+
+```js
++ import React from 'react'
+import { useState } from 'react';
+import './App.css';
+
+function App() {
+  const [count, setCount] = useState(0)
+  return <div className="App">
+      <p>{count}</p>
+      <button onClick={()=> setCount(count + 1 )}>+</button>
+      <button onClick={()=> setCount(count-1)}>-</button>
+    </div>
+
+}
+
+export default App;
+```
+
+## 添加服务端
+
+```bash
+yarn add express
+# 首页须进行打包操作给服务端做渲染：
+yarn build
+mkdir server && cd server && touch server.js
+```
+
+`server\server.js`
+```js
+import express from 'express'
+import fs from 'fs'
+import path from 'path'
+
+import React from 'react'
+import ReactDOMServer from 'react-dom/server'
+
+import App from '../src/App'
+
+const app = express()
+
+app.use('^/$', (req, res, next) =>{
+  fs.readFile(path.resolve('../build/index.html'), 'utf-8', (err, data) => {
+      if (err) { 
+        console.log(err)
+        return res.status(500).send('smoe error happened')
+      }
+      return res.send(data.replace(
+        '<div id="root"></div>',
+        `<div id="root">${ReactDOMServer.renderToString(<App/>)}</div>`
+      ))
+    }
+  )
+})
+
+app.use(express.static(path.resolve(__dirname, '..', 'build')))
+
+const PORT = 8888
+app.listen(PORT, ()=>console.log(`listen on PORT ${PORT}`))
+```
+
+把 `express` 跑起来
+
+## `src\index.js` 改造
+
+```js
+- ReactDOM.render(<App />,document.getElementById('root'))
++ ReactDOM.hydrate(<App />,document.getElementById('root')
+```
+
+## 添加 `babel` 让node认识jsx语法
+
+```bash
+yarn add @babel/preset-env @babel/preset-react @babel/register ignore-styles
+```
+
+## 在 `server` 文件夹添加运行 `babel` 机制
+
+执行`touch server/index.js`
+
+node原生的必须用 `require` 的写法导入模块，如下：
+
+```js
+require('ignore-styles')
+
+require('@babel/register')({
+  ignore: [/(node_module)/],
+  presets: ['@babel/preset-env', '@babel/preset-react']
+})
+
+require('./server')
+```
+
+添加 `package.json` 里的脚本后再运行 `yarn ssr`
+
+```json
+"ssr": "node server/index.js"
+```
+
+我们会发现顺利解析了 jsx 语法：
+```bash
+yuyi@home-pc MINGW64 /e/study/code/react-ssr-demo (main)
+$ yarn ssr
+yarn run v1.22.10
+$ node server/index.js
+listen on PORT 8888
+```
+
+![浏览器访问本地8888端口，打开调试工具就会发现已经成功](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.44/articles/react-ssr服务端渲染/01.png)
