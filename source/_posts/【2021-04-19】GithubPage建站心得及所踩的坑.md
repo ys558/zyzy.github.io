@@ -1,5 +1,5 @@
 ---
-title: 【210419】Github Page建站心得及所踩的坑
+title: Github Page建站心得及所踩的坑
 date: 2021-04-19 10:46:18
 tags:
     - Hexo
