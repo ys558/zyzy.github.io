@@ -1,6 +1,6 @@
 ---
-title: TS在ReactClass和ReactHooks中的应用
-date: 2021-05-04 01:15:25
+title: TS在ReactClass和ReactHooks中的应用（更新）
+date: 2021-05-23 08:43:25
 tags:
     - type script
     - React
