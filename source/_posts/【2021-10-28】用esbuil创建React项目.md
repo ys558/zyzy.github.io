@@ -1,5 +1,5 @@
 ---
-title: 【2021-10-28】用esbuil创建React项目
+title: 用esbuil创建React项目
 date: 2021-10-28 14:53:06
 tags:
   - esbuild
