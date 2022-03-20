@@ -14,12 +14,17 @@ cover: 'https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.43/articles/monorepo简
 <!-- more -->
 
 ## mono repo的好处
+mono repo的好处来源于[这篇文章](https://danluu.com/monorepo/)，我用自己直白点的话总结了以下几点：
 1. 多个内部模块可以集中管理
 2. 只需在根目录安装 `node_modules` 即可，无须所有模块都安装
 
+例如，一个有多端的项目，而且每个端都饮用了共有的模块，我们可以把所有项目或包放到一个packages中集中管理
+
 例如我们平时熟悉的react，babel等库的源码，都是采用mono repo进行仓库管理。
 
-我们需要用到两个库，`yarn workspace` 和 `lerna`， 前者用于依赖管理，后者用于处理发布问题，在版本发布这块，使用`lerna`更方便，可用于替代一部分的git的功能。
+我们需要用到两个库，`yarn workspace` 和 `lerna`， 以下的项目示例里，前者用于依赖管理，后者用于处理发布问题，在版本发布这块，使用`lerna`更方便，可用于替代一部分的git的功能。
+
+当然 `lerna` 也可以直接替代 `yarn workspace` 的功能。
 
 ## [`yarn workspace`](https://classic.yarnpkg.com/en/docs/cli/workspace) 管理依赖
 
