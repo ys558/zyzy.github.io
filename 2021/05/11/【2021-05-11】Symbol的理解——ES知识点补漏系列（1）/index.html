@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 5.4.0">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>Symbol的理解——ES知识点补漏系列（1） - 自由の翼小栈</title>
+
+  
+    <meta name="description" content="对于 Symbol 的理解，一直比较陌生，只知道他是 ES6 的语法规范，具体概念，可参考阮一峰老师的 Symbol 文章。这里我就自己的理解写，不讲概念，写一个容易理解的demo，介绍 Symbol 的作用。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Symbol的理解——ES知识点补漏系列（1）">
+<meta property="og:url" content="https://zyzy.info/2021/05/11/%E3%80%902021-05-11%E3%80%91Symbol%E7%9A%84%E7%90%86%E8%A7%A3%E2%80%94%E2%80%94ES%E7%9F%A5%E8%AF%86%E7%82%B9%E8%A1%A5%E6%BC%8F%E7%B3%BB%E5%88%97%EF%BC%881%EF%BC%89/index.html">
+<meta property="og:site_name" content="自由の翼小栈">
+<meta property="og:description" content="对于 Symbol 的理解，一直比较陌生，只知道他是 ES6 的语法规范，具体概念，可参考阮一峰老师的 Symbol 文章。这里我就自己的理解写，不讲概念，写一个容易理解的demo，介绍 Symbol 的作用。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.30/articles/Symbol%E7%9A%84%E7%90%86%E8%A7%A3%E2%80%94%E2%80%94ES%E7%9F%A5%E8%AF%86%E7%82%B9%E8%A1%A5%E6%BC%8F%E7%B3%BB%E5%88%97%EF%BC%881%EF%BC%89/01.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.30/articles/Symbol%E7%9A%84%E7%90%86%E8%A7%A3%E2%80%94%E2%80%94ES%E7%9F%A5%E8%AF%86%E7%82%B9%E8%A1%A5%E6%BC%8F%E7%B3%BB%E5%88%97%EF%BC%881%EF%BC%89/02.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.30/articles/Symbol%E7%9A%84%E7%90%86%E8%A7%A3%E2%80%94%E2%80%94ES%E7%9F%A5%E8%AF%86%E7%82%B9%E8%A1%A5%E6%BC%8F%E7%B3%BB%E5%88%97%EF%BC%881%EF%BC%89/04.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.30/articles/Symbol%E7%9A%84%E7%90%86%E8%A7%A3%E2%80%94%E2%80%94ES%E7%9F%A5%E8%AF%86%E7%82%B9%E8%A1%A5%E6%BC%8F%E7%B3%BB%E5%88%97%EF%BC%881%EF%BC%89/05.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.30/articles/Symbol%E7%9A%84%E7%90%86%E8%A7%A3%E2%80%94%E2%80%94ES%E7%9F%A5%E8%AF%86%E7%82%B9%E8%A1%A5%E6%BC%8F%E7%B3%BB%E5%88%97%EF%BC%881%EF%BC%89/03.png">
+<meta property="article:published_time" content="2021-05-11T01:27:58.000Z">
+<meta property="article:modified_time" content="2021-10-14T03:42:59.911Z">
+<meta property="article:author" content="自由の翼">
+<meta property="article:tag" content="ES">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.30/articles/Symbol%E7%9A%84%E7%90%86%E8%A7%A3%E2%80%94%E2%80%94ES%E7%9F%A5%E8%AF%86%E7%82%B9%E8%A1%A5%E6%BC%8F%E7%B3%BB%E5%88%97%EF%BC%881%EF%BC%89/01.png">
+  
+  
+
+  <!-- feed -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+</head>
+
+<body>
+  
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left'>
+    
+
+<header class='header'>
+  <div class='logo-wrap'>
+  
+    <a class='avatar' href='/about/'>
+      
+        <img no-lazy class='bg' src='https://cdn.jsdelivr.net/gh/cdn-x/placeholder@1.0.2/avatar/round/rainbow64@3x.webp'/>
+      
+      <img no-lazy class='avatar' src='https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.12/avatar/宇航员.svg'/>
+    </a>
+  
+  
+    <a class='title' href='/'>
+      自由の翼小栈
+    </a>
+  
+</div>
+
+  <nav class="menu dis-select"></nav>
+</header>
+
+<div class='widgets'>
+  
+    
+      
+      
+<div class="widget-wrap" id="toc"><div class="widget-header h4 dis-select"><span class="name">本文目录</span></div><div class="widget-body fs14 post"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BC%A0%E7%BB%9Fobj-key%E5%80%BC%E7%9A%84%E7%97%9B%E7%82%B9"><span class="toc-text">传统obj key值的痛点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A9%E7%94%A8-Symbol-%E6%B7%BB%E5%8A%A0%E7%A7%81%E7%94%9F%E5%AD%90-%E8%A7%A3%E5%86%B3%E7%97%9B%E7%82%B9"><span class="toc-text">利用 Symbol 添加私生子, 解决痛点</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A7%81%E7%94%9F%E5%AD%90%E8%BA%AB%E4%BB%BD%E7%A5%9E%E7%A7%98%EF%BC%8C%E6%99%AE%E9%80%9Anew%EF%BC%8C-%E7%AD%89%E6%96%B9%E6%B3%95%E5%AF%B9%E5%85%B6%E6%97%A0%E6%95%88%EF%BC%8C%E5%8F%AA%E6%9C%89%E4%BA%BF%E4%B8%87%E5%AF%8C%E7%BF%81%E8%87%AA%E5%B7%B1%E7%9F%A5%E9%81%93"><span class="toc-text">私生子身份神秘，普通new，. 等方法对其无效，只有亿万富翁自己知道</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A7%81%E7%94%9F%E5%AD%90%E7%9A%84%E8%BA%AB%E4%BB%BD%E7%A1%AE%E8%AE%A4%E5%A6%82%E4%BD%95%E5%BE%97%E5%88%B0%E4%BF%9D%E9%9A%9C%EF%BC%9F"><span class="toc-text">私生子的身份确认如何得到保障？</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Object-getOwnPropertySymbols"><span class="toc-text">Object.getOwnPropertySymbols()</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E4%B8%AA%E7%A7%81%E7%94%9F%E5%AD%90"><span class="toc-text">多个私生子</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Symbol-key%E5%80%BC%E5%90%8C%E5%90%8D%E6%97%B6%EF%BC%8C%E5%85%B6-value-%E4%B9%9F%E8%83%BD%E8%A2%AB%E8%A6%86%E7%9B%96%E6%8E%89"><span class="toc-text">Symbol key值同名时，其 value 也能被覆盖掉</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9F%A5%E8%AF%A2%E6%89%80%E6%9C%89%E5%84%BF%E5%A5%B3%EF%BC%8C%E5%8C%85%E6%8B%AC%E7%A7%81%E7%94%9F%E5%AD%90%E7%9A%84Key%E5%80%BC%EF%BC%9AReflect-ownKeys"><span class="toc-text">查询所有儿女，包括私生子的Key值：Reflect.ownKeys()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Symbol-for-%E5%92%8C-Symbol-%E7%94%9F%E6%88%90%E7%9A%84Key%E5%80%BC%E6%9C%89%E4%BD%95%E4%B8%8D%E5%90%8C"><span class="toc-text">Symbol.for() 和 Symbol() 生成的Key值有何不同</span></a></li></ol></div></div></div>
+
+    
+  
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+
+  <div class='bread-nav fs12'>
+  
+    
+    <div id='breadcrumb'>
+      <a class='cap breadcrumb' href='/'>主页</a>
+      <span class="sep"></span>
+      <a class='cap breadcrumb' href='/'>文章</a>
+      
+    </div>
+    <div id='post-meta'>
+      发布于&nbsp;<time datetime='2021-05-11T01:27:58.000Z'>2021-05-11</time>
+    </div>
+  
+  </div>
+
+
+<article class='content md post'>
+<h1 class="article-title"><span>Symbol的理解——ES知识点补漏系列（1）</span></h1>
+<p>对于 <code>Symbol</code> 的理解，一直比较陌生，只知道他是 <code>ES6</code> 的语法规范，具体概念，可参考阮一峰老师的 <a target="_blank" rel="noopener" href="https://es6.ruanyifeng.com/#docs/symbol"><code>Symbol</code> 文章</a>。这里我就自己的理解写，不讲概念，写一个容易理解的demo，介绍 <code>Symbol</code> 的作用。</p>
+<span id="more"></span>
+
+<h2 id="传统obj-key值的痛点"><a href="#传统obj-key值的痛点" class="headerlink" title="传统obj key值的痛点"></a>传统obj key值的痛点</h2><p>一个亿万富豪，有几个儿子和女儿，还有一私生子，如果此时，我们直接这样定义这个亿万富豪：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> billionaire = &#123;</span><br><span class="line">  son: [<span class="string">&#x27;son1&#x27;</span>, <span class="string">&#x27;son2&#x27;</span>, <span class="string">&#x27;son3&#x27;</span>,],</span><br><span class="line">  daughter: [<span class="string">&#x27;daughter1&#x27;</span>, <span class="string">&#x27;daughter2&#x27;</span>],</span><br><span class="line">  son: <span class="string">&#x27;bastard&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在控制台我们会发现，私生子bastard 会直接覆盖掉前面的son，这显然是不合适的<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.30/articles/Symbol%E7%9A%84%E7%90%86%E8%A7%A3%E2%80%94%E2%80%94ES%E7%9F%A5%E8%AF%86%E7%82%B9%E8%A1%A5%E6%BC%8F%E7%B3%BB%E5%88%97%EF%BC%881%EF%BC%89/01.png" alt="直接覆盖掉前面的属性"></p>
+<p>于是 <code>Symbol</code> 作为ES里原始的数据类型的作用就出现了</p>
+<h2 id="利用-Symbol-添加私生子-解决痛点"><a href="#利用-Symbol-添加私生子-解决痛点" class="headerlink" title="利用 Symbol 添加私生子, 解决痛点"></a>利用 <code>Symbol</code> 添加私生子, 解决痛点</h2><p>正确的做法应该如下，先定义了儿子和女儿们：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">let</span> billionaire = &#123;</span><br><span class="line">  son: [<span class="string">&#x27;son1&#x27;</span>, <span class="string">&#x27;son2&#x27;</span>, <span class="string">&#x27;son3&#x27;</span>,],</span><br><span class="line">  daughter: [<span class="string">&#x27;daughter1&#x27;</span>, <span class="string">&#x27;daughter2&#x27;</span>]</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>把私生子 <code>son: &#39;bastard&#39;</code> 单独抽出来，用 <code>Symbol</code> 定义，以下有3种定义方法：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> son = <span class="built_in">Symbol</span>(<span class="string">&#x27;son&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 1.</span></span><br><span class="line">billionaire[son] = <span class="string">&#x27;bastard&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 2.</span></span><br><span class="line"><span class="keyword">let</span> billionaire = &#123;</span><br><span class="line">  son: [<span class="string">&#x27;son1&#x27;</span>, <span class="string">&#x27;son2&#x27;</span>, <span class="string">&#x27;son3&#x27;</span>,],</span><br><span class="line">  daughter: [<span class="string">&#x27;daughter1&#x27;</span>, <span class="string">&#x27;daughter2&#x27;</span>],</span><br><span class="line">  [son] : <span class="string">&#x27;bastard&#x27;</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. </span></span><br><span class="line"><span class="built_in">Object</span>.defineProperty(billionaire, son, &#123; <span class="attr">value</span>: <span class="string">&#x27;bastard&#x27;</span> &#125;)</span><br></pre></td></tr></table></figure>
+
+
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.30/articles/Symbol%E7%9A%84%E7%90%86%E8%A7%A3%E2%80%94%E2%80%94ES%E7%9F%A5%E8%AF%86%E7%82%B9%E8%A1%A5%E6%BC%8F%E7%B3%BB%E5%88%97%EF%BC%881%EF%BC%89/02.png" alt="用Symbol生成私生子"></p>
+<p>至此，<code>Symbol</code> 的作用很明确了，</p>
+<blockquote>
+<p><strong>由于 JS 的 obj key值为字符串，为了避免 JS 的 obj 中属性名字的冲突而产生</strong></p>
+</blockquote>
+<h2 id="私生子身份神秘，普通new，-等方法对其无效，只有亿万富翁自己知道"><a href="#私生子身份神秘，普通new，-等方法对其无效，只有亿万富翁自己知道" class="headerlink" title="私生子身份神秘，普通new，. 等方法对其无效，只有亿万富翁自己知道"></a>私生子身份神秘，普通new，. 等方法对其无效，只有亿万富翁自己知道</h2><p>由于 <code>Symbol</code> 是原始类型，没有构造函数，不能使用 <code>new</code> 关键字</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.30/articles/Symbol%E7%9A%84%E7%90%86%E8%A7%A3%E2%80%94%E2%80%94ES%E7%9F%A5%E8%AF%86%E7%82%B9%E8%A1%A5%E6%BC%8F%E7%B3%BB%E5%88%97%EF%BC%881%EF%BC%89/04.png" alt="Symbol不能用 new 关键字"></p>
+<p>也不能用 . 运算将其点出来：<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.30/articles/Symbol%E7%9A%84%E7%90%86%E8%A7%A3%E2%80%94%E2%80%94ES%E7%9F%A5%E8%AF%86%E7%82%B9%E8%A1%A5%E6%BC%8F%E7%B3%BB%E5%88%97%EF%BC%881%EF%BC%89/05.png" alt="Symbol用键名选择器才能将其选出来"></p>
+<h2 id="私生子的身份确认如何得到保障？"><a href="#私生子的身份确认如何得到保障？" class="headerlink" title="私生子的身份确认如何得到保障？"></a>私生子的身份确认如何得到保障？</h2><p>作为亿万富豪的私生子，只有亿万富豪自己一个人知道其身份，所以，我们用普通方法是找不到这个私生子的：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.30/articles/Symbol%E7%9A%84%E7%90%86%E8%A7%A3%E2%80%94%E2%80%94ES%E7%9F%A5%E8%AF%86%E7%82%B9%E8%A1%A5%E6%BC%8F%E7%B3%BB%E5%88%97%EF%BC%881%EF%BC%89/03.png" alt="普通方法找不到私生子"></p>
+<p>而私生子有独特的方法能得到确认，<code>Symbol</code> 为我们提供了几种方法   </p>
+<h3 id="Object-getOwnPropertySymbols"><a href="#Object-getOwnPropertySymbols" class="headerlink" title="Object.getOwnPropertySymbols()"></a><code>Object.getOwnPropertySymbols()</code></h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> querySon = <span class="built_in">Object</span>.getOwnPropertySymbols(billionaire)</span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(querySon)</span><br><span class="line"><span class="comment">// [Symbol(son)]</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="多个私生子"><a href="#多个私生子" class="headerlink" title="多个私生子"></a>多个私生子</h2><p>亿万富豪也可能有不止一个私生子，比如和 ‘知己小秘’ 生了一个私生子，和 ‘灵魂伴侣’ 又生了一个私生子，此时我们可以用 <code>Symbol.for()</code> 定义:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> bastard1 = <span class="built_in">Symbol</span>.for(<span class="string">&#x27;知己小秘&#x27;</span>)</span><br><span class="line">billionaire[bastard1] = <span class="string">&#x27;知己小秘儿子1&#x27;</span></span><br><span class="line"><span class="keyword">const</span> bastard2 = <span class="built_in">Symbol</span>.for(<span class="string">&#x27;灵魂伴侣&#x27;</span>)</span><br><span class="line">billionaire[bastard2] = <span class="string">&#x27;灵魂伴侣儿子1&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(billionaire)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  son: [ <span class="string">&#x27;son1&#x27;</span>, <span class="string">&#x27;son2&#x27;</span>, <span class="string">&#x27;son3&#x27;</span> ],</span><br><span class="line">  daughter: [ <span class="string">&#x27;daughter1&#x27;</span>, <span class="string">&#x27;daughter2&#x27;</span> ],</span><br><span class="line">  [Symbol(知己小秘)]: <span class="string">&#x27;知己小秘儿子1&#x27;</span>,</span><br><span class="line">  [Symbol(灵魂伴侣)]: <span class="string">&#x27;灵魂伴侣儿子1&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Symbol-key值同名时，其-value-也能被覆盖掉"><a href="#Symbol-key值同名时，其-value-也能被覆盖掉" class="headerlink" title="Symbol key值同名时，其 value 也能被覆盖掉"></a><code>Symbol</code> key值同名时，其 value 也能被覆盖掉</h2><p>如果 ‘灵魂伴侣’ 又生多了一个私生子 ‘灵魂伴侣儿子2’ ，会出现什么情况？</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> bastard3 = <span class="built_in">Symbol</span>.for(<span class="string">&#x27;灵魂伴侣&#x27;</span>)</span><br><span class="line">billionaire[bastard3] = <span class="string">&#x27;灵魂伴侣儿子2&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(billionaire)</span><br></pre></td></tr></table></figure>
+
+<p>直接打印出来，会发现 value 值 ‘灵魂伴侣儿子2’ 覆盖掉了 ‘灵魂伴侣儿子1’</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  son: [ <span class="string">&#x27;son1&#x27;</span>, <span class="string">&#x27;son2&#x27;</span>, <span class="string">&#x27;son3&#x27;</span> ],</span><br><span class="line">  daughter: [ <span class="string">&#x27;daughter1&#x27;</span>, <span class="string">&#x27;daughter2&#x27;</span> ],</span><br><span class="line">  [Symbol(知己小秘)]: <span class="string">&#x27;知己小秘儿子1&#x27;</span>,</span><br><span class="line">  [Symbol(灵魂伴侣)]: <span class="string">&#x27;灵魂伴侣儿子2&#x27;</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>bastard2</code> 和 <code>bastard3</code> 都是Symbol值，它们都是由同样参数的 <code>Symbol.for</code> 方法生成的key，所以实际上是仍是同一个值:   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(bastard2 === bastard3)</span><br><span class="line"><span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="查询所有儿女，包括私生子的Key值：Reflect-ownKeys"><a href="#查询所有儿女，包括私生子的Key值：Reflect-ownKeys" class="headerlink" title="查询所有儿女，包括私生子的Key值：Reflect.ownKeys()"></a>查询所有儿女，包括私生子的Key值：<code>Reflect.ownKeys()</code></h2><p>会以一个数组返回所有 Key 值，包括 <code>Symbol Key</code> </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Reflect</span>.ownKeys(billionaire))</span><br><span class="line"><span class="comment">// [ &#x27;son&#x27;, &#x27;daughter&#x27;, Symbol(知己小秘), Symbol(灵魂伴侣) ]</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="Symbol-for-和-Symbol-生成的Key值有何不同"><a href="#Symbol-for-和-Symbol-生成的Key值有何不同" class="headerlink" title="Symbol.for() 和 Symbol() 生成的Key值有何不同"></a><code>Symbol.for()</code> 和 <code>Symbol()</code> 生成的Key值有何不同</h2><p><code>Symbol.for()</code> 会被登记在全局环境中供搜索，而 <code>Symbol()</code> 就不会，我们改动私生子为 <code>Symbol()</code> 生成，如：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> bastard1 = <span class="built_in">Symbol</span>.for(<span class="string">&#x27;知己小秘&#x27;</span>)</span><br><span class="line">billionaire[bastard1] = <span class="string">&#x27;知己小秘儿子1&#x27;</span></span><br><span class="line"><span class="keyword">const</span> bastard2 = <span class="built_in">Symbol</span>(<span class="string">&#x27;灵魂伴侣&#x27;</span>)</span><br><span class="line">billionaire[bastard2] = <span class="string">&#x27;灵魂伴侣儿子1&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(bastard1, <span class="built_in">Symbol</span>.keyFor(bastard1))</span><br><span class="line"><span class="built_in">console</span>.log(bastard2, <span class="built_in">Symbol</span>.keyFor(bastard2))</span><br><span class="line"></span><br><span class="line"><span class="comment">// Symbol(知己小秘) 知己小秘</span></span><br><span class="line"><span class="comment">// Symbol(灵魂伴侣) undefined</span></span><br></pre></td></tr></table></figure>
+
+<p>换句话说，<code>Symbol.for()</code> 每次生成前，会检查全局环境中是否存在该Key；<code>Symbol()</code> 则不会，每次调用会每次都生成</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Symbol</span>.for(<span class="string">&#x27;a&#x27;</span>) === <span class="built_in">Symbol</span>.for(<span class="string">&#x27;a&#x27;</span>))</span><br><span class="line"><span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="built_in">Symbol</span>(<span class="string">&#x27;a&#x27;</span>) === <span class="built_in">Symbol</span>(<span class="string">&#x27;a&#x27;</span>))</span><br><span class="line"><span class="comment">// false</span></span><br></pre></td></tr></table></figure>
+
+
+<div class="article-footer fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div></section></div>
+
+</article>
+
+<div class="related-wrap" id="read-next"><section class="header cap theme"><span>接下来阅读</span></section><section class="body"><div class="post-title h2"><a href="/2021/05/08/%E3%80%902021-05-04%E3%80%91%E8%84%B1%E7%A6%BB%E8%84%9A%E6%89%8B%E6%9E%B6webpack%E9%85%8D%E5%88%B6React-typescript%E9%A1%B9%E7%9B%AE%EF%BC%88%E4%BA%8C%EF%BC%89/">脱离脚手架webpack配制React+typescript项目（二）</a></div><div class="post-title fs14"><a href="/2021/05/12/%E3%80%902021-05-12%E3%80%91%E6%A0%87%E7%AD%BE%E6%A8%A1%E6%9D%BF%EF%BC%88Tagged-Template-%E2%80%94%E2%80%94ES%E7%9F%A5%E8%AF%86%E7%82%B9%E8%A1%A5%E6%BC%8F%E7%B3%BB%E5%88%97%EF%BC%882%EF%BC%89/">上一篇：标签模板（Tagged Template)——ES知识点补漏系列（2）</a></div></section></div>
+
+
+
+
+
+
+  <div class='related-wrap md' id="comments">
+    <div class='cmt-title cap theme'>
+      快来参与讨论吧
+    </div>
+    <div class='cmt-body utterances'>
+      
+
+<svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg>
+
+<div id="utterances" repo="xaoxuu/blog-comments" issue-term="pathname" theme="github-light"></div>
+
+    </div>
+  </div>
+
+
+
+      
+<footer class="page-footer fs12"><hr><div><p>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+<p>本站由 <a href="https://zyzy.info/">@自由の翼</a> 创建，使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.1.0">Stellar</a> 作为主题。</p>
+</div></footer>
+
+      <div class='float-panel mobile-only' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" viewBox="0 0 1228 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2849"><path d="M0 0m97.390199 0l973.901995 0q97.390199 0 97.390199 97.390199l0 0q0 97.390199-97.390199 97.3902l-973.901995 0q-97.390199 0-97.390199-97.3902l0 0q0-97.390199 97.390199-97.390199Z" p-id="2850"></path><path d="M0 389.560798m97.390199 0l973.901995 0q97.390199 0 97.390199 97.390199l0 0q0 97.390199-97.390199 97.3902l-973.901995 0q-97.390199 0-97.390199-97.3902l0 0q0-97.390199 97.390199-97.390199Z" p-id="2851"></path><path d="M0 779.121596m97.390199 0l973.901995 0q97.390199 0 97.390199 97.390199l0 0q0 97.390199-97.390199 97.390199l-973.901995 0q-97.390199 0-97.390199-97.390199l0 0q0-97.390199 97.390199-97.390199Z" p-id="2852"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script')
+      script.src = src
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.1.0';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js',
+    sitesjs: '/js/plugins/sites.js',
+    friendsjs: '/js/plugins/friends.js',
+  };
+
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.3.1/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper/swiper-bundle.min.css","js":"https://unpkg.com/swiper/swiper-bundle.min.js"});
+  }
+  if ('' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://cdn.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function utterances(){
+    if(!document.getElementById("utterances"))return;
+    setTimeout(function() {
+      var checkUtterances = setInterval(function () {
+        var el = document.getElementById("utterances");
+        if (!el) return
+        clearInterval(checkUtterances)
+        try {
+          el.innerHTML="";
+        } catch (error) {}
+        var script = document.createElement('script');
+        script.src = 'https://utteranc.es/client.js';
+        const keys = ['repo', 'issue-term', 'issue-number', 'theme', 'label', 'crossorigin'];
+        keys.forEach((key, i) => {
+          if (el.attributes[key] && el.attributes[key].value) {
+            script.setAttribute(key, el.attributes[key].value);
+          }
+        });
+        el.appendChild(script);
+       }, 200)
+    });
+  }
+  utterances();
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>

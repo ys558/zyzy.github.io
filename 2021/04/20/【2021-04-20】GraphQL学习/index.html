@@ -1,0 +1,438 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 5.4.0">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>GraphQL学习 - 自由の翼小栈</title>
+
+  
+    <meta name="description" content="去年自学了GraphQL，这里重新整理一下笔记。国内使用GraphQL的项目毕竟还不多，这里写个demo，做个小小的探索。    GraphQL是facebook发明的一套API查询语言，支持多种语言，这里用js演示，官网有详细的说明比起传统的后端API整合">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GraphQL学习">
+<meta property="og:url" content="https://zyzy.info/2021/04/20/%E3%80%902021-04-20%E3%80%91GraphQL%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="自由の翼小栈">
+<meta property="og:description" content="去年自学了GraphQL，这里重新整理一下笔记。国内使用GraphQL的项目毕竟还不多，这里写个demo，做个小小的探索。    GraphQL是facebook发明的一套API查询语言，支持多种语言，这里用js演示，官网有详细的说明比起传统的后端API整合">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/0.0.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/0.1.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/1.2.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/2.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/3.3.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/4.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/4.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/4.2.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/5.1.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/5.2.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/5.png">
+<meta property="article:published_time" content="2021-04-20T02:15:27.000Z">
+<meta property="article:modified_time" content="2021-10-14T03:42:59.909Z">
+<meta property="article:author" content="自由の翼">
+<meta property="article:tag" content="GraphQL">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/0.0.png">
+  
+  
+
+  <!-- feed -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+</head>
+
+<body>
+  
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left'>
+    
+
+<header class='header'>
+  <div class='logo-wrap'>
+  
+    <a class='avatar' href='/about/'>
+      
+        <img no-lazy class='bg' src='https://cdn.jsdelivr.net/gh/cdn-x/placeholder@1.0.2/avatar/round/rainbow64@3x.webp'/>
+      
+      <img no-lazy class='avatar' src='https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.12/avatar/宇航员.svg'/>
+    </a>
+  
+  
+    <a class='title' href='/'>
+      自由の翼小栈
+    </a>
+  
+</div>
+
+  <nav class="menu dis-select"></nav>
+</header>
+
+<div class='widgets'>
+  
+    
+      
+      
+<div class="widget-wrap" id="toc"><div class="widget-header h4 dis-select"><span class="name">本文目录</span></div><div class="widget-body fs14 post"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81HelloWorld"><span class="toc-text">一、HelloWorld</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C"><span class="toc-text">二、基础操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E9%80%9A%E8%BF%87%E4%B9%A6%E7%B1%8D%E6%9F%A5%E8%AF%A2%E5%AF%B9%E5%BA%94%E4%BD%9C%E8%80%85%EF%BC%88%E4%B8%80%E5%AF%B9%E4%B8%80%E5%85%B3%E7%B3%BB%E6%9F%A5%E8%AF%A2%EF%BC%89%E5%8F%8A%E4%BD%9C%E8%80%85%E6%9F%A5%E8%AF%A2%E5%AF%B9%E5%BA%94%E7%9A%84%E4%B9%A6%E7%B1%8D%E4%BF%A1%E6%81%AF%EF%BC%88%E4%B8%80%E5%AF%B9%E5%A4%9A%E6%9F%A5%E8%AF%A2%EF%BC%89"><span class="toc-text">三、通过书籍查询对应作者（一对一关系查询）及作者查询对应的书籍信息（一对多查询）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E9%80%9A%E8%BF%87%E4%B9%A6%E7%B1%8Did%E6%9F%A5%E8%AF%A2%E4%B9%A6%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="toc-text">四、通过书籍id查询书本信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E4%BF%AE%E6%94%B9%E6%95%B0%E6%8D%AE%EF%BC%88MutationType%EF%BC%89"><span class="toc-text">五、修改数据（MutationType）</span></a></li></ol></div></div></div>
+
+    
+  
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+
+  <div class='bread-nav fs12'>
+  
+    
+    <div id='breadcrumb'>
+      <a class='cap breadcrumb' href='/'>主页</a>
+      <span class="sep"></span>
+      <a class='cap breadcrumb' href='/'>文章</a>
+      
+    </div>
+    <div id='post-meta'>
+      发布于&nbsp;<time datetime='2021-04-20T02:15:27.000Z'>2021-04-20</time>
+    </div>
+  
+  </div>
+
+
+<article class='content md post'>
+<h1 class="article-title"><span>GraphQL学习</span></h1>
+<p>去年自学了GraphQL，这里重新整理一下笔记。国内使用GraphQL的项目毕竟还不多，这里写个demo，做个小小的探索。   </p>
+<p>GraphQL是facebook发明的一套API查询语言，支持多种语言，这里用js演示，<a target="_blank" rel="noopener" href="https://graphql.org/">官网</a>有详细的说明<br>比起传统的后端API整合</p>
+<span id="more"></span>
+
+<blockquote>
+<p>GraphQL为你的API数据提供了一种完整且易于理解的描述。（GraphQL provides a complete and understandable description of the data in your API）</p>
+</blockquote>
+<p>以上是官网对GraphQL的解释，利用GraphQL可以按需取字段给前端利用，不必取到不需要的字段，见下图解释：<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/0.0.png" alt="传统RestAPI效率低"></p>
+<p>GraphQL则可以精确查找想要的字段，效率显著提高：<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/0.1.png" alt="GraphQL效率高"></p>
+<p>下面，结合自己写的demo：<a target="_blank" rel="noopener" href="https://github.com/ys558/tech-blog-code/tree/master/2020/04-graphql-learn">https://github.com/ys558/tech-blog-code/tree/master/2020/04-graphql-learn</a> 完成以下完成本篇博客：</p>
+<h2 id="一、HelloWorld"><a href="#一、HelloWorld" class="headerlink" title="一、HelloWorld"></a>一、HelloWorld</h2><ol>
+<li>将项目拉下来后，cd到对应目录下，用<code>npm install</code>或<code>yarn</code>安装依赖，运行<code>npm run hello</code> 或 <code>yarn hello</code>，先从 <a target="_blank" rel="noopener" href="https://github.com/ys558/tech-blog-code/blob/master/2020/04-graphql-learn/01helloworld.js">01helloworld.js</a> 文件跑起，浏览器运行<code>http://localhost:5000/</code><br>左边输入框输入<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">query &#123;</span><br><span class="line">  message</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+</ol>
+<p><strong>注意，这种是GraphQL特有的查询语法</strong></p>
+<p>点击运行，( 或快捷键 ctrl+enter ) 后，右边会显示：<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/1.2.png" alt="hello world"></p>
+<ol start="2">
+<li><a target="_blank" rel="noopener" href="https://github.com/ys558/tech-blog-code/blob/master/2020/04-graphql-learn/01helloworld.js">01helloworld.js</a>解析：  </li>
+</ol>
+<ul>
+<li><code>graphqlHTTP</code> 为 <code>express-graphql</code> 库解构的实例<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> &#123; graphqlHTTP &#125; = <span class="built_in">require</span>(<span class="string">&#x27;express-graphql&#x27;</span>)</span><br></pre></td></tr></table></figure></li>
+<li>GraphQL自带图形化界面且友好，，只需在实例 <code>graphqlHTTP</code> 中设置<code>graphiql: true</code>即可：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">app.use(<span class="string">&#x27;/&#x27;</span>, graphqlHTTP(&#123; schema, <span class="attr">graphiql</span>: <span class="literal">true</span> &#125;))</span><br></pre></td></tr></table></figure></li>
+<li>在query实例中，<code>fields</code> 字段用于设置查询条件，是回调函数，</li>
+<li><code>fields</code> 函数返回的东西用 <code>resolve</code> 函数接收其返回结果，接收结果也为回调函数</li>
+<li>在接收结果中，可以规定其返回类型 <code>type</code>，其值为 <a target="_blank" rel="noopener" href="https://graphql.org/graphql-js/type/#scalars">Scalar Type</a> (标量类型)<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> schema = <span class="keyword">new</span> GraphQLSchema(&#123;</span><br><span class="line">  query: <span class="keyword">new</span> GraphQLObjectType(&#123;</span><br><span class="line">    name: <span class="string">&#x27;helloWorld&#x27;</span>,</span><br><span class="line">    fields: <span class="function">() =&gt;</span> (&#123;</span><br><span class="line">      message: &#123;</span><br><span class="line">        type: GraphQLString,</span><br><span class="line">        resolve: <span class="function">() =&gt;</span> <span class="string">&#x27;Hello World&#x27;</span></span><br><span class="line">      &#125;</span><br><span class="line">    &#125;)</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="二、基础操作"><a href="#二、基础操作" class="headerlink" title="二、基础操作"></a>二、基础操作</h2><ol>
+<li><p>运行<code>npm run ds2</code> 或 <code>yarn ds2</code>，浏览器跑 <code>http://localhost:5000/books</code>，</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  books &#123;</span><br><span class="line">    id</span><br><span class="line">    name</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>输入以上条件，<strong>通过 books 字段查询其对应的 id, name</strong> 后运行，可以查询出以下结果：<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/2.png" alt="hello world"></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/ys558/tech-blog-code/blob/master/2020/04-graphql-learn/02base.js">02base.js</a> 解析：</p>
+</li>
+</ol>
+<ul>
+<li>books查询出来的为一数组，其<a target="_blank" rel="noopener" href="https://graphql.org/graphql-js/type/#scalars">标量</a> 定义为 <code>GraphQLList</code><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> RootQueryType = <span class="keyword">new</span> GraphQLObjectType(&#123;</span><br><span class="line">  name: <span class="string">&#x27;Query&#x27;</span>,</span><br><span class="line">  description: <span class="string">&#x27;Root Query&#x27;</span>,</span><br><span class="line">  fields: <span class="function">() =&gt;</span> (&#123;</span><br><span class="line">    <span class="comment">/* 第一个 books 是命名，也可叫 aaa，如果改 aaa 则</span></span><br><span class="line"><span class="comment">    在 query 条件改为：</span></span><br><span class="line"><span class="comment">    aaa &#123;</span></span><br><span class="line"><span class="comment">     books &#123;</span></span><br><span class="line"><span class="comment">       id</span></span><br><span class="line"><span class="comment">       name</span></span><br><span class="line"><span class="comment">      &#125;</span></span><br><span class="line"><span class="comment">    &#125; </span></span><br><span class="line"><span class="comment">    */</span></span><br><span class="line">    books: &#123;</span><br><span class="line">      <span class="comment">// BookType as params pass to RootQueryType</span></span><br><span class="line">      type: <span class="keyword">new</span> GraphQLList(BookType),</span><br><span class="line">      description: <span class="string">&#x27;List of all books&#x27;</span>,</span><br><span class="line">      <span class="comment">// 这里的 books 对应实际的 books 数组，</span></span><br><span class="line">      <span class="comment">// 要查询数组 books里的东西：</span></span><br><span class="line">      resolve: <span class="function">() =&gt;</span> books</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+<li><code>BookType</code> 独立为标量<code>GraphQLObjectType</code>的实例化，由于其为最后一层数据，无需向下深挖，所以<code>resolve</code> 方法不需要</li>
+<li><code>GraphQLNonNull</code> 表示该字段为必须字段<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> BookType = <span class="keyword">new</span> GraphQLObjectType(&#123;</span><br><span class="line">  name: <span class="string">&#x27;Book&#x27;</span>,</span><br><span class="line">  description: <span class="string">&#x27;this is represents a book written by an author&#x27;</span>,</span><br><span class="line">  fields: <span class="function">() =&gt;</span> (&#123;</span><br><span class="line">    id: &#123; <span class="attr">type</span>: GraphQLNonNull(GraphQLInt) &#125;,</span><br><span class="line">    name: &#123; <span class="attr">type</span>: GraphQLNonNull(GraphQLString) &#125;,</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h2 id="三、通过书籍查询对应作者（一对一关系查询）及作者查询对应的书籍信息（一对多查询）"><a href="#三、通过书籍查询对应作者（一对一关系查询）及作者查询对应的书籍信息（一对多查询）" class="headerlink" title="三、通过书籍查询对应作者（一对一关系查询）及作者查询对应的书籍信息（一对多查询）"></a>三、通过书籍查询对应作者（一对一关系查询）及作者查询对应的书籍信息（一对多查询）</h2><ol>
+<li><p>跑 <a target="_blank" rel="noopener" href="https://github.com/ys558/tech-blog-code/blob/master/2020/04-graphql-learn/03listQuery.js"><code>03listQuery.js</code></a> 文件，输入</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  authors &#123;</span><br><span class="line">    books &#123;</span><br><span class="line">      id</span><br><span class="line">      name</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 可以得到结果：<br> <img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/3.3.png" alt="hello world"></p>
+</li>
+<li><p>解析<a target="_blank" rel="noopener" href="https://github.com/ys558/tech-blog-code/blob/master/2020/04-graphql-learn/03listQuery.js"><code>03listQuery.js</code></a> ：  </p>
+</li>
+</ol>
+<ul>
+<li><p>可以按照上面的方法继续丰富查询，建立一个模拟数据 <code>author</code> ，内容如下：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> authors = [</span><br><span class="line">  &#123; <span class="attr">id</span>: <span class="number">1</span>, <span class="attr">name</span>: <span class="string">&#x27;J. K. Rowling&#x27;</span>&#125;,</span><br><span class="line">  &#123; <span class="attr">id</span>: <span class="number">2</span>, <span class="attr">name</span>: <span class="string">&#x27;J. R. R. Tolkien&#x27;</span>&#125;,</span><br><span class="line">  &#123; <span class="attr">id</span>: <span class="number">3</span>, <span class="attr">name</span>: <span class="string">&#x27;Brent Weeks&#x27;</span>&#125;,</span><br><span class="line">]</span><br></pre></td></tr></table></figure></li>
+<li><p>同样的，建立两个实例查询对应信息：<code>resolve</code> 部分对应相应的数据</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  books: &#123;</span><br><span class="line">    type: <span class="keyword">new</span> GraphQLList(BookType),</span><br><span class="line">    description: <span class="string">&#x27;List of all books&#x27;</span>,</span><br><span class="line">    resolve: <span class="function">() =&gt;</span> books</span><br><span class="line">  &#125;,</span><br><span class="line">  authors: &#123;</span><br><span class="line">    type: <span class="keyword">new</span> GraphQLList(AuthorType),</span><br><span class="line">    description: <span class="string">&#x27;List of all Authors&#x27;</span>,</span><br><span class="line">    resolve: <span class="function">() =&gt;</span> authors</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>根据上面的字段名字<code>books</code> 和 <code>authors</code> 创建对应的查询实例：</p>
+<ul>
+<li><p>books实例里，<code>id</code>, <code>name</code>, <code>authorId</code> 均是 <code>books</code> 对象里的，可直接查出， <code>author</code>字段在 <code>author</code> 数组里</p>
+</li>
+<li><p><code>books</code> 数据有关联的是<code>authorId</code>，用js的数组方法<code>.find()</code>去找</p>
+</li>
+<li><p>books &lt;–&gt; authors 是一对一的关系，<code>AuthorType</code>本身就是<code>GraphQLObjectType</code> 标量，可直接使用</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> BookType = <span class="keyword">new</span> GraphQLObjectType(&#123;</span><br><span class="line">  name: <span class="string">&#x27;Book&#x27;</span>,</span><br><span class="line">  description: <span class="string">&#x27;this is represents a book written by an author&#x27;</span>,</span><br><span class="line">  fields: <span class="function">() =&gt;</span> (&#123;</span><br><span class="line">    id: &#123; <span class="attr">type</span>: GraphQLNonNull(GraphQLInt) &#125;,</span><br><span class="line">    name: &#123; <span class="attr">type</span>: GraphQLNonNull(GraphQLString) &#125;,</span><br><span class="line">    authorId: &#123; <span class="attr">type</span>: GraphQLNonNull(GraphQLInt)&#125;,</span><br><span class="line">    author: &#123;</span><br><span class="line">      type: AuthorType,</span><br><span class="line">      <span class="comment">// query book by authorId</span></span><br><span class="line">      resolve: <span class="function"><span class="params">book</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> authors.find( <span class="function"><span class="params">author</span> =&gt;</span> author.id === book.authorId )</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+<li><p>authors实例也是同样道理</p>
+</li>
+<li><p>authors &lt;–&gt; books 是一对多的关系，<code>BookType</code>实例要装入<code>GraphQLList</code>标量中</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> AuthorType = <span class="keyword">new</span> GraphQLObjectType(&#123;</span><br><span class="line">  name: <span class="string">&#x27;Author&#x27;</span>,</span><br><span class="line">  description: <span class="string">&#x27;this is represents a author of a book&#x27;</span>,</span><br><span class="line">  fields: <span class="function">() =&gt;</span> (&#123;</span><br><span class="line">    id: &#123; <span class="attr">type</span>: GraphQLNonNull(GraphQLInt) &#125;,</span><br><span class="line">    name: &#123; <span class="attr">type</span>: GraphQLNonNull(GraphQLString) &#125;,</span><br><span class="line">    <span class="comment">// query author by book&#x27;s id</span></span><br><span class="line">    books: &#123;</span><br><span class="line">      type: <span class="keyword">new</span> GraphQLList(BookType),</span><br><span class="line">      resolve: <span class="function"><span class="params">author</span> =&gt;</span> &#123;</span><br><span class="line">        <span class="keyword">return</span> books.filter(<span class="function"><span class="params">book</span> =&gt;</span> book.authorId === author.id)</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;)</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+</ul>
+</li>
+</ul>
+<h2 id="四、通过书籍id查询书本信息"><a href="#四、通过书籍id查询书本信息" class="headerlink" title="四、通过书籍id查询书本信息"></a>四、通过书籍id查询书本信息</h2><ol>
+<li>运行<a target="_blank" rel="noopener" href="https://github.com/ys558/tech-blog-code/blob/master/2020/04-graphql-learn/04singleQuery.js"><code>04singleQuery.js</code></a>，输入以下查询条件：</li>
+</ol>
+  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="function"><span class="title">book</span>(<span class="params">id: <span class="number">4</span></span>)</span> &#123;</span><br><span class="line">    name</span><br><span class="line">    author &#123;</span><br><span class="line">      name</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p>  执行结果如下：<br>  <img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/4.png" alt="单个查询">   </p>
+<p>  输入以下条件<br>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="function"><span class="title">book</span>(<span class="params">id: <span class="number">4</span></span>)</span> &#123;</span><br><span class="line">    name</span><br><span class="line">    author &#123;</span><br><span class="line">      name</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
+<p>  执行结果如下：<br>  <img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/4.png" alt="单个查询">   </p>
+<ol start="2">
+<li><a target="_blank" rel="noopener" href="https://github.com/ys558/tech-blog-code/blob/master/2020/04-graphql-learn/04singleQuery.js"><code>04singleQuery.js</code></a>解析：</li>
+</ol>
+<ul>
+<li>从以上的查询条件 <code>book(id: 4)</code> 可看出，通过传参id查询具体书籍信息，这里的id就体现在<code>args</code>参数上：</li>
+<li><code>args</code> 在 <code>resolve</code> 函数里处于第二个参数的位置<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">book: &#123;</span><br><span class="line">  type: BookType,</span><br><span class="line">  description: <span class="string">&#x27;A Single Book&#x27;</span>,</span><br><span class="line">  <span class="comment">// must query this book by params of book id:</span></span><br><span class="line">  args: &#123; <span class="attr">id</span>: &#123; <span class="attr">type</span>: GraphQLInt &#125; &#125;,</span><br><span class="line">  resolve: <span class="function">(<span class="params"> parent, args </span>) =&gt;</span> books.find( <span class="function"><span class="params">book</span> =&gt;</span> book.id === args.id )</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure></li>
+<li>同样的， <code>author</code>也可以按照传入<code>authorId</code>查询得到：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">author: &#123;</span><br><span class="line">  type: AuthorType,</span><br><span class="line">  description: <span class="string">&#x27;A Single Author&#x27;</span>,</span><br><span class="line">  <span class="comment">// query an author by params of author id:</span></span><br><span class="line">  args: &#123; <span class="attr">id</span>: &#123; <span class="attr">type</span>: GraphQLInt &#125; &#125;,</span><br><span class="line">  resolve: <span class="function">(<span class="params"> parent, args </span>) =&gt;</span> authors.find( <span class="function"><span class="params">author</span> =&gt;</span> author.id === args.id )</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
+用 <code>author(id)</code> 查询结果：<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/4.2.png" alt="单个查询"></li>
+</ul>
+<h2 id="五、修改数据（MutationType）"><a href="#五、修改数据（MutationType）" class="headerlink" title="五、修改数据（MutationType）"></a>五、修改数据（MutationType）</h2><ol>
+<li><p>运行<code>yarn ds5</code>，浏览器输入：</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mutation &#123;</span><br><span class="line">  <span class="function"><span class="title">addBook</span>(<span class="params">name: <span class="string">&quot;new book&quot;</span>, authorId: <span class="number">1</span></span>)</span> &#123;</span><br><span class="line">    id</span><br><span class="line">    name</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 可以看到增加单本书成功：<br> <img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/5.1.png" alt="单个查询"></p>
+<p> 输入：</p>
+ <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mutation &#123;</span><br><span class="line">  <span class="function"><span class="title">addAuthor</span>(<span class="params">name: <span class="string">&quot;new author&quot;</span></span>)</span> &#123;</span><br><span class="line">    name</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<p> 可以看到增加一个作者成功：<br> <img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/5.2.png" alt="单个查询"></p>
+<p> 点击右上角的 &lt; Docs，可以发现该文件的Mutation函数，其中<code>!</code>意为必要字段：<br> <img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/5.png" alt="单个查询"></p>
+</li>
+</ol>
+<ol start="2">
+<li><a target="_blank" rel="noopener" href="https://github.com/ys558/tech-blog-code/blob/master/2020/04-graphql-learn/05mutationType.js"><code>05mutationType.js</code></a>解析： </li>
+</ol>
+<ul>
+<li>想要实现 <code>Mutation Type</code> 须在<code>GraphQLSchema</code>实例里添加<code>mutation</code>类型：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> Schema = <span class="keyword">new</span> GraphQLSchema(&#123;</span><br><span class="line">  query: RootQueryType,</span><br><span class="line">  mutation: RootMutationType</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+<li>和普通的 <code>Query Type</code> 类似，只不过 <code>Mutation Type</code> 在 <code>resolve</code> 里直接对数据进行改动而已：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">fields: <span class="function">() =&gt;</span> (&#123;</span><br><span class="line">  addBook: &#123;</span><br><span class="line">    type: BookType,</span><br><span class="line">    description: <span class="string">&#x27;Add a book&#x27;</span>,</span><br><span class="line">    args: &#123;</span><br><span class="line">      name: &#123; <span class="attr">type</span>: GraphQLNonNull(GraphQLString) &#125;,</span><br><span class="line">      authorId: &#123; <span class="attr">type</span>: GraphQLNonNull(GraphQLInt) &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    resolve: <span class="function">(<span class="params"> parent, args </span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> book = &#123; <span class="attr">id</span>: books.length + <span class="number">1</span>, <span class="attr">name</span>: args.name, <span class="attr">authorId</span>: args.authorId &#125;</span><br><span class="line">      books.push(book)</span><br><span class="line">      <span class="keyword">return</span> book</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  addAuthor: &#123;</span><br><span class="line">    type: AuthorType,</span><br><span class="line">    description: <span class="string">&#x27;Add a author&#x27;</span>,</span><br><span class="line">    args: &#123;</span><br><span class="line">      name: &#123; <span class="attr">type</span>: GraphQLNonNull(GraphQLString) &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    resolve: <span class="function">(<span class="params"> parent, args </span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> author = &#123; <span class="attr">id</span>: authors.length + <span class="number">1</span>, <span class="attr">name</span>: args.name &#125;</span><br><span class="line">      authors.push(author)</span><br><span class="line">      <span class="keyword">return</span> author</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
+</ul>
+
+
+<div class="article-footer fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div></section></div>
+
+</article>
+
+<div class="related-wrap" id="read-next"><section class="header cap theme"><span>接下来阅读</span></section><section class="body"><div class="post-title h2"><a href="/2021/04/19/%E3%80%902021-04-19%E3%80%91GithubPage%E5%BB%BA%E7%AB%99%E5%BF%83%E5%BE%97%E5%8F%8A%E6%89%80%E8%B8%A9%E7%9A%84%E5%9D%91/">Github Page建站心得及所踩的坑</a></div><div class="post-title fs14"><a href="/2021/04/22/%E3%80%902021-04-22%E3%80%91%E5%8F%91%E7%8E%B0%E4%B8%80%E5%85%8D%E8%B4%B9CDN%EF%BC%8C%E6%88%91%E7%94%A8%E6%9D%A5%E5%AD%98%E8%AF%A5%E7%AB%99%E7%9A%84%E5%9B%BE/">上一篇：发现一免费CDN，我用来存该站的图</a></div></section></div>
+
+
+
+
+
+
+  <div class='related-wrap md' id="comments">
+    <div class='cmt-title cap theme'>
+      快来参与讨论吧
+    </div>
+    <div class='cmt-body utterances'>
+      
+
+<svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg>
+
+<div id="utterances" repo="xaoxuu/blog-comments" issue-term="pathname" theme="github-light"></div>
+
+    </div>
+  </div>
+
+
+
+      
+<footer class="page-footer fs12"><hr><div><p>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+<p>本站由 <a href="https://zyzy.info/">@自由の翼</a> 创建，使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.1.0">Stellar</a> 作为主题。</p>
+</div></footer>
+
+      <div class='float-panel mobile-only' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" viewBox="0 0 1228 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2849"><path d="M0 0m97.390199 0l973.901995 0q97.390199 0 97.390199 97.390199l0 0q0 97.390199-97.390199 97.3902l-973.901995 0q-97.390199 0-97.390199-97.3902l0 0q0-97.390199 97.390199-97.390199Z" p-id="2850"></path><path d="M0 389.560798m97.390199 0l973.901995 0q97.390199 0 97.390199 97.390199l0 0q0 97.390199-97.390199 97.3902l-973.901995 0q-97.390199 0-97.390199-97.3902l0 0q0-97.390199 97.390199-97.390199Z" p-id="2851"></path><path d="M0 779.121596m97.390199 0l973.901995 0q97.390199 0 97.390199 97.390199l0 0q0 97.390199-97.390199 97.390199l-973.901995 0q-97.390199 0-97.390199-97.390199l0 0q0-97.390199 97.390199-97.390199Z" p-id="2852"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script')
+      script.src = src
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.1.0';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js',
+    sitesjs: '/js/plugins/sites.js',
+    friendsjs: '/js/plugins/friends.js',
+  };
+
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.3.1/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper/swiper-bundle.min.css","js":"https://unpkg.com/swiper/swiper-bundle.min.js"});
+  }
+  if ('' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://cdn.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function utterances(){
+    if(!document.getElementById("utterances"))return;
+    setTimeout(function() {
+      var checkUtterances = setInterval(function () {
+        var el = document.getElementById("utterances");
+        if (!el) return
+        clearInterval(checkUtterances)
+        try {
+          el.innerHTML="";
+        } catch (error) {}
+        var script = document.createElement('script');
+        script.src = 'https://utteranc.es/client.js';
+        const keys = ['repo', 'issue-term', 'issue-number', 'theme', 'label', 'crossorigin'];
+        keys.forEach((key, i) => {
+          if (el.attributes[key] && el.attributes[key].value) {
+            script.setAttribute(key, el.attributes[key].value);
+          }
+        });
+        el.appendChild(script);
+       }, 200)
+    });
+  }
+  utterances();
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>

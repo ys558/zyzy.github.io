@@ -1,0 +1,449 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 5.4.0">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>Dart语法自学笔记（一） - 自由の翼小栈</title>
+
+  
+    <meta name="description" content="flutter框架从19年开始就火了，主要用于跨端解决方案，一套代码可以覆盖ios，Android和Web，据说法执行效率很高，因去掉了像React Native那样的转译层，直接作用于底层，那必须学起来。 flutter其framework层面调用的是Dart，一新的静态语言，和js炒鸡像，本文从着重讲解Dart的基础语法，包括基础数据解构，常用api及循环，不罗列所有基础语法点，只挑一些有特点">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Dart语法自学笔记（一）">
+<meta property="og:url" content="https://zyzy.info/2021/05/25/%E3%80%902021-05-25%E3%80%91Dart%E8%AF%AD%E6%B3%95%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
+<meta property="og:site_name" content="自由の翼小栈">
+<meta property="og:description" content="flutter框架从19年开始就火了，主要用于跨端解决方案，一套代码可以覆盖ios，Android和Web，据说法执行效率很高，因去掉了像React Native那样的转译层，直接作用于底层，那必须学起来。 flutter其framework层面调用的是Dart，一新的静态语言，和js炒鸡像，本文从着重讲解Dart的基础语法，包括基础数据解构，常用api及循环，不罗列所有基础语法点，只挑一些有特点">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-05-25T00:22:49.000Z">
+<meta property="article:modified_time" content="2021-10-14T03:42:59.912Z">
+<meta property="article:author" content="自由の翼">
+<meta property="article:tag" content="Dart">
+<meta property="article:tag" content="Flutter">
+<meta property="article:tag" content="跨端">
+<meta name="twitter:card" content="summary_large_image">
+  
+  
+
+  <!-- feed -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+</head>
+
+<body>
+  
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left'>
+    
+
+<header class='header'>
+  <div class='logo-wrap'>
+  
+    <a class='avatar' href='/about/'>
+      
+        <img no-lazy class='bg' src='https://cdn.jsdelivr.net/gh/cdn-x/placeholder@1.0.2/avatar/round/rainbow64@3x.webp'/>
+      
+      <img no-lazy class='avatar' src='https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.12/avatar/宇航员.svg'/>
+    </a>
+  
+  
+    <a class='title' href='/'>
+      自由の翼小栈
+    </a>
+  
+</div>
+
+  <nav class="menu dis-select"></nav>
+</header>
+
+<div class='widgets'>
+  
+    
+      
+      
+<div class="widget-wrap" id="toc"><div class="widget-header h4 dis-select"><span class="name">本文目录</span></div><div class="widget-body fs14 post"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85-Dart"><span class="toc-text">安装 Dart</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hello-world"><span class="toc-text">hello world</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%98%E9%87%8F-var-%E5%B8%B8%E9%87%8F-const-final"><span class="toc-text">变量 var 常量 const final </span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B"><span class="toc-text">数据类型</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#dart%E4%B8%8D%E5%83%8Fjs%EF%BC%8C%E4%B8%8D%E8%83%BD%E8%BF%9B%E8%A1%8C%E7%B1%BB%E5%9E%8B%E8%87%AA%E5%8A%A8%E8%BD%AC%E6%8D%A2%EF%BC%8C%E9%9C%80%E8%A6%81%E6%89%8B%E5%8A%A8%E8%BF%9B%E8%A1%8C%E8%BD%AC%E6%8D%A2"><span class="toc-text">dart不像js，不能进行类型自动转换，需要手动进行转换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#bool"><span class="toc-text">bool</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#int-double"><span class="toc-text">int double</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#String"><span class="toc-text">String</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#List"><span class="toc-text">List</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%AE%9A%E4%B9%89List"><span class="toc-text">定义List</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%9B%BA%E5%AE%9A%E9%95%BF%E5%BA%A6List%EF%BC%8CList-filled-length-%E5%A1%AB%E5%85%85%E7%9A%84%E5%85%83%E7%B4%A0-%EF%BC%8C%E4%B8%8D%E8%83%BD%E5%A2%9E%E5%8A%A0%E6%95%B0%E6%8D%AE%E4%BD%BF%E7%94%A8-add"><span class="toc-text">创建固定长度List，List.filled(length, 填充的元素)，不能增加数据使用 add()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8List%E6%96%B9%E6%B3%95"><span class="toc-text">常用List方法:</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#%E5%B0%86%E4%B8%80%E4%B8%AA%E7%8E%B0%E6%9C%89List%E5%8F%8D%E8%BD%AC-reversed-toList"><span class="toc-text">将一个现有List反转 .reversed.toList()</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#%E6%9B%BF%E6%8D%A2%E5%85%83%E7%B4%A0-fillRange-%E5%BC%80%E5%A7%8B-%E7%BB%93%E6%9D%9F-%E6%9B%BF%E6%8D%A2%E7%9A%84%E5%85%83%E7%B4%A0-%E6%8F%92%E5%85%A5-insert-%E6%8F%92%E5%85%A5%E4%BD%8D%E7%BD%AE%EF%BC%8C%E6%8F%92%E5%85%A5%E5%85%83%E7%B4%A0-insertAll-%E6%8F%92%E5%85%A5%E4%BD%8D%E7%BD%AE%EF%BC%8C%E6%8F%92%E5%85%A5%E5%A4%9A%E4%B8%AA%E5%85%83%E7%B4%A0"><span class="toc-text">替换元素 fillRange(开始, 结束, 替换的元素) 插入 insert(插入位置，插入元素) insertAll(插入位置，插入多个元素)</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#List-%E2%80%94%E2%80%94-gt-String%EF%BC%9A-join-%EF%BC%9BString-%E2%80%94%E2%80%94-gt-List%EF%BC%9A-split"><span class="toc-text">List ——&gt; String： .join()；String ——&gt; List：.split()</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Set"><span class="toc-text">Set</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Map"><span class="toc-text">Map</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#keys-toList-values-toList-%E8%AE%A9%E9%94%AE%E6%88%96%E5%80%BC%E5%8F%98%E6%88%90%E6%95%B0%E7%BB%84"><span class="toc-text">keys.toList() values.toList() 让键或值变成数组</span></a></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#is-%E5%85%B3%E9%94%AE%E5%AD%97%E5%88%A4%E6%96%AD%E7%B1%BB%E5%9E%8B"><span class="toc-text">is 关键字判断类型</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%AF%E8%BF%AD%E4%BB%A3%E6%95%B0%E6%8D%AE%E7%9A%84%E9%80%9A%E7%94%A8%E6%96%B9%E6%B3%95"><span class="toc-text">可迭代数据的通用方法</span></a><ol class="toc-child"><li class="toc-item toc-level-4"><a class="toc-link" href="#%E6%8B%BC%E6%8E%A5-addAll"><span class="toc-text">拼接 .addAll()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BD%AC%E6%8D%A2%E4%B8%BA%E6%95%B0%E7%BB%84-toList"><span class="toc-text">转换为数组 .toList()</span></a></li><li class="toc-item toc-level-4"><a class="toc-link" href="#%E8%BD%AC%E6%8D%A2%E4%B8%BA%E5%AD%97%E7%AC%A6%E4%B8%B2-toString"><span class="toc-text">转换为字符串 .toString()</span></a></li></ol></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%A4%E4%B8%AA%E7%89%B9%E6%AE%8A%E8%BF%90%E7%AE%97%E7%AC%A6"><span class="toc-text">两个特殊运算符</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%92%8C"><span class="toc-text">~&#x2F; 和 ~&#x2F;&#x3D;</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%98%AF%E5%90%A6%E4%B8%BA%E7%A9%BA%E8%B5%8B%E5%80%BC"><span class="toc-text">是否为空赋值 ??&#x3D;</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B1%BB%E5%9E%8B%E8%BD%AC%E6%8D%A2-String-%E2%80%94%E2%80%94-gt-Number-%EF%BC%9A-int-parse-%E5%92%8C-double-parse"><span class="toc-text">类型转换 String ——&gt; Number ： int.parse() 和 double.parse()</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#isEmpty-%E5%92%8C-isNotEmpty-%E5%88%A4%E6%96%AD%E5%AD%97%E7%AC%A6%E4%B8%B2%E6%98%AF%E5%90%A6%E4%B8%BA%E7%A9%BA%EF%BC%9BisNaN-%E5%88%A4%E6%96%AD%E6%95%B0%E5%80%BC%E6%98%AF%E5%90%A6%E5%90%88%E6%B3%95"><span class="toc-text">isEmpty 和 isNotEmpty 判断字符串是否为空；isNaN 判断数值是否合法</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%BE%AA%E7%8E%AF"><span class="toc-text">循环</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#for%EF%BC%8C-for-in"><span class="toc-text">for， for in</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#forEach"><span class="toc-text">forEach</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#List%EF%BC%8C-Set-%E7%9A%84%E9%80%9A%E7%94%A8%E6%96%B9%E6%B3%95-where%EF%BC%8Cany%EF%BC%8Cevery"><span class="toc-text">List， Set 的通用方法: where，any，every</span></a></li></ol></div></div></div>
+
+    
+  
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+
+  <div class='bread-nav fs12'>
+  
+    
+    <div id='breadcrumb'>
+      <a class='cap breadcrumb' href='/'>主页</a>
+      <span class="sep"></span>
+      <a class='cap breadcrumb' href='/'>文章</a>
+      
+    </div>
+    <div id='post-meta'>
+      发布于&nbsp;<time datetime='2021-05-25T00:22:49.000Z'>2021-05-25</time>
+    </div>
+  
+  </div>
+
+
+<article class='content md post'>
+<h1 class="article-title"><span>Dart语法自学笔记（一）</span></h1>
+<p>flutter框架从19年开始就火了，主要用于跨端解决方案，一套代码可以覆盖ios，Android和Web，据说法执行效率很高，因去掉了像React Native那样的转译层，直接作用于底层，那必须学起来。</p>
+<p>flutter其framework层面调用的是Dart，一新的静态语言，和js炒鸡像，本文从着重讲解Dart的基础语法，包括基础数据解构，常用api及循环，<br>不罗列所有基础语法点，只挑一些有特点演示。</p>
+<span id="more"></span>
+
+<p>本文的示例代码，放在这个 <a target="_blank" rel="noopener" href="https://github.com/ys558/dart-learn">仓库</a>，本文阐述了 01-06 的代码</p>
+<h2 id="安装-Dart"><a href="#安装-Dart" class="headerlink" title="安装 Dart"></a>安装 Dart</h2><p><a target="_blank" rel="noopener" href="https://dart.dev/get-dart">官网</a>上有命令行的安装方法，我用win平台，可以直接从<a target="_blank" rel="noopener" href="https://gekorm.com/dart-windows/">这里</a>下载一个SDK安装包，直接下一步下一步安装完成。</p>
+<p>安装完成后可以在命令行检验版本是否安装成功：</p>
+<blockquote>
+<p>C:\WINDOWS\System32&gt;dart –version<br>Dart SDK version: 2.13.0 (stable) (Wed May 12 12:45:49 2021 +0200) on “windows_x64”</p>
+</blockquote>
+<p>我用 <code>vs code</code> 开发，安装 插件 <code>Dart</code> ，<code>Code Runner</code></p>
+<h2 id="hello-world"><a href="#hello-world" class="headerlink" title="hello world"></a><a target="_blank" rel="noopener" href="https://github.com/ys558/dart-learn/blob/master/01-hello-world.dart">hello world</a></h2><p>先来个 <code>hello world</code>，发现和 <code>go</code> 语言语法有点像，</p>
+<ul>
+<li>同样是主入口函数 <code>main()&#123;&#125;</code> 主导着整个文件的执行</li>
+<li>一个语句完成须强行加 <code>;</code></li>
+</ul>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// void 可省略</span></span><br><span class="line"><span class="keyword">void</span> main()&#123;</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">&#x27;hello world&#x27;</span>);</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>运行</li>
+</ul>
+<p>命令行里直接跑 <code>dart &lt;DartDoc&gt;.dart</code>，就可以看到打印的 <code>hello world</code></p>
+<blockquote>
+<p>E:\study\code\2021\dart-learn&gt;dart 01-hello-world.dart<br>hello world</p>
+</blockquote>
+<h2 id="变量-var-常量-const-final"><a href="#变量-var-常量-const-final" class="headerlink" title="变量 var 常量 const final "></a><a target="_blank" rel="noopener" href="https://github.com/ys558/dart-learn/blob/master/02-var-const.dart">变量 <code>var</code> 常量 <code>const</code> <code>final</code> </a></h2><p>dart类似 <code>ts</code> 有类型检查功能，</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">String</span> str1 = <span class="string">&#x27;你好&#x27;</span>;</span><br><span class="line"><span class="built_in">print</span>(str1); <span class="comment">// 你好</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">int</span> num1 = <span class="number">123</span>;</span><br><span class="line"><span class="built_in">print</span>(num1); <span class="comment">// 123</span></span><br></pre></td></tr></table></figure>
+
+<p>但 dart 也可自动推断类型，也可以无须声明直接定义，类似 <code>js</code> ：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> str = <span class="string">&#x27;hehe&#x27;</span>;</span><br><span class="line"><span class="built_in">print</span>(str); <span class="comment">// hehe</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> e = <span class="number">2.14</span>;</span><br><span class="line"><span class="built_in">print</span>(e); <span class="comment">// 2.14</span></span><br></pre></td></tr></table></figure>
+
+<p>dart 有一个惰性常量 <code>final</code>，其和普通常量 <code>const</code> 的区别：</p>
+<ul>
+<li><code>final</code> 可以只定义，不赋值；<code>const</code> 则不可以</li>
+<li><code>final</code> 只有在运行时才会初始化</li>
+</ul>
+<p>例如定义日期，实时生成的，只能用 <code>final</code></p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">final</span> timeNow;</span><br><span class="line">timeNow = <span class="keyword">new</span> <span class="built_in">DateTime</span>.now();</span><br><span class="line"><span class="built_in">print</span>(timeNow);</span><br><span class="line"><span class="comment">// 2021-05-24 12:53:04.819814</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="数据类型"><a href="#数据类型" class="headerlink" title="数据类型"></a><a target="_blank" rel="noopener" href="https://github.com/ys558/dart-learn/blob/master/03-String-int-long-bool-List-Map-if.dart">数据类型</a></h2><h3 id="dart不像js，不能进行类型自动转换，需要手动进行转换"><a href="#dart不像js，不能进行类型自动转换，需要手动进行转换" class="headerlink" title="dart不像js，不能进行类型自动转换，需要手动进行转换"></a>dart不像js，不能进行类型自动转换，需要手动进行转换</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;string&#x27;</span> + <span class="number">1</span>); <span class="comment">// 错误</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 报错：</span></span><br><span class="line"><span class="comment">// Error: A value of type &#x27;int&#x27; can&#x27;t be assigned to a variable of type &#x27;String&#x27;.</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="bool"><a href="#bool" class="headerlink" title="bool"></a><code>bool</code></h3><p>布尔类型为一种单独类型，不同于js，不能转换为0，1</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">bool</span> k = <span class="keyword">true</span>;</span><br><span class="line"><span class="built_in">print</span>(k); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="int-double"><a href="#int-double" class="headerlink" title="int double"></a><code>int</code> <code>double</code></h3><p>整数类型和浮点类型，没啥好讲的</p>
+<h3 id="String"><a href="#String" class="headerlink" title="String"></a><code>String</code></h3><ul>
+<li>单行字符串。可以单引号<code>&#39; &#39;</code>或双引号<code>&quot; &quot;</code>定义；</li>
+<li>换行的字符串。类似 <code>Python</code> ，需用三单引<code>&#39;&#39;&#39; &#39;&#39;&#39;</code> 或 三双引<code>&quot;&quot;&quot; &quot;&quot;&quot;</code>；</li>
+<li>占位符用 <code>$</code>，单行或多行字符串均可使用；</li>
+</ul>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">String</span> str = <span class="string">&#x27;1223&#x27;</span>;</span><br><span class="line"><span class="keyword">var</span> str2 = <span class="string">&#x27;&#x27;&#x27;</span></span><br><span class="line"><span class="string">line1: hehe</span></span><br><span class="line"><span class="string">line2: haha</span></span><br><span class="line"><span class="string">&#x27;&#x27;&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;<span class="subst">$str</span> + <span class="subst">$str2</span>&#x27;</span>);</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;-------------&#x27;</span>);</span><br><span class="line"><span class="built_in">print</span>(str + str2);</span><br></pre></td></tr></table></figure>
+
+<p>结果：   </p>
+<blockquote>
+<p>1223 +   line1: hehe<br>  line2: haha</p>
+<hr>
+<p>1223  line1: hehe<br>  line2: haha</p>
+</blockquote>
+<h3 id="List"><a href="#List" class="headerlink" title="List"></a><code>List</code></h3><h4 id="定义List"><a href="#定义List" class="headerlink" title="定义List"></a>定义List</h4><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">List</span> l = [<span class="string">&#x27;aaa&#x27;</span>, <span class="number">3</span>, <span class="keyword">true</span>];</span><br><span class="line"><span class="built_in">print</span>(l.length); <span class="comment">// 3</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> l2 = [<span class="string">&#x27;vvv&#x27;</span>, <span class="string">&#x27;xx&#x27;</span>];</span><br><span class="line"><span class="built_in">print</span>(<span class="string">&#x27;<span class="subst">$l</span> <span class="subst">$l2</span>&#x27;</span>); <span class="comment">// [aaa, 2, true] [vvv, 5]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 增加元素 .add() 方法：</span></span><br><span class="line"><span class="built_in">List</span> l3 = &lt;<span class="built_in">String</span>&gt;[<span class="string">&#x27;foo&#x27;</span>, <span class="string">&#x27;bar&#x27;</span>];</span><br><span class="line">l3.add(<span class="string">&#x27;fee&#x27;</span>); <span class="comment">// [foo, bar, fee]</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="创建固定长度List，List-filled-length-填充的元素-，不能增加数据使用-add"><a href="#创建固定长度List，List-filled-length-填充的元素-，不能增加数据使用-add" class="headerlink" title="创建固定长度List，List.filled(length, 填充的元素)，不能增加数据使用 add()"></a>创建固定长度List，<code>List.filled(length, 填充的元素)</code>，不能增加数据使用 <del><code>add()</code></del></h4><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// &lt;String&gt; 可省略</span></span><br><span class="line"><span class="built_in">List</span> l5 = <span class="built_in">List</span>&lt;<span class="built_in">String</span>&gt;.filled(<span class="number">3</span>, <span class="string">&#x27;&#x27;</span>);</span><br><span class="line"><span class="built_in">print</span>(l5); <span class="comment">// [, , ]</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="常用List方法"><a href="#常用List方法" class="headerlink" title="常用List方法:"></a>常用List方法:</h4><h5 id="将一个现有List反转-reversed-toList"><a href="#将一个现有List反转-reversed-toList" class="headerlink" title="将一个现有List反转 .reversed.toList()"></a><a id='ListToList'>将一个现有List反转 <code>.reversed.toList()</code></a></h5><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">List</span> a = [<span class="string">&#x27;12&#x27;</span>, <span class="string">&#x27;23&#x27;</span>, <span class="string">&#x27;34&#x27;</span>, <span class="string">&#x27;45&#x27;</span>];</span><br><span class="line"><span class="built_in">print</span>(a.reversed);</span><br><span class="line"><span class="comment">// (45, 34, 23, 12)</span></span><br><span class="line"><span class="built_in">print</span>(a.reversed.toList());</span><br><span class="line"><span class="comment">// [45, 34, 23, 12]</span></span><br></pre></td></tr></table></figure>
+
+
+
+<h5 id="替换元素-fillRange-开始-结束-替换的元素-插入-insert-插入位置，插入元素-insertAll-插入位置，插入多个元素"><a href="#替换元素-fillRange-开始-结束-替换的元素-插入-insert-插入位置，插入元素-insertAll-插入位置，插入多个元素" class="headerlink" title="替换元素 fillRange(开始, 结束, 替换的元素) 插入 insert(插入位置，插入元素) insertAll(插入位置，插入多个元素)"></a>替换元素 <code>fillRange(开始, 结束, 替换的元素)</code> 插入 <code>insert(插入位置，插入元素)</code> <code>insertAll(插入位置，插入多个元素)</code></h5><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">List</span> l = [<span class="string">&#x27;12&#x27;</span>, <span class="string">&#x27;23&#x27;</span>, <span class="string">&#x27;34&#x27;</span>, <span class="string">&#x27;45&#x27;</span>];</span><br><span class="line">l.fillRange(<span class="number">1</span>,<span class="number">3</span>, <span class="string">&#x27;c&#x27;</span>);</span><br><span class="line"><span class="built_in">print</span>(l); <span class="comment">// [12, c, c, 45]</span></span><br><span class="line"> </span><br><span class="line">l.insert(<span class="number">3</span>, <span class="string">&#x27;单个元素&#x27;</span>);</span><br><span class="line"><span class="built_in">print</span>(l); <span class="comment">// [12, c, c, 单个元素, 45]</span></span><br><span class="line"></span><br><span class="line">l.insertAll(<span class="number">2</span>, [<span class="string">&#x27;元素1&#x27;</span>, <span class="string">&#x27;元素2&#x27;</span>]);</span><br><span class="line"><span class="built_in">print</span>(l); <span class="comment">// [12, c, 元素1, 元素2, c, 单个元素, 45]</span></span><br></pre></td></tr></table></figure>
+
+<h5 id="List-——-gt-String：-join-；String-——-gt-List：-split"><a href="#List-——-gt-String：-join-；String-——-gt-List：-split" class="headerlink" title="List ——&gt; String： .join()；String ——&gt; List：.split()"></a>List ——&gt; String： <code>.join()</code>；String ——&gt; List：<code>.split()</code></h5><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">List</span> a = [<span class="number">12</span>, <span class="string">&#x27;CC&#x27;</span>, <span class="string">&#x27;zengjia&#x27;</span>, <span class="string">&#x27;hehe&#x27;</span>, <span class="string">&#x27;haha&#x27;</span>, <span class="string">&#x27;CC&#x27;</span>, <span class="number">67</span>];</span><br><span class="line"><span class="keyword">var</span> b = a.join(<span class="string">&#x27;-&#x27;</span>);</span><br><span class="line"><span class="built_in">print</span>(b);</span><br><span class="line"><span class="comment">// 12-CC-zengjia-hehe-haha-CC-67</span></span><br><span class="line"><span class="built_in">print</span>(b <span class="keyword">is</span> <span class="built_in">String</span>);</span><br><span class="line"><span class="comment">// true</span></span><br><span class="line"><span class="keyword">var</span> c = b.split(<span class="string">&#x27;-&#x27;</span>);</span><br><span class="line"><span class="built_in">print</span>(c);</span><br><span class="line"><span class="comment">// [12, CC, zengjia, hehe, haha, CC, 67]</span></span><br><span class="line"><span class="built_in">print</span>(c <span class="keyword">is</span> <span class="built_in">List</span>);</span><br><span class="line"><span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Set"><a href="#Set" class="headerlink" title="Set"></a><a id="SetToList"><code>Set</code></a></h3><p>和 <code>js</code> 的 <code>Set</code> 类似</p>
+<ul>
+<li>最主要的功能就是去除数组重复内容</li>
+<li>没有顺序且不能重复的集合，所以不能通过索引去获取值</li>
+</ul>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">List</span> l = [<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>];</span><br><span class="line"><span class="built_in">Set</span> ss = <span class="keyword">new</span> <span class="built_in">Set</span>();</span><br><span class="line">ss.addAll(l);</span><br><span class="line"><span class="built_in">print</span>(ss); <span class="comment">// &#123;a, b, c&#125;</span></span><br><span class="line"><span class="built_in">print</span>(ss.toList()); <span class="comment">// [a, b, c]</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Map"><a href="#Map" class="headerlink" title="Map"></a><code>Map</code></h3><p>类似 <code>js</code> 的obj，定义<code>Map</code>两种方法：</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> p = &#123;<span class="string">&#x27;name&#x27;</span>: <span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;age&#x27;</span>:<span class="number">20</span>&#125;;</span><br><span class="line"><span class="built_in">print</span>(p); <span class="comment">// &#123;name: zhangsan, age: 20&#125;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">var</span> p2 = <span class="keyword">new</span> <span class="built_in">Map</span>();</span><br><span class="line"><span class="built_in">print</span>(p2); <span class="comment">// &#123;&#125;</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>注意！<code>Map</code> 不能用点 <code>.</code> 运算，只能用属性选择器 <code>[]</code></strong></p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">print</span>(p[<span class="string">&#x27;age&#x27;</span>]);  <span class="comment">// 20</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="keys-toList-values-toList-让键或值变成数组"><a href="#keys-toList-values-toList-让键或值变成数组" class="headerlink" title="keys.toList() values.toList() 让键或值变成数组"></a><code>keys.toList()</code> <code>values.toList()</code> 让键或值变成数组</h4><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">Map</span> p = &#123;<span class="string">&#x27;name&#x27;</span>: <span class="string">&#x27;zhangsan&#x27;</span>, <span class="string">&#x27;age&#x27;</span>:<span class="number">20</span>&#125;;</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(person.keys.toList()); </span><br><span class="line"><span class="comment">// [name, age]</span></span><br><span class="line"><span class="built_in">print</span>(person.values.toList());</span><br><span class="line"><span class="comment">// [xxx, 20]</span></span><br><span class="line"><span class="built_in">print</span>(person.entries);</span><br><span class="line"><span class="comment">// (MapEntry(name: xxx), MapEntry(age: 20))</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="is-关键字判断类型"><a href="#is-关键字判断类型" class="headerlink" title="is 关键字判断类型"></a><code>is</code> 关键字判断类型</h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">String</span> str = <span class="string">&#x27;1223&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> (str <span class="keyword">is</span> <span class="built_in">String</span>) <span class="built_in">print</span>(<span class="string">&#x27;string类型&#x27;</span>);</span><br><span class="line"><span class="keyword">else</span> <span class="keyword">if</span>(str <span class="keyword">is</span> <span class="built_in">int</span>) <span class="built_in">print</span>(<span class="string">&#x27;int类型&#x27;</span>);</span><br><span class="line"><span class="keyword">else</span> <span class="built_in">print</span>(<span class="string">&#x27;其他&#x27;</span>);</span><br><span class="line"></span><br><span class="line"><span class="comment">// string类型</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="可迭代数据的通用方法"><a href="#可迭代数据的通用方法" class="headerlink" title="可迭代数据的通用方法"></a>可迭代数据的通用方法</h3><h4 id="拼接-addAll"><a href="#拼接-addAll" class="headerlink" title="拼接 .addAll()"></a>拼接 <code>.addAll()</code></h4><p>注意：<code>List</code> 和 <code>Map</code> 拼接可在原来的基础上拼接，其内存指向不变，<code>Set</code> 拼接则需重新 <code>new</code> 一个对象</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// List 拼接：</span></span><br><span class="line"><span class="built_in">List</span> a = [<span class="string">&#x27;12&#x27;</span>, <span class="string">&#x27;23&#x27;</span>, <span class="string">&#x27;34&#x27;</span>, <span class="string">&#x27;45&#x27;</span>];</span><br><span class="line">a.addAll([<span class="string">&#x27;67&#x27;</span>,<span class="string">&#x27;89&#x27;</span>]);</span><br><span class="line"><span class="built_in">print</span>(a);</span><br><span class="line"><span class="comment">// [12, 23, 34, 45, 67, 89]</span></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="comment">// Set 拼接：</span></span><br><span class="line"><span class="built_in">List</span> l = [<span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;a&#x27;</span>, <span class="string">&#x27;b&#x27;</span>, <span class="string">&#x27;c&#x27;</span>];</span><br><span class="line"><span class="built_in">Set</span> ss = <span class="keyword">new</span> <span class="built_in">Set</span>();</span><br><span class="line">ss.addAll(l);</span><br><span class="line"><span class="built_in">print</span>(ss); <span class="comment">// &#123;a, b, c&#125;</span></span><br><span class="line"><span class="built_in">print</span>(ss.toList()); <span class="comment">// [a, b, c]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Map 拼接：</span></span><br><span class="line"><span class="built_in">Map</span> m = &#123;<span class="string">&#x27;name&#x27;</span>:<span class="string">&#x27;Tom&#x27;</span>,<span class="string">&#x27;Id&#x27;</span>:<span class="string">&#x27;E1001&#x27;</span>&#125;;</span><br><span class="line">m.addAll(&#123;<span class="string">&#x27;dept&#x27;</span>:<span class="string">&#x27;HR&#x27;</span>,<span class="string">&#x27;email&#x27;</span>:<span class="string">&#x27;tom@xyz.com&#x27;</span>&#125;);</span><br><span class="line"><span class="built_in">print</span>(m);</span><br><span class="line"><span class="comment">// &#123;name: Tom, Id: E1001, dept: HR, email: tom@xyz.com&#125;</span></span><br></pre></td></tr></table></figure>
+
+<h4 id="转换为数组-toList"><a href="#转换为数组-toList" class="headerlink" title="转换为数组 .toList()"></a>转换为数组 <code>.toList()</code></h4><p>见上面提过的例子具有涉及: <a href="#ListToList">List</a>， <a href="#SetToList">Set</a></p>
+<h4 id="转换为字符串-toString"><a href="#转换为字符串-toString" class="headerlink" title="转换为字符串 .toString()"></a>转换为字符串 <code>.toString()</code></h4><p>List，Set，Map均有此功能</p>
+<h2 id="两个特殊运算符"><a href="#两个特殊运算符" class="headerlink" title="两个特殊运算符"></a>两个特殊<a target="_blank" rel="noopener" href="https://github.com/ys558/dart-learn/blob/master/04-%E8%BF%90%E7%AE%97%E7%AC%A6.dart">运算符</a></h2><p>dart的运算符，除了这里提到的两种符号，其他和 <code>js</code> 一样</p>
+<h3 id="和"><a href="#和" class="headerlink" title="~/ 和 ~/="></a><code>~/</code> 和 <code>~/=</code></h3><ul>
+<li>取整符号 <code>~/</code>，很简单：</li>
+</ul>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">int</span> a = <span class="number">12</span>;</span><br><span class="line"><span class="built_in">int</span> b = <span class="number">5</span>;</span><br><span class="line"><span class="built_in">print</span>(a~/b);</span><br><span class="line"><span class="comment">// 2</span></span><br></pre></td></tr></table></figure>
+<ul>
+<li>另外，和大多数语言一样，dart里没有三等符号，只有两等 <code>==</code></li>
+</ul>
+<h3 id="是否为空赋值"><a href="#是否为空赋值" class="headerlink" title="是否为空赋值 ??="></a>是否为空赋值 <code>??=</code></h3><p><code>??=</code> 表示，如果值不为空，则赋值为新值；如果不为空，则用原值；   </p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">b??=<span class="number">89</span>;</span><br><span class="line"><span class="built_in">print</span>(b);</span><br><span class="line"><span class="comment">// 5</span></span><br><span class="line"><span class="keyword">var</span> c = <span class="number">45</span>;</span><br><span class="line">c ??= <span class="number">8</span>;</span><br><span class="line"><span class="built_in">print</span>(c);</span><br><span class="line"><span class="comment">// 45</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="类型转换-String-——-gt-Number-：-int-parse-和-double-parse"><a href="#类型转换-String-——-gt-Number-：-int-parse-和-double-parse" class="headerlink" title="类型转换 String ——&gt; Number ： int.parse() 和 double.parse()"></a>类型转换 String ——&gt; Number ： <code>int.parse()</code> 和 <code>double.parse()</code></h2><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">String</span> y = <span class="string">&#x27;123&#x27;</span>;</span><br><span class="line"><span class="keyword">var</span> m = <span class="built_in">int</span>.parse(y);</span><br><span class="line"><span class="built_in">print</span>(m <span class="keyword">is</span> <span class="built_in">int</span>);</span><br><span class="line"><span class="comment">// true</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">String</span> u = <span class="string">&#x27;23.345&#x27;</span>;</span><br><span class="line"><span class="keyword">var</span> x = <span class="built_in">double</span>.parse(u);</span><br><span class="line"><span class="built_in">print</span>(x <span class="keyword">is</span> <span class="built_in">double</span>);</span><br><span class="line"><span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="isEmpty-和-isNotEmpty-判断字符串是否为空；isNaN-判断数值是否合法"><a href="#isEmpty-和-isNotEmpty-判断字符串是否为空；isNaN-判断数值是否合法" class="headerlink" title="isEmpty 和 isNotEmpty 判断字符串是否为空；isNaN 判断数值是否合法"></a><code>isEmpty</code> 和 <code>isNotEmpty</code> 判断字符串是否为空；<code>isNaN</code> 判断数值是否合法</h2><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> er = <span class="string">&#x27;xxx&#x27;</span>;</span><br><span class="line"><span class="keyword">var</span> xu = <span class="number">0</span>/<span class="number">0</span>;</span><br><span class="line"><span class="keyword">if</span>(er.isEmpty) <span class="built_in">print</span>(<span class="string">&#x27;str为空&#x27;</span>); <span class="keyword">else</span> <span class="built_in">print</span>(<span class="string">&#x27;str不为空&#x27;</span>);</span><br><span class="line"><span class="comment">// str不为空</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span>(xu.isNaN)&#123;</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">&#x27;xu不合法&#x27;</span>);</span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">&#x27;xu合法&#x27;</span>);</span><br><span class="line">&#125;</span><br><span class="line"><span class="comment">// xu不合法</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="循环"><a href="#循环" class="headerlink" title="循环"></a>循环</h2><p>和 <code>js</code> 相似度达到 95%</p>
+<h3 id="for，-for-in"><a href="#for，-for-in" class="headerlink" title="for， for in"></a><code>for</code>， <code>for in</code></h3><p>dart没有 <code>for of </code> 循环，<code>for</code> <code>for in</code>和 <code>js</code> 基本一样的写法</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 例：打印1到9之间所有偶数：</span></span><br><span class="line"><span class="keyword">for</span> (<span class="built_in">int</span> i=<span class="number">1</span>; i&lt;=<span class="number">9</span>; i++) &#123;</span><br><span class="line">  <span class="keyword">if</span> (i%<span class="number">2</span> == <span class="number">0</span>) &#123;</span><br><span class="line">    <span class="built_in">print</span>(i);</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// p.s. 如果在同一行写可省略花括号 `&#123;&#125;` </span></span><br><span class="line"><span class="keyword">for</span> (<span class="built_in">int</span> i <span class="keyword">in</span> [<span class="number">1</span>,<span class="number">2</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">6</span>,<span class="number">7</span>,<span class="number">8</span>,<span class="number">9</span>]) <span class="keyword">if</span>(i%<span class="number">2</span> == <span class="number">0</span>) <span class="built_in">print</span>(i);</span><br></pre></td></tr></table></figure>
+
+<p>以上均输出：</p>
+<blockquote>
+<p>2<br>4<br>6<br>8</p>
+</blockquote>
+<h3 id="forEach"><a href="#forEach" class="headerlink" title="forEach"></a><code>forEach</code></h3><figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 循环List</span></span><br><span class="line"><span class="keyword">const</span> l2 = [<span class="number">2</span>,<span class="number">3</span>];</span><br><span class="line">l2.forEach((el) &#123;</span><br><span class="line">  <span class="built_in">print</span>(el);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// 2</span></span><br><span class="line"><span class="comment">// 3</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 循环Map</span></span><br><span class="line"><span class="built_in">Map</span> m = &#123;<span class="string">&#x27;a&#x27;</span>:<span class="number">1</span>, <span class="string">&#x27;b&#x27;</span>:<span class="number">2</span>&#125;;</span><br><span class="line">m.forEach((key, value) &#123;</span><br><span class="line">  <span class="built_in">print</span>(<span class="string">&#x27;<span class="subst">$key</span> --- <span class="subst">$value</span>&#x27;</span>);</span><br><span class="line">&#125;);</span><br><span class="line"><span class="comment">// a --- 1</span></span><br><span class="line"><span class="comment">// b --- 2</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 或可写为 箭头函数 =&gt;</span></span><br><span class="line"><span class="comment">// m.forEach((key, value) =&gt;  print(&#x27;$key --- $value&#x27;));</span></span><br></pre></td></tr></table></figure>
+
+<h2 id="List，-Set-的通用方法-where，any，every"><a href="#List，-Set-的通用方法-where，any，every" class="headerlink" title="List， Set 的通用方法: where，any，every"></a><code>List</code>， <code>Set</code> 的通用方法: <code>where</code>，<code>any</code>，<code>every</code></h2><p>一个比较有趣的方法，类似条件语句，用于特定元素的查找<br>和 <code>js</code> 的数组方法的 <code>.some()</code> <code>.every()</code>等方法类似</p>
+<figure class="highlight dart"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// List</span></span><br><span class="line"><span class="built_in">List</span> l3 = [<span class="number">2</span>,<span class="number">3</span>,<span class="number">6</span>,<span class="number">8</span>];</span><br><span class="line"><span class="keyword">var</span> ll = l3.where((item) =&gt; item &gt;<span class="number">3</span>);</span><br><span class="line"><span class="built_in">print</span>(ll); <span class="comment">// (6, 8)</span></span><br><span class="line"><span class="built_in">print</span>(ll.toList()); <span class="comment">// [6, 8]</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(l3.any((item) =&gt; item &gt;=<span class="number">3</span>)); <span class="comment">// true</span></span><br><span class="line"><span class="built_in">print</span>(l3.every((item) =&gt; item % <span class="number">2</span> == <span class="number">0</span> || item % <span class="number">3</span> == <span class="number">0</span> )); <span class="comment">// true</span></span><br><span class="line">l3.removeWhere((item) =&gt; item &lt; <span class="number">7</span> );</span><br><span class="line"><span class="built_in">print</span>(l3); <span class="comment">// [8]</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// Set</span></span><br><span class="line"><span class="built_in">Set</span> s2 = &#123;<span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">2</span>, <span class="number">8</span>, <span class="number">9</span>, <span class="number">8</span>&#125;;</span><br><span class="line"><span class="built_in">bool</span> ss = s2.any((item) =&gt; item &lt; <span class="number">1</span>);</span><br><span class="line"><span class="built_in">print</span>(ss); <span class="comment">// false</span></span><br><span class="line"><span class="built_in">print</span>(s2.where((item) =&gt; item &gt; <span class="number">3</span>)); <span class="comment">// (4, 8, 9)</span></span><br><span class="line"><span class="built_in">print</span>(s2.every((item) =&gt; item &lt;= <span class="number">10</span>)); <span class="comment">// true</span></span><br></pre></td></tr></table></figure>
+
+
+
+<div class="article-footer fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div></section></div>
+
+</article>
+
+<div class="related-wrap" id="read-next"><section class="header cap theme"><span>接下来阅读</span></section><section class="body"><div class="post-title h2"><a href="/2021/05/19/%E3%80%902021-05-19%E3%80%91Vue2+3%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/">Vue2+3自学笔记（一）</a></div><div class="post-title fs14"><a href="/2021/05/26/%E3%80%902021-05-26%E3%80%91Dart%E8%AF%AD%E6%B3%95%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/">上一篇：Dart语法自学笔记（二）</a></div></section></div>
+
+
+
+
+
+
+  <div class='related-wrap md' id="comments">
+    <div class='cmt-title cap theme'>
+      快来参与讨论吧
+    </div>
+    <div class='cmt-body utterances'>
+      
+
+<svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg>
+
+<div id="utterances" repo="xaoxuu/blog-comments" issue-term="pathname" theme="github-light"></div>
+
+    </div>
+  </div>
+
+
+
+      
+<footer class="page-footer fs12"><hr><div><p>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+<p>本站由 <a href="https://zyzy.info/">@自由の翼</a> 创建，使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.1.0">Stellar</a> 作为主题。</p>
+</div></footer>
+
+      <div class='float-panel mobile-only' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" viewBox="0 0 1228 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2849"><path d="M0 0m97.390199 0l973.901995 0q97.390199 0 97.390199 97.390199l0 0q0 97.390199-97.390199 97.3902l-973.901995 0q-97.390199 0-97.390199-97.3902l0 0q0-97.390199 97.390199-97.390199Z" p-id="2850"></path><path d="M0 389.560798m97.390199 0l973.901995 0q97.390199 0 97.390199 97.390199l0 0q0 97.390199-97.390199 97.3902l-973.901995 0q-97.390199 0-97.390199-97.3902l0 0q0-97.390199 97.390199-97.390199Z" p-id="2851"></path><path d="M0 779.121596m97.390199 0l973.901995 0q97.390199 0 97.390199 97.390199l0 0q0 97.390199-97.390199 97.390199l-973.901995 0q-97.390199 0-97.390199-97.390199l0 0q0-97.390199 97.390199-97.390199Z" p-id="2852"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script')
+      script.src = src
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.1.0';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js',
+    sitesjs: '/js/plugins/sites.js',
+    friendsjs: '/js/plugins/friends.js',
+  };
+
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.3.1/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper/swiper-bundle.min.css","js":"https://unpkg.com/swiper/swiper-bundle.min.js"});
+  }
+  if ('' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://cdn.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function utterances(){
+    if(!document.getElementById("utterances"))return;
+    setTimeout(function() {
+      var checkUtterances = setInterval(function () {
+        var el = document.getElementById("utterances");
+        if (!el) return
+        clearInterval(checkUtterances)
+        try {
+          el.innerHTML="";
+        } catch (error) {}
+        var script = document.createElement('script');
+        script.src = 'https://utteranc.es/client.js';
+        const keys = ['repo', 'issue-term', 'issue-number', 'theme', 'label', 'crossorigin'];
+        keys.forEach((key, i) => {
+          if (el.attributes[key] && el.attributes[key].value) {
+            script.setAttribute(key, el.attributes[key].value);
+          }
+        });
+        el.appendChild(script);
+       }, 200)
+    });
+  }
+  utterances();
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>

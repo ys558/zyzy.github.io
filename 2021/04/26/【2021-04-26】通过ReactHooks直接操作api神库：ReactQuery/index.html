@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 5.4.0">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>通过ReactHooks直接操作api神库：ReactQuery - 自由の翼小栈</title>
+
+  
+    <meta name="description" content="React Query 是一个以react hooks为基础进行异步获取，缓存和更改数据的库，react query仓库文档原文描述：  Hooks for fetching, caching and updating asynchronous data in React  换言之，是一个异步处理数据的库。这么重要而且好用的库当然要收入囊中，把他学起来，本篇着重介绍整个项目的构建过程。p.s 该篇">
+<meta property="og:type" content="article">
+<meta property="og:title" content="通过ReactHooks直接操作api神库：ReactQuery">
+<meta property="og:url" content="https://zyzy.info/2021/04/26/%E3%80%902021-04-26%E3%80%91%E9%80%9A%E8%BF%87ReactHooks%E7%9B%B4%E6%8E%A5%E6%93%8D%E4%BD%9Capi%E7%A5%9E%E5%BA%93%EF%BC%9AReactQuery/index.html">
+<meta property="og:site_name" content="自由の翼小栈">
+<meta property="og:description" content="React Query 是一个以react hooks为基础进行异步获取，缓存和更改数据的库，react query仓库文档原文描述：  Hooks for fetching, caching and updating asynchronous data in React  换言之，是一个异步处理数据的库。这么重要而且好用的库当然要收入囊中，把他学起来，本篇着重介绍整个项目的构建过程。p.s 该篇">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/%E9%80%9A%E8%BF%87ReactHooks%E7%9B%B4%E6%8E%A5%E6%93%8D%E4%BD%9Capi%E7%A5%9E%E5%BA%93%EF%BC%9AReactQuery/01.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/%E9%80%9A%E8%BF%87ReactHooks%E7%9B%B4%E6%8E%A5%E6%93%8D%E4%BD%9Capi%E7%A5%9E%E5%BA%93%EF%BC%9AReactQuery/02.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/%E9%80%9A%E8%BF%87ReactHooks%E7%9B%B4%E6%8E%A5%E6%93%8D%E4%BD%9Capi%E7%A5%9E%E5%BA%93%EF%BC%9AReactQuery/03.gif">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/%E9%80%9A%E8%BF%87ReactHooks%E7%9B%B4%E6%8E%A5%E6%93%8D%E4%BD%9Capi%E7%A5%9E%E5%BA%93%EF%BC%9AReactQuery/04.gif">
+<meta property="article:published_time" content="2021-04-26T02:17:07.000Z">
+<meta property="article:modified_time" content="2021-10-14T03:42:59.910Z">
+<meta property="article:author" content="自由の翼">
+<meta property="article:tag" content="React Query">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/%E9%80%9A%E8%BF%87ReactHooks%E7%9B%B4%E6%8E%A5%E6%93%8D%E4%BD%9Capi%E7%A5%9E%E5%BA%93%EF%BC%9AReactQuery/01.png">
+  
+  
+
+  <!-- feed -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+</head>
+
+<body>
+  
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left'>
+    
+
+<header class='header'>
+  <div class='logo-wrap'>
+  
+    <a class='avatar' href='/about/'>
+      
+        <img no-lazy class='bg' src='https://cdn.jsdelivr.net/gh/cdn-x/placeholder@1.0.2/avatar/round/rainbow64@3x.webp'/>
+      
+      <img no-lazy class='avatar' src='https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.12/avatar/宇航员.svg'/>
+    </a>
+  
+  
+    <a class='title' href='/'>
+      自由の翼小栈
+    </a>
+  
+</div>
+
+  <nav class="menu dis-select"></nav>
+</header>
+
+<div class='widgets'>
+  
+    
+      
+      
+<div class="widget-wrap" id="toc"><div class="widget-header h4 dis-select"><span class="name">本文目录</span></div><div class="widget-body fs14 post"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%89%8D%E7%AB%AF%E5%9F%BA%E7%A1%80%E6%9C%8D%E5%8A%A1%E6%90%AD%E5%BB%BA"><span class="toc-text">前端基础服务搭建</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E7%A1%80%E8%B7%AF%E7%94%B1%E6%A8%A1%E5%9D%97%E5%8F%8A%E5%9F%BA%E7%A1%80%E6%9E%B6%E6%9E%84%EF%BC%9A"><span class="toc-text">基础路由模块及基础架构：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%8E%B7%E5%8F%96%E6%89%80%E6%9C%89%E5%9B%BE%E4%B9%A6"><span class="toc-text">获取所有图书</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA%E5%9B%BE%E4%B9%A6"><span class="toc-text">创建图书</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84%EF%BC%9A"><span class="toc-text">基本结构：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B7%BB%E5%8A%A0%E5%AF%BC%E8%88%AA%E6%A0%8F%E6%A0%B7%E5%BC%8F"><span class="toc-text">添加导航栏样式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9B%E5%BB%BA-api-js-%E6%8E%A5%E5%8F%A3%E6%96%87%E4%BB%B6%E8%8E%B7%E5%8F%96%E5%B9%B6%E6%95%B0%E6%8D%AE%EF%BC%9A"><span class="toc-text">创建 api.js 接口文件获取并数据：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%8D%E5%88%B6%E6%96%87%E4%BB%B6-env"><span class="toc-text">配制文件 .env</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#src-api-js"><span class="toc-text">src&#x2F;api.js</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E3%80%90-useQuery-%E3%80%91-%E5%BA%94%E7%94%A8-%E2%80%94%E2%80%94-src-BookList-jsx-%E4%B8%AD%E6%9F%A5%E8%AF%A2%E6%89%80%E6%9C%89%E5%9B%BE%E4%B9%A6"><span class="toc-text">【 useQuery 】 应用 —— src&#x2F;BookList.jsx 中查询所有图书</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%AF%8F%E6%9D%A1%E8%AE%B0%E5%BD%95%E5%8D%95%E7%8B%AC%E6%8A%BD%E7%A6%BB%E5%81%9A%E6%A8%A1%E5%9D%97-src-BookList-BookItem-jsx"><span class="toc-text">每条记录单独抽离做模块 src\BookList\BookItem.jsx</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E-src-BookList-BookList-jsx-%E5%AF%BC%E5%85%A5%E5%B9%B6%E5%8F%96%E4%BB%A3%E5%85%B7%E4%BD%93%E8%AE%B0%E5%BD%95%E7%9A%84%E4%BD%8D%E7%BD%AE"><span class="toc-text">从 src\BookList\BookList.jsx 导入并取代具体记录的位置</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E3%80%90-useMutation-%E3%80%91%E5%92%8C%E3%80%90-queryClient-%E3%80%91-%E7%9A%84%E5%BA%94%E7%94%A8-%E2%80%94%E2%80%94-%E5%88%A0%E9%99%A4%E5%9B%BE%E4%B9%A6"><span class="toc-text">【 useMutation 】和【 queryClient 】 的应用 —— 删除图书</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9C%A8-src-api-js-%E5%A2%9E%E5%8A%A0%E5%88%A0%E9%99%A4%E6%8E%A5%E5%8F%A3%EF%BC%9A"><span class="toc-text">在 src\api.js 增加删除接口：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BA%E5%88%A0%E9%99%A4%E5%9B%BE%E4%B9%A6%E4%BF%AE%E6%94%B9%E7%95%8C%E9%9D%A2"><span class="toc-text">为删除图书修改界面</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%98%E6%9B%B4%E4%B8%80%E6%9C%AC%E5%9B%BE%E4%B9%A6%E4%BF%A1%E6%81%AF"><span class="toc-text">变更一本图书信息</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#src-api-js-%E5%A2%9E%E5%8A%A0%E8%8E%B7%E5%8F%96%E4%B8%80%E6%9C%AC%E4%B9%A6%E7%9A%84%E6%8E%A5%E5%8F%A3%EF%BC%9A"><span class="toc-text">src\api.js 增加获取一本书的接口：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#src-api-js-%E5%A2%9E%E5%8A%A0-updateBook-%E6%8E%A5%E5%8F%A3%EF%BC%9A"><span class="toc-text">src\api.js 增加 updateBook 接口：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E5%BB%BA-src-shared-BookForm-jsx-%E7%94%A8%E5%81%9A%E6%9B%B4%E6%96%B0%E5%9B%BE%E4%B9%A6%E7%9A%84%E8%BE%93%E5%85%A5%E7%95%8C%E9%9D%A2%EF%BC%9A"><span class="toc-text">新建 src\shared\BookForm.jsx 用做更新图书的输入界面：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%B0%E5%BB%BA%E4%B8%80%E6%9C%AC%E5%9B%BE%E4%B9%A6"><span class="toc-text">新建一本图书</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#src-api-js-%E9%87%8C%E6%B7%BB%E5%8A%A0"><span class="toc-text">src\api.js 里添加</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9B%B4%E6%94%B9%E5%88%9B%E5%BB%BA%E5%9B%BE%E4%B9%A6%E7%95%8C%E9%9D%A2-src-CreateBook-jsx-%E5%A6%82%E4%B8%8B%EF%BC%9A"><span class="toc-text">更改创建图书界面 src\CreateBook.jsx 如下：</span></a></li></ol></li></ol></div></div></div>
+
+    
+  
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+
+  <div class='bread-nav fs12'>
+  
+    
+    <div id='breadcrumb'>
+      <a class='cap breadcrumb' href='/'>主页</a>
+      <span class="sep"></span>
+      <a class='cap breadcrumb' href='/'>文章</a>
+      
+    </div>
+    <div id='post-meta'>
+      发布于&nbsp;<time datetime='2021-04-26T02:17:07.000Z'>2021-04-26</time>
+    </div>
+  
+  </div>
+
+
+<article class='content md post'>
+<h1 class="article-title"><span>通过ReactHooks直接操作api神库：ReactQuery</span></h1>
+<p><a target="_blank" rel="noopener" href="https://react-query.tanstack.com/">React Query</a> 是一个以react hooks为基础进行异步获取，缓存和更改数据的库，<a target="_blank" rel="noopener" href="https://github.com/tannerlinsley/react-query">react query仓库</a>文档原文描述：</p>
+<blockquote>
+<p>Hooks for fetching, caching and updating asynchronous data in React</p>
+</blockquote>
+<p>换言之，是一个异步处理数据的库。这么重要而且好用的库当然要收入囊中，把他学起来，本篇着重介绍整个项目的构建过程。<br>p.s 该篇的后端服务用<a href="https://zyzy.info/2021/04/25/SwaggerUI%E9%80%9A%E8%BF%87swagger-jsdoc%E5%9C%A8node%E9%87%8C%E7%9A%84%E5%BA%94%E7%94%A8%E5%92%8C%E9%85%8D%E7%BD%AE/">这篇</a> 配置的服务端</p>
+<span id="more"></span>
+
+
+
+<h2 id="前端基础服务搭建"><a href="#前端基础服务搭建" class="headerlink" title="前端基础服务搭建"></a>前端基础服务搭建</h2><p>初始化项目:</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npx create-react-app client &amp;&amp; cd client</span><br></pre></td></tr></table></figure>
+
+<p>安装依赖并运行:<br>其中 <code>react-hook-from @rebass/forms @rebass/preset styled-components react-loader-spinner</code> 均为样式组件</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yarn add react-query react-router-dom react-hook-from @rebass/forms @rebass/preset styled-components react-loader-spinner</span><br><span class="line">yarn start</span><br></pre></td></tr></table></figure>
+
+<p>修改<code>src/client.js</code> 文件如下: <a target="_blank" rel="noopener" href="https://react-query.tanstack.com/reference/QueryClientProvider#_top">QueryClientProvider文档</a></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">&#x27;react-dom&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&quot;react-loader-spinner/dist/loader/css/react-spinner-loader.css&quot;</span></span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">&#x27;./App&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; BrowserRouter &#125; <span class="keyword">from</span> <span class="string">&quot;react-router-dom&quot;</span></span><br><span class="line"><span class="keyword">import</span> &#123; ThemeProvider &#125; <span class="keyword">from</span> <span class="string">&quot;styled-components&quot;</span></span><br><span class="line"><span class="keyword">import</span> preset <span class="keyword">from</span> <span class="string">&quot;@rebass/preset&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">// 核心部分: react-query</span></span><br><span class="line"><span class="keyword">import</span> &#123; QueryClientProvider, QueryClient &#125; <span class="keyword">from</span> <span class="string">&quot;react-query&quot;</span></span><br><span class="line"><span class="comment">// 实例化queryClient</span></span><br><span class="line"><span class="keyword">const</span> queryClient = <span class="keyword">new</span> QueryClient()</span><br><span class="line"></span><br><span class="line">ReactDOM.render(</span><br><span class="line">  &#123;<span class="comment">/* React严格模式，官方文档： https://react.html.cn/docs/strict-mode.html */</span>&#125;</span><br><span class="line">  &lt;React.StrictMode&gt;</span><br><span class="line">    &#123;<span class="comment">/* QueryClientProvider 可作为全局对象注入，类似 react-redux */</span>&#125;</span><br><span class="line">    &lt;QueryClientProvider client=&#123;queryClient&#125;&gt;</span><br><span class="line">      &#123;<span class="comment">/* 样式组件： */</span>&#125;</span><br><span class="line">      &lt;ThemeProvider theme=&#123;preset&#125;&gt;</span><br><span class="line">        &lt;BrowserRouter&gt;</span><br><span class="line">          &lt;App /&gt;</span><br><span class="line">        &lt;/BrowserRouter&gt;</span><br><span class="line">      &lt;/ThemeProvider&gt;</span><br><span class="line">    &lt;/QueryClientProvider&gt;</span><br><span class="line">  &lt;/React.StrictMode&gt;,</span><br><span class="line">  <span class="built_in">document</span>.getElementById(<span class="string">&#x27;root&#x27;</span>)</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<h2 id="基础路由模块及基础架构："><a href="#基础路由模块及基础架构：" class="headerlink" title="基础路由模块及基础架构："></a>基础路由模块及基础架构：</h2><p><code>src/App.js</code> 利用 <code>&#39;react-router-dom&#39;</code> 作为路由的管理器，也是react常见的结构模式：   </p>
+<p>修改<code>src/App.js</code>文件如下: </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Switch, Route &#125; <span class="keyword">from</span> <span class="string">&#x27;react-router-dom&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; BooksList &#125; <span class="keyword">from</span> <span class="string">&#x27;./BookList&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; CreateBook &#125; <span class="keyword">from</span> <span class="string">&#x27;./CreateBook&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; UpdateBook &#125; <span class="keyword">from</span> <span class="string">&#x27;./UpdateBook&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">App</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;&gt;</span></span></span><br><span class="line">      &lt;Switch&gt;</span><br><span class="line">        &lt;Route path=&#x27;/update-book/:id&#x27;&gt;&lt;UpdateBook/&gt;&lt;/Route&gt;</span><br><span class="line">        &lt;Route path=&#x27;/create-book&#x27;&gt;&lt;CreateBook /&gt;&lt;/Route&gt;</span><br><span class="line">        &lt;Route path=&#x27;/&#x27;&gt;&lt;BooksList /&gt;&lt;/Route&gt;</span><br><span class="line"><span class="xml">      <span class="tag">&lt;/<span class="name">Switch</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/&gt;</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> App;</span><br></pre></td></tr></table></figure>
+<h3 id="获取所有图书"><a href="#获取所有图书" class="headerlink" title="获取所有图书"></a>获取所有图书</h3><p>创建 <code>src/BookList/index.js</code> 和 <code>src/BookList/BookList.jsx</code> ：   </p>
+<p><code>src/BookList/index.js</code>:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> * <span class="keyword">from</span> <span class="string">&#x27;./BooksList&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>src/BookList/BookList.jsx</code>:</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> BooksList = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h3 id="创建图书"><a href="#创建图书" class="headerlink" title="创建图书"></a>创建图书</h3><p>创建 <code>src/BookList/index.js</code> 和 <code>src/BookList/BookList.jsx</code> :    </p>
+<p><code>src/CreateBook/index.js</code>:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> * <span class="keyword">from</span> <span class="string">&#x27;./CreateBook&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>src/CreateBook/CreateBook.jsx</code>:</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> CreateBook = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="string">``</span><span class="string">`  </span></span><br><span class="line"><span class="string">### 更新图书   </span></span><br><span class="line"><span class="string">创建 `</span>src/BookList/index.js<span class="string">` 和 `</span>src/BookList/BookList.jsx<span class="string">` :   </span></span><br><span class="line"><span class="string"> </span></span><br><span class="line"><span class="string">`</span>src/UpdateBook/index.js<span class="string">`:</span></span><br><span class="line"><span class="string">`</span><span class="string">``</span>js</span><br><span class="line"><span class="keyword">export</span> * <span class="keyword">from</span> <span class="string">&#x27;./UpdateBook&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p><code>src/UpdateBook/UpdateBook.jsx</code>:</p>
+<figure class="highlight jsx"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> UpdateBook = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="基本结构："><a href="#基本结构：" class="headerlink" title="基本结构："></a>基本结构：</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">src</span><br><span class="line">  |_App.js</span><br><span class="line">  |_BookList</span><br><span class="line">  |  |_index.js</span><br><span class="line">  |  |_BookList.jsx</span><br><span class="line">  |_CreateBook</span><br><span class="line">  |  |_CreateBook.jsx</span><br><span class="line">  |  |_index.js</span><br><span class="line">  |_UpdateBook</span><br><span class="line">     |_UpdateBook.jsx</span><br><span class="line">     |_index.js</span><br></pre></td></tr></table></figure>
+
+<h3 id="添加导航栏样式"><a href="#添加导航栏样式" class="headerlink" title="添加导航栏样式"></a>添加导航栏样式</h3><p><code>src/shared/NavBar.jsx</code>:     </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Flex, Box, Link <span class="keyword">as</span> StyledLink, Image &#125; <span class="keyword">from</span> <span class="string">&#x27;rebass/styled-components&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; Link &#125; <span class="keyword">from</span> <span class="string">&#x27;react-router-dom&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; Container &#125; <span class="keyword">from</span> <span class="string">&#x27;./Container&#x27;</span></span><br><span class="line"><span class="keyword">import</span> logo <span class="keyword">from</span> <span class="string">&#x27;./logo.svg&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> NavBar = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">Flex</span> <span class="attr">bg</span>=<span class="string">&quot;black&quot;</span> <span class="attr">color</span>=<span class="string">&quot;white&quot;</span> <span class="attr">justifyContent</span>=<span class="string">&quot;center&quot;</span>&gt;</span></span></span><br><span class="line">      &lt;Container&gt;</span><br><span class="line">        &lt;Flex px=&#123;2&#125; width=&#x27;100%&#x27; alignItems=&#x27;center&#x27;&gt;</span><br><span class="line">          &lt;Image size=&#123;20&#125; src=&#123;logo&#125; /&gt;</span><br><span class="line">          &lt;Link component=&#123;StyledLink&#125; variant=&#x27;nav&#x27; to=&#x27;/&#x27;&gt;</span><br><span class="line">            React Query CRUD</span><br><span class="line">          &lt;/Link&gt;</span><br><span class="line">          &lt;Box mx=&quot;auto&quot;/&gt;</span><br><span class="line">          &lt;Link component=&#123;StyledLink&#125; variant=&#x27;nav&#x27; to=&#x27;/create-book&#x27;&gt;</span><br><span class="line">            + Add new book</span><br><span class="line">          &lt;/Link&gt;</span><br><span class="line">        &lt;/Flex&gt;</span><br><span class="line"><span class="xml">      <span class="tag">&lt;/<span class="name">Container</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">Flex</span>&gt;</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><code>src/shared/Container.jsx</code> :   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Box &#125; <span class="keyword">from</span> <span class="string">&#x27;rebass/styled-components&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> Container = <span class="function">(<span class="params">&#123;children&#125;</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">Box</span> <span class="attr">sx</span>=<span class="string">&#123;&#123;</span> <span class="attr">width:</span> &quot;<span class="attr">100</span>%&quot;, <span class="attr">maxWidth:</span> <span class="attr">1024</span>, <span class="attr">mx:</span> &quot;<span class="attr">auto</span>&quot; &#125;&#125;&gt;</span></span></span><br><span class="line"><span class="xml">      &#123;children&#125;</span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">Box</span>&gt;</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>返回 <code>src/App.js</code> 把导航栏加上:  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; NavBar &#125; <span class="keyword">from</span> <span class="string">&#x27;./shared/NavBar&#x27;</span></span><br><span class="line"></span><br><span class="line">&lt;NavBar/&gt;</span><br></pre></td></tr></table></figure>
+
+<h2 id="创建-api-js-接口文件获取并数据："><a href="#创建-api-js-接口文件获取并数据：" class="headerlink" title="创建 api.js 接口文件获取并数据："></a>创建 api.js 接口文件获取并数据：</h2><h3 id="配制文件-env"><a href="#配制文件-env" class="headerlink" title="配制文件 .env"></a>配制文件 <code>.env</code></h3><p>路径必须在根目录     </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">REACT_APP_SERVER &#x3D; http:&#x2F;&#x2F;localhost:4800</span><br></pre></td></tr></table></figure>
+
+<h3 id="src-api-js"><a href="#src-api-js" class="headerlink" title="src/api.js"></a><code>src/api.js</code></h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> getAllBooks = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> response = <span class="keyword">await</span> fetch(<span class="string">`<span class="subst">$&#123;process.env.REACT_APP_SERVER&#125;</span>/books`</span>)</span><br><span class="line">  <span class="keyword">if</span> (!response.ok) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(<span class="string">&#x27;something wrong&#x27;</span>)</span><br><span class="line">  <span class="keyword">return</span> response.json()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="【-useQuery-】-应用-——-src-BookList-jsx-中查询所有图书"><a href="#【-useQuery-】-应用-——-src-BookList-jsx-中查询所有图书" class="headerlink" title="【 useQuery 】 应用 —— src/BookList.jsx 中查询所有图书"></a>【 <a target="_blank" rel="noopener" href="https://react-query.tanstack.com/reference/useQuery"><strong><code>useQuery</code></strong></a> 】 应用 —— <code>src/BookList.jsx</code> 中查询所有图书</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useQuery &#125; <span class="keyword">from</span> <span class="string">&#x27;react-query&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; Flex &#125; <span class="keyword">from</span> <span class="string">&#x27;rebass&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; getAllBooks &#125; <span class="keyword">from</span> <span class="string">&#x27;../api&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; Container &#125; <span class="keyword">from</span> <span class="string">&#x27;../shared/Container&#x27;</span></span><br><span class="line"><span class="keyword">import</span> Loader <span class="keyword">from</span> <span class="string">&#x27;react-loader-spinner&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> BooksList = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="comment">// useQuery已经准备好了各种状态，直接调用即可：</span></span><br><span class="line">  <span class="keyword">const</span> &#123; data, error, isLoading, isError &#125; = useQuery(<span class="string">&#x27;books&#x27;</span>, getAllBooks)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (isLoading) <span class="keyword">return</span> &lt;Container&gt;</span><br><span class="line">    &lt;Flex&gt;</span><br><span class="line">      &lt;Loader type=<span class="string">&#x27;ThreeDots&#x27;</span> color=<span class="string">&#x27;#ccc&#x27;</span> height=&#123;<span class="number">30</span>&#125; /&gt;</span><br><span class="line">    &lt;/Flex&gt;</span><br><span class="line">  &lt;/Container&gt;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (isError) <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">span</span>&gt;</span> Error: &#123;error.message&#125; <span class="tag">&lt;/<span class="name">span</span>&gt;</span></span></span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &lt;Container&gt;</span><br><span class="line">    &lt;Flex flexDirection=<span class="string">&#x27;column&#x27;</span> alignItems=<span class="string">&#x27;center&#x27;</span>&gt;</span><br><span class="line">    &#123; data.map(<span class="function">(<span class="params">&#123;author, title, id&#125;</span>) =&gt;</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">key</span>=<span class="string">&#123;id&#125;</span>&gt;</span></span></span><br><span class="line"><span class="xml">          &#123;author&#125; - &#123;title&#125;</span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">      )&#125;</span><br><span class="line">    &lt;/Flex&gt;</span><br><span class="line">  &lt;/Container&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>此时界面可看到效果：<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/%E9%80%9A%E8%BF%87ReactHooks%E7%9B%B4%E6%8E%A5%E6%93%8D%E4%BD%9Capi%E7%A5%9E%E5%BA%93%EF%BC%9AReactQuery/01.png" alt="1"></p>
+<h2 id="每条记录单独抽离做模块-src-BookList-BookItem-jsx"><a href="#每条记录单独抽离做模块-src-BookList-BookItem-jsx" class="headerlink" title="每条记录单独抽离做模块 src\BookList\BookItem.jsx"></a>每条记录单独抽离做模块 <code>src\BookList\BookItem.jsx</code></h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Flex, Text, Button, Link <span class="keyword">as</span> StyledLink &#125; <span class="keyword">from</span> <span class="string">&#x27;rebass/styled-components&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; Link &#125; <span class="keyword">from</span> <span class="string">&#x27;react-router-dom&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> BookItem = <span class="function">(<span class="params">&#123; author, title, id &#125;</span>) =&gt;</span> &#123;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">Flex</span> <span class="attr">p</span>=<span class="string">&#123;3&#125;</span> <span class="attr">width</span>=<span class="string">&quot;100%&quot;</span> <span class="attr">alignItems</span>=<span class="string">&#x27;center&#x27;</span>&gt;</span></span></span><br><span class="line">    &lt;Link component=&#123;StyledLink&#125; to=&#123;`/update-book/$&#123;id&#125;`&#125; mr=&quot;auto&quot;&gt;</span><br><span class="line">      &#123; title &#125;</span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">Link</span>&gt;</span></span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">Text</span>&gt;</span>&#123;author&#125;<span class="tag">&lt;/<span class="name">Text</span>&gt;</span></span></span><br><span class="line">    &lt;Button ml=&quot;3&quot;&gt;</span><br><span class="line">      remove</span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">Button</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">Flex</span>&gt;</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+<h2 id="从-src-BookList-BookList-jsx-导入并取代具体记录的位置"><a href="#从-src-BookList-BookList-jsx-导入并取代具体记录的位置" class="headerlink" title="从 src\BookList\BookList.jsx 导入并取代具体记录的位置"></a>从 <code>src\BookList\BookList.jsx</code> 导入并取代具体记录的位置</h2><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; BookItem &#125; <span class="keyword">from</span> <span class="string">&#x27;./BookItem&#x27;</span></span><br><span class="line"></span><br><span class="line">data.map(<span class="function">(<span class="params">&#123;author, title, id&#125;</span>) =&gt;</span> </span><br><span class="line">  &lt;BookItem author=&#123;author&#125; title=&#123;title&#125; id=&#123;id&#125; key=&#123;id&#125;/&gt;</span><br><span class="line">)</span><br></pre></td></tr></table></figure>
+
+<p>看看页面的效果：   </p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/%E9%80%9A%E8%BF%87ReactHooks%E7%9B%B4%E6%8E%A5%E6%93%8D%E4%BD%9Capi%E7%A5%9E%E5%BA%93%EF%BC%9AReactQuery/02.png" alt="2"></p>
+<h2 id="【-useMutation-】和【-queryClient-】-的应用-——-删除图书"><a href="#【-useMutation-】和【-queryClient-】-的应用-——-删除图书" class="headerlink" title="【 useMutation 】和【 queryClient 】 的应用 —— 删除图书"></a>【 <a target="_blank" rel="noopener" href="https://react-query.tanstack.com/reference/useMutation"><strong>useMutation</strong></a> 】和【 <a target="_blank" rel="noopener" href="https://react-query.tanstack.com/reference/useQueryClient"><strong>queryClient</strong></a> 】 的应用 —— 删除图书</h2><h3 id="在-src-api-js-增加删除接口："><a href="#在-src-api-js-增加删除接口：" class="headerlink" title="在 src\api.js 增加删除接口："></a>在 <code>src\api.js</code> 增加删除接口：</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> removeBook = <span class="keyword">async</span> id =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> response = <span class="keyword">await</span> fetch(<span class="string">`<span class="subst">$&#123;process.env.REACT_APP_API_SERVER&#125;</span>/books/<span class="subst">$&#123;id&#125;</span>`</span>, &#123;</span><br><span class="line">    method: <span class="string">&#x27;DELETE&#x27;</span></span><br><span class="line">  &#125;)</span><br><span class="line">  <span class="keyword">if</span> (!response.ok) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(response.json().message)</span><br><span class="line">  <span class="keyword">return</span> <span class="literal">true</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="为删除图书修改界面"><a href="#为删除图书修改界面" class="headerlink" title="为删除图书修改界面"></a>为删除图书修改界面</h3><p>并在 <code>src\BookList\BookList.jsx</code> 里增加相应的 <a target="_blank" rel="noopener" href="https://react-query.tanstack.com/reference/useMutation"><strong>useMutation</strong></a> 和 <a target="_blank" rel="noopener" href="https://react-query.tanstack.com/reference/useQueryClient"><strong>queryClient</strong></a> 的写法：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; removeBook &#125; <span class="keyword">from</span> <span class="string">&#x27;../api&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> queryClient = useQueryClient()</span><br><span class="line"><span class="comment">// 将 removeBook 直接传入 useMutation</span></span><br><span class="line"><span class="keyword">const</span> &#123; mutateAsync, isLoading &#125; = useMutation(removeBook)</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> remove = <span class="keyword">async</span> () =&gt; &#123;</span><br><span class="line">  <span class="keyword">await</span> mutateAsync(id)</span><br><span class="line">  queryClient.invalidateQueries(<span class="string">&#x27;books&#x27;</span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">&lt;Button ml=<span class="string">&quot;3&quot;</span> onClick=&#123;remove&#125;&gt;</span><br><span class="line">  &#123; isLoading ? <span class="xml"><span class="tag">&lt;<span class="name">Loader</span> <span class="attr">type</span>=<span class="string">&#x27;ThreeDots&#x27;</span> <span class="attr">color</span>=<span class="string">&#x27;#fff&#x27;</span> <span class="attr">height</span>=<span class="string">&#123;10&#125;</span> /&gt;</span></span>: <span class="string">&#x27;Remove&#x27;</span> &#125;</span><br><span class="line">&lt;/Button&gt;</span><br></pre></td></tr></table></figure>
+
+<p><strong>queryClient.invalidateQueries()</strong> 用于清除缓存并刷新页面：</p>
+<p>来自<a target="_blank" rel="noopener" href="https://cangsdarm.github.io/react-query-web-i18n/guides&concepts/query-invalidation">中文官方文档</a>的解释：</p>
+<blockquote>
+<p>可以智能地将查询标记为过时的，并使之可用重新获取数据，</p>
+</blockquote>
+<p>简言之，<code>queryClient.invalidateQueries(&#39;books&#39;)</code> 可清除旧 ‘books’ 的显示缓存，并直接刷新最新的 ‘books’ 接口数据，如果不加，页面就不会刷新，需要手动刷新</p>
+<h2 id="变更一本图书信息"><a href="#变更一本图书信息" class="headerlink" title="变更一本图书信息"></a>变更一本图书信息</h2><h3 id="src-api-js-增加获取一本书的接口："><a href="#src-api-js-增加获取一本书的接口：" class="headerlink" title="src\api.js 增加获取一本书的接口："></a><code>src\api.js</code> 增加获取一本书的接口：</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> getBook = <span class="keyword">async</span> (&#123; queryKey &#125;) =&gt; &#123;</span><br><span class="line">  <span class="comment">// useQuery 传过来的参数：</span></span><br><span class="line">  <span class="keyword">const</span> [_key, &#123; id &#125;] = queryKey</span><br><span class="line">  <span class="keyword">const</span> response = <span class="keyword">await</span> fetch(<span class="string">`<span class="subst">$&#123;process.env.REACT_APP_API_SERVER&#125;</span>/books/<span class="subst">$&#123;id&#125;</span>`</span>)</span><br><span class="line">  <span class="keyword">if</span> (!response.ok) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(response.json().message)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> response.json()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="src-api-js-增加-updateBook-接口："><a href="#src-api-js-增加-updateBook-接口：" class="headerlink" title="src\api.js 增加 updateBook 接口："></a><code>src\api.js</code> 增加 <code>updateBook</code> 接口：</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> updateBook = <span class="keyword">async</span> (&#123; id, ...data &#125;) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> response = <span class="keyword">await</span>  fetch(<span class="string">`<span class="subst">$&#123;process.env.REACT_APP_API_SERVER&#125;</span>/books/<span class="subst">$&#123;id&#125;</span>`</span>, &#123;</span><br><span class="line">    method: <span class="string">&#x27;PUT&#x27;</span>,</span><br><span class="line">    headers: &#123;</span><br><span class="line">      <span class="string">&#x27;Content-Type&#x27;</span> : <span class="string">&#x27;application/json&#x27;</span></span><br><span class="line">    &#125;,</span><br><span class="line">    body: <span class="built_in">JSON</span>.stringify(data)</span><br><span class="line">  &#125;)</span><br><span class="line">  </span><br><span class="line">  <span class="keyword">if</span> (!response.ok) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(response.json().message)</span><br><span class="line">  <span class="keyword">return</span> response.json()</span><br><span class="line">&#125; </span><br></pre></td></tr></table></figure>
+
+<h3 id="新建-src-shared-BookForm-jsx-用做更新图书的输入界面："><a href="#新建-src-shared-BookForm-jsx-用做更新图书的输入界面：" class="headerlink" title="新建 src\shared\BookForm.jsx 用做更新图书的输入界面："></a>新建 <code>src\shared\BookForm.jsx</code> 用做更新图书的输入界面：</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; Box, Button &#125; <span class="keyword">from</span> <span class="string">&#x27;rebass/styled-components&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; Label, Input &#125; <span class="keyword">from</span> <span class="string">&#x27;@rebass/forms&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; useForm &#125; <span class="keyword">from</span> <span class="string">&#x27;react-hook-form&#x27;</span></span><br><span class="line"><span class="keyword">import</span> Loader <span class="keyword">from</span> <span class="string">&#x27;react-loader-spinner&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> BookForm = <span class="function">(<span class="params">&#123; defaultValues, onFormSubmit, isLoading &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; register, handleSubmit &#125; = useForm(&#123; defaultValues &#125;)</span><br><span class="line">  <span class="keyword">const</span> onSubmit = handleSubmit( <span class="function"><span class="params">data</span> =&gt;</span> &#123;</span><br><span class="line">    onFormSubmit(data)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">form</span> <span class="attr">onSubmit</span>=<span class="string">&#123;onSubmit&#125;</span>&gt;</span></span></span><br><span class="line">    &lt;Box sx=&#123;&#123; marginBottom : 3 &#125;&#125;&gt;</span><br><span class="line">      &lt;Label htmlFor=&quot;title&quot;&gt;Title&lt;/Label&gt;</span><br><span class="line">      &lt;Input ref=&#123;register&#125; id=&#x27;title&#x27; name=&#x27;title&#x27; type=&#x27;text&#x27; /&gt;</span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">Box</span>&gt;</span></span></span><br><span class="line">    &lt;Box sx=&#123;&#123; marginBottom : 3 &#125;&#125;&gt;</span><br><span class="line">      &lt;Label htmlFor=&#x27;author&#x27;&gt;Author&lt;/Label&gt;</span><br><span class="line">      &lt;Input ref=&#123;register&#125; id=&#x27;author&#x27; name=&#x27;author&#x27; type=&#x27;text&#x27; /&gt;</span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">Box</span>&gt;</span></span></span><br><span class="line">    &lt;Button&gt;</span><br><span class="line">      &#123; isLoading ? &lt;Loader type=&#x27;ThreeDots&#x27; color=&#x27;#fff&#x27; height=&#123;10&#125; /&gt; : &#x27;Submit&#x27; &#125;</span><br><span class="line"><span class="xml">    <span class="tag">&lt;/<span class="name">Button</span>&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">form</span>&gt;</span></span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>src\UpdateBook\UpdateBook.jsx</code> 更改如下：   </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> Loader <span class="keyword">from</span> <span class="string">&quot;react-loader-spinner&quot;</span></span><br><span class="line"><span class="keyword">import</span> &#123; useMutation, useQuery &#125; <span class="keyword">from</span> <span class="string">&quot;react-query&quot;</span></span><br><span class="line"><span class="keyword">import</span> &#123; useHistory, useParams &#125; <span class="keyword">from</span> <span class="string">&quot;react-router-dom&quot;</span></span><br><span class="line"><span class="keyword">import</span> &#123; Box, Flex, Heading &#125; <span class="keyword">from</span> <span class="string">&quot;rebass/styled-components&quot;</span></span><br><span class="line"><span class="keyword">import</span> &#123; getBook, updateBook &#125; <span class="keyword">from</span> <span class="string">&quot;../api&quot;</span></span><br><span class="line"><span class="keyword">import</span> &#123; BookForm, Container &#125; <span class="keyword">from</span> <span class="string">&quot;../shared&quot;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> UpdateBook = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; id &#125; = useParams()</span><br><span class="line">  <span class="keyword">const</span> history = useHistory()</span><br><span class="line">  <span class="comment">// 获取单本书的接口：</span></span><br><span class="line">  <span class="keyword">const</span> &#123; data, error, isLoading, isError &#125; = useQuery([<span class="string">&#x27;book&#x27;</span>, &#123;id&#125;], getBook)</span><br><span class="line"></span><br><span class="line">  <span class="comment">// 更改单本书 useMutation</span></span><br><span class="line">  <span class="keyword">const</span> &#123; mutateAsync, <span class="attr">isLoading</span>: isMutating &#125; = useMutation(updateBook)</span><br><span class="line">  <span class="comment">// 将数据传给后端：</span></span><br><span class="line">  <span class="keyword">const</span> onFormSubmit = <span class="keyword">async</span> data =&gt; &#123;</span><br><span class="line">    <span class="keyword">await</span> mutateAsync(&#123; ...data, id &#125;)</span><br><span class="line">    history.push(<span class="string">&#x27;/&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> ( isLoading ) <span class="keyword">return</span> &lt;Container&gt;</span><br><span class="line">      &lt;Flex&gt;</span><br><span class="line">        &lt;Loader type=<span class="string">&#x27;ThreeDots&#x27;</span> color=<span class="string">&#x27;#ccc&#x27;</span> height=&#123;<span class="number">30</span>&#125; /&gt;</span><br><span class="line">      &lt;/Flex&gt;</span><br><span class="line">    &lt;/Container&gt;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> ( isError ) <span class="keyword">return</span> &lt;Container&gt;</span><br><span class="line">    &lt;Flex py=<span class="string">&#x27;5&#x27;</span> justifyContent=<span class="string">&#x27;center&#x27;</span>&gt;</span><br><span class="line">      <span class="built_in">Error</span>: &#123;error.message&#125;</span><br><span class="line">    &lt;/Flex&gt;</span><br><span class="line">  &lt;/Container&gt;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &lt;Container&gt;</span><br><span class="line">    &lt;Box sx=&#123;&#123; <span class="attr">py</span>: <span class="number">3</span> &#125;&#125;&gt;</span><br><span class="line">      &lt;Heading sx=&#123;&#123; <span class="attr">marginBottom</span>: <span class="number">3</span> &#125;&#125;&gt;Update Book&lt;/Heading&gt;</span><br><span class="line">      &lt;BookForm defaultValues=&#123;data&#125; onFormSubmit=&#123;onFormSubmit&#125; isLoading=&#123;isMutating&#125; /&gt;</span><br><span class="line">    &lt;/Box&gt;</span><br><span class="line">  &lt;/Container&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>新建 <code>src\shared\index.js</code> 将所有共用组件导出：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> * <span class="keyword">from</span> <span class="string">&#x27;./Container&#x27;</span></span><br><span class="line"><span class="keyword">export</span> * <span class="keyword">from</span> <span class="string">&#x27;./BookForm&#x27;</span></span><br><span class="line"><span class="keyword">export</span> * <span class="keyword">from</span> <span class="string">&#x27;./NavBar&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>看看页面的效果：<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/%E9%80%9A%E8%BF%87ReactHooks%E7%9B%B4%E6%8E%A5%E6%93%8D%E4%BD%9Capi%E7%A5%9E%E5%BA%93%EF%BC%9AReactQuery/03.gif" alt="添加书籍"></p>
+<h2 id="新建一本图书"><a href="#新建一本图书" class="headerlink" title="新建一本图书"></a>新建一本图书</h2><h3 id="src-api-js-里添加"><a href="#src-api-js-里添加" class="headerlink" title="src\api.js 里添加"></a><code>src\api.js</code> 里添加</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> createBook = <span class="keyword">async</span> (data) =&gt; &#123;</span><br><span class="line">  <span class="keyword">const</span> response = <span class="keyword">await</span> fetch(<span class="string">`<span class="subst">$&#123;process.env.REACT_APP_API_SERVER&#125;</span>/books/`</span>, &#123;</span><br><span class="line">    method: <span class="string">&#x27;POST&#x27;</span>,</span><br><span class="line">    headers: &#123; <span class="string">&#x27;Content-Type&#x27;</span>: <span class="string">&#x27;application/json&#x27;</span> &#125;,</span><br><span class="line">    body: <span class="built_in">JSON</span>.stringify(data)</span><br><span class="line">  &#125;)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">if</span> (!response.ok) <span class="keyword">throw</span> <span class="keyword">new</span> <span class="built_in">Error</span>(response.json().message)</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> response.json()</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="更改创建图书界面-src-CreateBook-jsx-如下："><a href="#更改创建图书界面-src-CreateBook-jsx-如下：" class="headerlink" title="更改创建图书界面 src\CreateBook.jsx 如下："></a>更改创建图书界面 <code>src\CreateBook.jsx</code> 如下：</h3><figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; useMutation &#125; <span class="keyword">from</span> <span class="string">&quot;react-query&quot;</span></span><br><span class="line"><span class="keyword">import</span> &#123; useHistory &#125; <span class="keyword">from</span> <span class="string">&quot;react-router-dom&quot;</span></span><br><span class="line"><span class="keyword">import</span> &#123; Box, Heading &#125; <span class="keyword">from</span> <span class="string">&quot;rebass&quot;</span></span><br><span class="line"><span class="keyword">import</span> &#123; createBook &#125; <span class="keyword">from</span> <span class="string">&quot;../api&quot;</span></span><br><span class="line"><span class="keyword">import</span> &#123; BookForm, Container, &#125; <span class="keyword">from</span> <span class="string">&#x27;../shared&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> CreateBook = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> history = useHistory()</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> &#123; mutateAsync, isLoading &#125; = useMutation(createBook)</span><br><span class="line">  <span class="keyword">const</span> onFormSubmit = <span class="keyword">async</span> data =&gt; &#123;</span><br><span class="line">    <span class="keyword">await</span> mutateAsync(data)</span><br><span class="line">    history.push(<span class="string">&#x27;/&#x27;</span>)</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> &lt;Container&gt;</span><br><span class="line">    &lt;Box sx=&#123;&#123; <span class="attr">py</span>: <span class="number">3</span> &#125;&#125;&gt;</span><br><span class="line">      &lt;Heading sx=&#123;&#123; <span class="attr">marginBottom</span>: <span class="number">3</span> &#125;&#125;&gt;Create New Book&lt;/Heading&gt;</span><br><span class="line">      &lt;BookForm onFormSubmit=&#123;onFormSubmit&#125; isLoading=&#123;isLoading&#125; /&gt;</span><br><span class="line">    &lt;/Box&gt;</span><br><span class="line">  &lt;/Container&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>看看页面的效果：<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/%E9%80%9A%E8%BF%87ReactHooks%E7%9B%B4%E6%8E%A5%E6%93%8D%E4%BD%9Capi%E7%A5%9E%E5%BA%93%EF%BC%9AReactQuery/04.gif" alt="添加书籍"></p>
+
+
+<div class="article-footer fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div></section></div>
+
+</article>
+
+<div class="related-wrap" id="read-next"><section class="header cap theme"><span>接下来阅读</span></section><section class="body"><div class="post-title h2"><a href="/2021/04/25/%E3%80%902021-04-25%E3%80%91SwaggerUI%E9%80%9A%E8%BF%87swagger-jsdoc%E5%9C%A8node%E9%87%8C%E7%9A%84%E5%BA%94%E7%94%A8%E5%92%8C%E9%85%8D%E7%BD%AE/">SwaggerUI通过swagger-jsdoc在node里的应用和配置</a></div><div class="post-title fs14"><a href="/2021/05/04/%E3%80%902021-05-04%E3%80%91TS%E5%9C%A8ReactClass%E5%92%8CReactHooks%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/">上一篇：TS在ReactClass和ReactHooks中的应用</a></div></section></div>
+
+
+
+
+
+
+  <div class='related-wrap md' id="comments">
+    <div class='cmt-title cap theme'>
+      快来参与讨论吧
+    </div>
+    <div class='cmt-body utterances'>
+      
+
+<svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg>
+
+<div id="utterances" repo="xaoxuu/blog-comments" issue-term="pathname" theme="github-light"></div>
+
+    </div>
+  </div>
+
+
+
+      
+<footer class="page-footer fs12"><hr><div><p>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+<p>本站由 <a href="https://zyzy.info/">@自由の翼</a> 创建，使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.1.0">Stellar</a> 作为主题。</p>
+</div></footer>
+
+      <div class='float-panel mobile-only' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" viewBox="0 0 1228 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2849"><path d="M0 0m97.390199 0l973.901995 0q97.390199 0 97.390199 97.390199l0 0q0 97.390199-97.390199 97.3902l-973.901995 0q-97.390199 0-97.390199-97.3902l0 0q0-97.390199 97.390199-97.390199Z" p-id="2850"></path><path d="M0 389.560798m97.390199 0l973.901995 0q97.390199 0 97.390199 97.390199l0 0q0 97.390199-97.390199 97.3902l-973.901995 0q-97.390199 0-97.390199-97.3902l0 0q0-97.390199 97.390199-97.390199Z" p-id="2851"></path><path d="M0 779.121596m97.390199 0l973.901995 0q97.390199 0 97.390199 97.390199l0 0q0 97.390199-97.390199 97.390199l-973.901995 0q-97.390199 0-97.390199-97.390199l0 0q0-97.390199 97.390199-97.390199Z" p-id="2852"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script')
+      script.src = src
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.1.0';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js',
+    sitesjs: '/js/plugins/sites.js',
+    friendsjs: '/js/plugins/friends.js',
+  };
+
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.3.1/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper/swiper-bundle.min.css","js":"https://unpkg.com/swiper/swiper-bundle.min.js"});
+  }
+  if ('' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://cdn.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function utterances(){
+    if(!document.getElementById("utterances"))return;
+    setTimeout(function() {
+      var checkUtterances = setInterval(function () {
+        var el = document.getElementById("utterances");
+        if (!el) return
+        clearInterval(checkUtterances)
+        try {
+          el.innerHTML="";
+        } catch (error) {}
+        var script = document.createElement('script');
+        script.src = 'https://utteranc.es/client.js';
+        const keys = ['repo', 'issue-term', 'issue-number', 'theme', 'label', 'crossorigin'];
+        keys.forEach((key, i) => {
+          if (el.attributes[key] && el.attributes[key].value) {
+            script.setAttribute(key, el.attributes[key].value);
+          }
+        });
+        el.appendChild(script);
+       }, 200)
+    });
+  }
+  utterances();
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>

@@ -1,0 +1,639 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 5.4.0">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>Web性能优化（持续更新） - 自由の翼小栈</title>
+
+  
+    <meta name="description" content="本文根据这篇文章：Best Practices for Speeding Up Your Web Site，被称作”雅虎35条军规”，虽里面有的东西虽说也已经过时，但可以由此窥探前端发展的历程，一些过时的建议会略去解释">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Web性能优化（持续更新）">
+<meta property="og:url" content="https://zyzy.info/2021/05/30/%E3%80%902021-05-30%E3%80%91Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/index.html">
+<meta property="og:site_name" content="自由の翼小栈">
+<meta property="og:description" content="本文根据这篇文章：Best Practices for Speeding Up Your Web Site，被称作”雅虎35条军规”，虽里面有的东西虽说也已经过时，但可以由此窥探前端发展的历程，一些过时的建议会略去解释">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/04.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/00.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/01.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/02.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/03.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/06.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/05.png">
+<meta property="article:published_time" content="2021-05-30T09:38:14.000Z">
+<meta property="article:modified_time" content="2021-10-14T03:42:59.912Z">
+<meta property="article:author" content="自由の翼">
+<meta property="article:tag" content="面试">
+<meta property="article:tag" content="Web性能优化">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/04.png">
+  
+  
+
+  <!-- feed -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+</head>
+
+<body>
+  
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left'>
+    
+
+<header class='header'>
+  <div class='logo-wrap'>
+  
+    <a class='avatar' href='/about/'>
+      
+        <img no-lazy class='bg' src='https://cdn.jsdelivr.net/gh/cdn-x/placeholder@1.0.2/avatar/round/rainbow64@3x.webp'/>
+      
+      <img no-lazy class='avatar' src='https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.12/avatar/宇航员.svg'/>
+    </a>
+  
+  
+    <a class='title' href='/'>
+      自由の翼小栈
+    </a>
+  
+</div>
+
+  <nav class="menu dis-select"></nav>
+</header>
+
+<div class='widgets'>
+  
+    
+      
+      
+<div class="widget-wrap" id="toc"><div class="widget-header h4 dis-select"><span class="name">本文目录</span></div><div class="widget-body fs14 post"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E9%81%93%E9%9D%A2%E8%AF%95%E9%A2%98%E5%BC%95%E5%8F%91%E7%9A%84%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%80%9D%E8%80%83"><span class="toc-text">一道面试题引发的前端性能优化思考</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E9%A1%B5%E6%80%A7%E8%83%BD%E6%A3%80%E6%B5%8B%E5%B7%A5%E5%85%B7"><span class="toc-text">网页性能检测工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#window-performance"><span class="toc-text">window.performance</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Chrome%E8%87%AA%E5%B8%A6%E7%9A%84performance%E6%A3%80%E6%B5%8B%E5%B7%A5%E5%85%B7"><span class="toc-text">Chrome自带的performance检测工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E5%8C%96%E6%A3%80%E6%B5%8B%E5%88%A9%E5%99%A8%E2%80%94%E2%80%94-lighthouse-%E2%80%94%E2%80%94-%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E7%BD%91%E9%A1%B5%E6%80%A7%E8%83%BD%E6%8A%A5%E5%91%8A%EF%BC%8C%E5%B9%B6%E6%9C%89%E4%BC%98%E5%8C%96%E5%BB%BA%E8%AE%AE"><span class="toc-text">自动化检测利器—— lighthouse —— 自动生成网页性能报告，并有优化建议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E9%87%8D%E7%BB%98%E4%B8%8E%E5%9B%9E%E6%B5%81"><span class="toc-text">浏览器的重绘与回流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B5%84%E6%BA%90%E5%90%88%E5%B9%B6%E4%B8%8E%E5%8E%8B%E7%BC%A9%EF%BC%9A"><span class="toc-text">资源合并与压缩：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HTML%E5%8E%8B%E7%BC%A9"><span class="toc-text">HTML压缩</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CSS%E5%8E%8B%E7%BC%A9"><span class="toc-text">CSS压缩</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JS%E5%8E%8B%E7%BC%A9%E4%B8%8E%E6%B7%B7%E4%B9%B1"><span class="toc-text">JS压缩与混乱</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JS%E6%96%87%E4%BB%B6%E5%90%88%E5%B9%B6"><span class="toc-text">JS文件合并</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%85%E8%99%8E35%E6%9D%A1%E7%9A%84%E9%93%BE%E6%8E%A5%EF%BC%8C-%E4%BB%8E%E4%B8%AD%E6%8C%91%E5%87%BA%E4%B8%80%E4%BA%9B%E7%82%B9%E6%9D%A5%E8%AE%B2%EF%BC%8C%E5%A6%82%E4%B8%8B%EF%BC%9A"><span class="toc-text">雅虎35条的链接， 从中挑出一些点来讲，如下：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Image"><span class="toc-text">Image *</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Optimize-Images-%E5%9B%BE%E7%89%87%E4%BC%98%E5%8C%96"><span class="toc-text">Optimize Images * 图片优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Optimize-CSS-Sprites"><span class="toc-text">Optimize CSS Sprites</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Do-Not-Scale-Images-in-HTML"><span class="toc-text">Do Not Scale Images in HTML</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Make-favicon-ico-Small-and-Cacheable"><span class="toc-text">Make favicon.ico Small and Cacheable</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Content"><span class="toc-text">Content</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Make-Fewer-HTTP-Requests"><span class="toc-text">Make Fewer HTTP Requests *</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Reduce-DNS-Lookups"><span class="toc-text">Reduce DNS Lookups</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Avoid-Redirects"><span class="toc-text">Avoid Redirects *</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Postload-Components-%E6%87%92%E5%8A%A0%E8%BD%BD%E7%BB%84%E4%BB%B6"><span class="toc-text">Postload Components * 懒加载组件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Preload-Components-%E9%A2%84%E5%8A%A0%E8%BD%BD%E7%BB%84%E4%BB%B6"><span class="toc-text">Preload Components * 预加载组件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Server-%E6%9C%8D%E5%8A%A1%E7%AB%AF%E4%BC%98%E5%8C%96"><span class="toc-text">Server 服务端优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Use-a-Content-Delivery-Network-CDN"><span class="toc-text">Use a Content Delivery Network (CDN) *</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Add-Expires-or-Cache-Control-Header"><span class="toc-text">Add Expires or Cache-Control Header *</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Gzip-Components"><span class="toc-text">Gzip Components *</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Configure-ETags"><span class="toc-text">Configure ETags</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Browser-Storage-%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AD%98%E5%82%A8%E4%BC%98%E5%8C%96"><span class="toc-text">Browser Storage * 浏览器存储优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Reduce-Cookie-Size"><span class="toc-text">Reduce Cookie Size *</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LocalStorage"><span class="toc-text">LocalStorage *</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SessionStorage"><span class="toc-text">SessionStorage *</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IndexDB"><span class="toc-text">IndexDB</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Service-Worker"><span class="toc-text">Service Worker *</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Progressive-Web-Apps-%E6%B8%90%E8%BF%9B%E5%BC%8F-Web-%E5%BA%94%E7%94%A8"><span class="toc-text">Progressive Web Apps 渐进式 Web 应用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS"><span class="toc-text">CSS</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Put-Stylesheets-at-Top"><span class="toc-text">Put Stylesheets at Top *</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Choose-lt-link-gt-Over-import"><span class="toc-text">Choose &lt;link&gt; Over @import</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JavaScript"><span class="toc-text">JavaScript</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Put-Scripts-at-Bottom"><span class="toc-text">Put Scripts at Bottom *</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Make-JavaScript-and-CSS-External"><span class="toc-text">Make JavaScript and CSS External</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Minify-JavaScript-and-CSS"><span class="toc-text">Minify JavaScript and CSS *</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Minimize-DOM-Access"><span class="toc-text">Minimize DOM Access *</span></a></li></ol></li></ol></div></div></div>
+
+    
+  
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+
+  <div class='bread-nav fs12'>
+  
+    
+    <div id='breadcrumb'>
+      <a class='cap breadcrumb' href='/'>主页</a>
+      <span class="sep"></span>
+      <a class='cap breadcrumb' href='/'>文章</a>
+      
+    </div>
+    <div id='post-meta'>
+      发布于&nbsp;<time datetime='2021-05-30T09:38:14.000Z'>2021-05-30</time>
+    </div>
+  
+  </div>
+
+
+<article class='content md post'>
+<h1 class="article-title"><span>Web性能优化（持续更新）</span></h1>
+<p>本文根据这篇文章：<a target="_blank" rel="noopener" href="https://developer.yahoo.com/performance/rules.html">Best Practices for Speeding Up Your Web Site</a>，被称作”雅虎35条军规”，虽里面有的东西虽说也已经过时，但可以由此窥探前端发展的历程，一些过时的建议会略去解释</p>
+<span id="more"></span>
+<h2 id="一道面试题引发的前端性能优化思考"><a href="#一道面试题引发的前端性能优化思考" class="headerlink" title="一道面试题引发的前端性能优化思考"></a>一道面试题引发的前端性能优化思考</h2><p>相信大家都碰过这道经典面试题：在浏览器输入url到看到页面的展示，这中间发生了什么？</p>
+<p>总体答案是这样：</p>
+<ul>
+<li>浏览器输入域名（Domain） ——&gt; DNS服务器解析成IP地址 （如：12.220.12.123）</li>
+<li>通过局域网 ——&gt; 交换机 ——&gt; 路由器 ——&gt; 主干网 ——&gt; 服务端</li>
+<li>建立TCP连接</li>
+<li>服务器接收请求，查库，读文件等， 拼接好response，即返回的HTTP响应</li>
+<li>浏览器收到首屏html页面，开始渲染</li>
+<li>解析 html 为 DOM-tree</li>
+<li>解析 CSS 为 CSS-tree</li>
+<li>DOM-tree + CSS-tree 生成 render-tree 绘图</li>
+<li>根据页面节点的改变，样式的改变等，发生重绘与回流</li>
+</ul>
+<p>所谓的性能优化，就是上面的步骤加在一起，时间尽可能短，所以在这个过程种3点关键的优化因素：</p>
+<ul>
+<li>减少http请求，缩小http请求大小</li>
+<li>减少文件大小</li>
+<li>少执行代码</li>
+</ul>
+<p>大概优化点，实际工作种还要结合场景才能做出优化：</p>
+<ul>
+<li>DNS 通过缓存减少DNS查询时间</li>
+<li>网络请求过程走最近的网络环境</li>
+<li>相同静态资源是否可缓存</li>
+<li>减小http请求大小</li>
+<li>减少http请求</li>
+<li>服务的渲染</li>
+</ul>
+<h2 id="网页性能检测工具"><a href="#网页性能检测工具" class="headerlink" title="网页性能检测工具"></a>网页性能检测工具</h2><p>首先应明确检测网页所需的工具，这里列举了3种方法：</p>
+<h3 id="window-performance"><a href="#window-performance" class="headerlink" title="window.performance"></a><code>window.performance</code></h3><p>打开任意网页，控制台输入以下代码，<br>可以看到 <code>window.performance</code> 所获取到的东西，我们主要看他的<code>timing</code>属性，用开始时间减去结束时间得出各种资源加载的时间。以下的数值都算是比较粗略的数值</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> t = <span class="built_in">window</span>.performance.timing;</span><br><span class="line"><span class="built_in">console</span>.log(&#123;</span><br><span class="line">    <span class="string">&quot;DNS&quot;</span>: t.domainLookupEnd - t.domainLookupStart,</span><br><span class="line">    <span class="string">&quot;TCP&quot;</span>: t.connectEnd - t.connectStart,</span><br><span class="line">    <span class="string">&quot;获得首字节耗费时间，TTFB&quot;</span>: t.responseStart - t.navigationStart,</span><br><span class="line">    <span class="string">&quot;domReady时间&quot;</span>: t.domContentLoadedEventStart - t.navigationStart,</span><br><span class="line">    <span class="string">&quot;DOM资源下载&quot;</span>: t.responseEnd - t.responseStart</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
+<p>第一字节响应时间（TTFB）= 从发送请求到WEB服务器的时间 + WEB服务器处理请求并生成响应花费的时间 + WEB服务器生成响应到浏览器花费的时间</p>
+<p>第一字节响应时间（TTFB）要考虑的问题：<br>步骤1：从发送请求到WEB服务器的时，即向站点地址提交首次请求</p>
+<ul>
+<li>DNS 响应时间（终端用户侧解析 DNS 请求有多块）</li>
+<li>网站服务器到终端用户的距离，越短越好</li>
+<li>网络稳定性</li>
+</ul>
+<p>步骤2：WEB服务器处理请求并生成响应花费的时间，即由 web 服务器解析本次请求</p>
+<ul>
+<li>物理硬件响应时间 （web 服务器解析请求有多快）</li>
+<li>既有的服务器操作负载</li>
+<li>数据中心任何网络相关的延迟</li>
+</ul>
+<p>步骤3：WEB服务器生成响应到浏览器花费的时间， 即向客户端发送首个响应的时间</p>
+<ul>
+<li>终端用户的网速</li>
+<li>连接稳定性</li>
+</ul>
+<h3 id="Chrome自带的performance检测工具"><a href="#Chrome自带的performance检测工具" class="headerlink" title="Chrome自带的performance检测工具"></a>Chrome自带的performance检测工具</h3><h3 id="自动化检测利器——-lighthouse-——-自动生成网页性能报告，并有优化建议"><a href="#自动化检测利器——-lighthouse-——-自动生成网页性能报告，并有优化建议" class="headerlink" title="自动化检测利器—— lighthouse —— 自动生成网页性能报告，并有优化建议"></a>自动化检测利器—— <code>lighthouse</code> —— 自动生成网页性能报告，并有优化建议</h3><p>符合谷歌的 PWA 标准的检测，关于PWA的概念，点击<a href="#PWA%E6%A0%87%E5%87%86">这里</a></p>
+<p>方法一，直接安装 npm 库</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm i -g lighthouse</span><br></pre></td></tr></table></figure>
+
+<p>使用起来超级简单</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lighthouse &lt;需要测试的网页链接&gt;</span><br></pre></td></tr></table></figure>
+
+<p>方法二，浏览器也自带 <code>lighthouse</code> 功能，以下是 <code>Edge</code> 浏览器</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/04.png" alt="文件合并"></p>
+<h2 id="浏览器的重绘与回流"><a href="#浏览器的重绘与回流" class="headerlink" title="浏览器的重绘与回流"></a>浏览器的重绘与回流</h2><h2 id="资源合并与压缩："><a href="#资源合并与压缩：" class="headerlink" title="资源合并与压缩："></a>资源合并与压缩：</h2><p>现代化的前端跑不掉资源压缩这一步，平时工程化用的 <code>webpack</code> 就是一款压缩工具</p>
+<h3 id="HTML压缩"><a href="#HTML压缩" class="headerlink" title="HTML压缩"></a>HTML压缩</h3><p>原理：将HTML里的空格，换行符，制表符等去掉</p>
+<p>方法：</p>
+<ol>
+<li>node作为构建工具，提供了 <a target="_blank" rel="noopener" href="https://www.npmjs.com/package/html-minifier">html-minifier</a> 工具，webpack的 <a target="_blank" rel="noopener" href="https://webpack.docschina.org/plugins/html-minimizer-webpack-plugin/#root">HTMLMinifierWebpackPlugin</a> 中内置了该构建工具</li>
+<li>后端模板引擎渲染压缩，如ejs模板，<code>express</code> 的 <code>renderFile() </code></li>
+</ol>
+<h3 id="CSS压缩"><a href="#CSS压缩" class="headerlink" title="CSS压缩"></a>CSS压缩</h3><p>原理：</p>
+<ul>
+<li>除了像HTML一样删除空格，换行符等之外</li>
+<li>删除无效代码</li>
+<li>css语义合并</li>
+</ul>
+<p>方法：   </p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/html-minifier">html-minifier</a> 可以对html中的内联css样式进行压缩，需配置其中的选项</li>
+<li><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/clean-css">clean-css</a> 对 css 的压缩</li>
+<li>Webpack 的 <a target="_blank" rel="noopener" href="https://webpack.js.org/plugins/css-minimizer-webpack-plugin/#root">CssMinimizerWebpackPlugin</a></li>
+</ol>
+<h3 id="JS压缩与混乱"><a href="#JS压缩与混乱" class="headerlink" title="JS压缩与混乱"></a>JS压缩与混乱</h3><p>原理：</p>
+<ul>
+<li>删除无效字符</li>
+<li>删除注释</li>
+<li>代码语义化的缩减和优化</li>
+<li>代码保护</li>
+</ul>
+<p>方法：</p>
+<ol>
+<li><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/html-minifier">html-minifier</a> 可以对html中的js进行压缩，需配置其中的选项</li>
+<li><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/uglify-js">uglifyjs3</a></li>
+</ol>
+<h3 id="JS文件合并"><a href="#JS文件合并" class="headerlink" title="JS文件合并"></a>JS文件合并</h3><p>如果不合并请求会有以下影响<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/00.png" alt="文件合并"></p>
+<p>但合并请求也不是万能的，其缺点体现在：</p>
+<ul>
+<li><p>首屏渲染的问题<br>现在的前端都用类似react或者vue等前端框架，如果使用vue或者react没有进行服务端渲染的操作，而且服务端合并请求的JS文件又比较大，那么请求回来的JS加载完成后，才会执行react或vue的框架代码在客户端加载渲染，那么首屏白屏的时间就会比较久</p>
+</li>
+<li><p>缓存失效的问题<br>现在的打包用webpack都会加上md5戳，用于标识单个js文件是否发生改变，如果JS合并了，就会使原先的md5戳失效，就得重新加载</p>
+</li>
+</ul>
+<p>针对合并带来的负面效果，应遵循以下原则：</p>
+<ul>
+<li><p>公共库合并<br>公共库代码比较少做频繁变动，应单独打包为一个js文件，和业务代码的js文件分开，避免公共库的缓存失效</p>
+</li>
+<li><p>不同页面的合并<br>这种发生在vue或react的单页面应用，通常我们打包出来的单页应用只有一个js文件，但这种方法在效率提升来说有阻碍，最好的方法是每个页面打包为一个js文件，当某页面被路由到加载到时，才去加载对应页面的js文件，这种方式在webpack中有相应的解决方案，就是<a target="_blank" rel="noopener" href="https://www.webpackjs.com/api/module-methods/#import-"> <code>loadable</code> 异步加载组件</a></p>
+</li>
+</ul>
+<h2 id="雅虎35条的链接，-从中挑出一些点来讲，如下："><a href="#雅虎35条的链接，-从中挑出一些点来讲，如下：" class="headerlink" title="雅虎35条的链接， 从中挑出一些点来讲，如下："></a><a target="_blank" rel="noopener" href="https://developer.yahoo.com/performance/rules.html">雅虎35条的链接</a>， 从中挑出一些点来讲，如下：</h2><h2 id="Image"><a href="#Image" class="headerlink" title="Image *"></a>Image *</h2><p>之所以把图片放在最前，因为优化图片的效率是比较大的</p>
+<h3 id="Optimize-Images-图片优化"><a href="#Optimize-Images-图片优化" class="headerlink" title="Optimize Images * 图片优化"></a>Optimize Images * 图片优化</h3><ol>
+<li><p>各种图片格式的应用场景：<br> 1.1 png 大部分需要使用透明的场景<br> pngcrush 或其他工具压缩png。在线压缩工具 https:/ tinypng.com/   </p>
+<p> 1.2 jpg 大部分不需要透明的场景<br> jpegtran或其它工具压缩jpeg，大图用jpg    </p>
+<p> 1.3 SVG矢量图，类似XML语法，内嵌在html里的代码图片（用来绘制地图，股票K线图等），可使用 <a target="_blank" rel="noopener" href="https://www.iconfont.cn/">阿里的iconfont</a> 解决icon问题<br> <a target="_blank" rel="noopener" href="https://www.w3school.com.cn/svg/index.asp">SVG的教程</a></p>
+<p> 例如画一个长方形：</p>
+ <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">width</span>=<span class="string">&quot;100%&quot;</span> <span class="attr">height</span>=<span class="string">&quot;100%&quot;</span> <span class="attr">version</span>=<span class="string">&quot;1.1&quot;</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.w3.org/2000/svg&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">rect</span> <span class="attr">width</span>=<span class="string">&quot;300&quot;</span> <span class="attr">height</span>=<span class="string">&quot;100&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">style</span>=<span class="string">&quot;fill:rgb(0,0,255);stroke-width:1;</span></span></span><br><span class="line"><span class="tag"><span class="string">    stroke:rgb(0,0,0)&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p> 1.4 Webp 安卓可全用<br> google在2010年开发的一种全能的图片，但safari浏览器 和 webview 的兼容性不太好   </p>
+<p> 1.5 png ——&gt; Webp 格式网站：<a target="_blank" rel="noopener" href="https://zhitu.isux.us/">智图</a></p>
+</li>
+</ol>
+<ol start="2">
+<li>Image inline，即将图片内容内嵌到html里，减少网站的HTTP请求数量，多用于移动端和小图标：<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/01.png" alt="淘宝移动端大量使用image inline">   </li>
+</ol>
+<p>如何将图片转换为base64编码内嵌到html中，有一个<a target="_blank" rel="noopener" href="https://www.vgot.net/test/image2base64.php">在线转换网站</a><br>，在html文件图片所在的src=””中添加data:image/jpg;base64,（注：这里是jpg格式，你可以改写成你编码图片的类型）<br>，将你编码的Base64代码复制到image/jpg;base64, 的后面，然后用浏览器运行即可。</p>
+<p>当然还可以像taobao主页一样，嵌入到css的属性中使用：<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/02.png" alt="inline image 可以通过css属性设置"></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/03.png" alt="sprite cow 复制上面这块代码去粘贴即可"></p>
+<p><a href="#%E6%87%92%E5%8A%A0%E8%BD%BD">3. 懒加载</a></p>
+<p><a href="#%E9%A2%84%E5%8A%A0%E8%BD%BD">4. 预加载</a></p>
+<h3 id="Optimize-CSS-Sprites"><a href="#Optimize-CSS-Sprites" class="headerlink" title="Optimize CSS Sprites"></a>Optimize CSS Sprites</h3><p><strong>实际上，随着带宽的普遍提高，现在不少网站都不用雪碧图了，特别是PC端，移动端用的还相对比PC端多些。但仍有网站在使用他。而雪碧图在应用上也有缺点，如果过多图标集合在一个图的话，则会出现如果该图片请求后读取不出，所有应用到该图片的图标全部会失效</strong></p>
+<blockquote>
+<ul>
+<li>Arranging the images in the sprite horizontally as opposed to vertically usually results in a smaller file size.   </li>
+<li>Combining similar colors in a sprite helps you keep the color count low, ideally under 256 colors so to fit in a PNG8.   </li>
+<li>“Be mobile-friendly” and don’t leave big gaps between the images in a sprite. This doesn’t affect the file size as much but requires less memory for the user agent to decompress the image into a pixel map. 100x100 image is 10 thousand pixels, where 1000x1000 is 1 million pixels   </li>
+</ul>
+</blockquote>
+<ul>
+<li><p>雪碧图最好竖放，避免横放，达到最小尺寸</p>
+</li>
+<li><p>相似图片合并，颜色相近的合并，颜色数会更少</p>
+</li>
+<li><p>移动端的雪碧图减少空隙</p>
+</li>
+<li><p>雪碧图的生成，用这个<a target="_blank" rel="noopener" href="http://www.spritecow.com/">网站</a></p>
+</li>
+</ul>
+<p>选择器性能<br>内联样式 (style=””) &gt; ID 选择器 (id) &gt; 类选择器 (class) = 属性选择器 ( a[href], input[type=”text”] 等 ) = 伪类选择器 (nth-child(n), :hover, :active 等) &gt; 元素（类型）选择器  = 伪元素选择器</p>
+<h3 id="Do-Not-Scale-Images-in-HTML"><a href="#Do-Not-Scale-Images-in-HTML" class="headerlink" title="Do Not Scale Images in HTML"></a>Do Not Scale Images in HTML</h3><blockquote>
+<p>If you need <code>&lt;img width=&quot;100&quot; height=&quot;100&quot; src=&quot;mycat.jpg&quot; alt=&quot;My Cat&quot; /&gt;</code><br>then your image (mycat.jpg) should be 100x100px rather than a scaled down 500x500px image.</p>
+</blockquote>
+<p>不要在HTML中缩放图片，如果你需要 <code>&lt;img width=&quot;100&quot; height=&quot;100&quot; src=&quot;mycat.jpg&quot; alt=&quot;My Cat&quot; /&gt;</code> 的图片，直接做一张 <code>100*100</code> 的图即可，而不是拿一张 <code>500*500</code> 的图片进行缩放</p>
+<h3 id="Make-favicon-ico-Small-and-Cacheable"><a href="#Make-favicon-ico-Small-and-Cacheable" class="headerlink" title="Make favicon.ico Small and Cacheable"></a>Make favicon.ico Small and Cacheable</h3><p>使得 <code>favicon.ico</code> 图片可以缓存，如果不进行缓存，不关心他，浏览器还是会请求他</p>
+<h2 id="Content"><a href="#Content" class="headerlink" title="Content"></a>Content</h2><h3 id="Make-Fewer-HTTP-Requests"><a href="#Make-Fewer-HTTP-Requests" class="headerlink" title="Make Fewer HTTP Requests *"></a>Make Fewer HTTP Requests *</h3><p>减少 HTTP 请求</p>
+<h3 id="Reduce-DNS-Lookups"><a href="#Reduce-DNS-Lookups" class="headerlink" title="Reduce DNS Lookups"></a>Reduce DNS Lookups</h3><p>减少DNS查询</p>
+<h3 id="Avoid-Redirects"><a href="#Avoid-Redirects" class="headerlink" title="Avoid Redirects *"></a>Avoid Redirects *</h3><p>避免重定向</p>
+<h3 id="Postload-Components-懒加载组件"><a href="#Postload-Components-懒加载组件" class="headerlink" title="Postload Components * 懒加载组件"></a><a id="懒加载">Postload Components * 懒加载组件</a></h3><p>图片进入可视区域后再请求图片资源。适用于电商等图片很多，页面很长的业务场景<br>减少无效资源的加载<br>并发加载的资源过多会阻塞js的加载，影响网站正常使用</p>
+<p>案例可以看我的另一篇文章，关于<a href="https://zyzy.info/2021/04/23/%E6%97%A0%E9%99%90%E6%BB%9A%E5%8A%A8%E5%92%8C%E6%87%92%E5%8A%A0%E8%BD%BD%E9%80%9A%E8%BF%87IntersectionObserver%E5%92%8CReact_Hooks%E5%AE%9E%E7%8E%B0/">JS IntersectionObserver Api</a>，可以这个将这个api用于懒加载</p>
+<p>下面结合<code>react</code> 写一个懒加载案例</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span></span><br><span class="line"><span class="keyword">import</span> <span class="string">&#x27;./Lazyload.css&#x27;</span></span><br><span class="line"><span class="keyword">import</span> &#123; v4 <span class="keyword">as</span> uuidv4 &#125; <span class="keyword">from</span> <span class="string">&#x27;uuid&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="comment">/* </span></span><br><span class="line"><span class="comment">总体思路：</span></span><br><span class="line"><span class="comment">1. 先创建图片占位符</span></span><br><span class="line"><span class="comment">2. 创建 IntersectionObserver 对象监听这些图片占位符</span></span><br><span class="line"><span class="comment">*/</span></span><br><span class="line"><span class="keyword">const</span> refs = [] <span class="comment">// 图片的 ref（操作dom时用）</span></span><br><span class="line"><span class="keyword">const</span> images = []</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> (<span class="keyword">let</span> i=<span class="number">0</span>; i&lt;<span class="number">4</span>; i++) &#123;</span><br><span class="line">  <span class="keyword">const</span> ref = React.createRef() </span><br><span class="line">  refs.push(ref)</span><br><span class="line">  images.push(<span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&#x27;image-box&#x27;</span> <span class="attr">key</span>=<span class="string">&#123;uuidv4()&#125;</span>&gt;</span></span></span><br><span class="line"><span class="xml">        <span class="tag">&lt;<span class="name">img</span> <span class="attr">ref</span>=<span class="string">&#123;</span> <span class="attr">ref</span> &#125; <span class="attr">data-src</span>=<span class="string">&#123;</span>`<span class="attr">https:</span>//<span class="attr">pschina.github.io</span>/<span class="attr">src</span>/<span class="attr">assets</span>/<span class="attr">images</span>/$&#123;<span class="attr">i</span>&#125;<span class="attr">.jpg</span>`&#125; /&gt;</span></span></span><br><span class="line"><span class="xml">      <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>)</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> LazyLoadPage = <span class="function">()=&gt;</span>&#123;</span><br><span class="line">  <span class="keyword">const</span> io = <span class="keyword">new</span> IntersectionObserver( <span class="function"><span class="params">entries</span> =&gt;</span>&#123;</span><br><span class="line">    entries.forEach(<span class="function">(<span class="params">item</span>)=&gt;</span>&#123; </span><br><span class="line">      <span class="keyword">if</span> (item.intersectionRatio &lt;= <span class="number">0</span> ) <span class="keyword">return</span> <span class="comment">// intersectionRatio 是可见度 如果当前元素不可见就结束该函数。</span></span><br><span class="line">      item.target.src = item.target.dataset.src</span><br><span class="line">    &#125;)</span><br><span class="line">  <span class="comment">// [0.01] 这是触发时机 0.01代表出现 1%的面积出现在可视区触发一次回掉函数</span></span><br><span class="line">  <span class="comment">// threshold = [0, 0.25, 0.5, 0.75]  表示分别在0% 25% 50% 75% 时触发回掉函数</span></span><br><span class="line">  &#125;, [<span class="number">0.01</span>] );</span><br><span class="line"></span><br><span class="line">  <span class="keyword">const</span> onload = <span class="function">()=&gt;</span> refs.forEach( <span class="function"><span class="params">i</span> =&gt;</span> io.observe(i.current) )</span><br><span class="line">  </span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span> <span class="attr">className</span>=<span class="string">&#x27;box&#x27;</span>&gt;</span></span></span><br><span class="line"><span class="xml">    &#123;images&#125;</span></span><br><span class="line"><span class="xml">    <span class="tag">&lt;<span class="name">img</span> <span class="attr">onError</span>=<span class="string">&#123;onload&#125;</span> <span class="attr">src</span>=<span class="string">&quot;&quot;</span> /&gt;</span></span></span><br><span class="line"><span class="xml">  <span class="tag">&lt;/<span class="name">div</span>&gt;</span></span>&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> LazyLoadPage</span><br></pre></td></tr></table></figure>
+
+<h3 id="Preload-Components-预加载组件"><a href="#Preload-Components-预加载组件" class="headerlink" title="Preload Components * 预加载组件"></a><a id="预加载">Preload Components * 预加载组件</a></h3><p>方法一，加载时另 <code>display</code> 为 <code>none</code></p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;http://xxx.xxx&quot;</span> <span class="attr">style</span>=<span class="string">&quot;display: none&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<p>方法二，利用 <code>new Image()</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> img = <span class="keyword">new</span> Image()</span><br><span class="line">img.src = <span class="string">&#x27;http://xxx.xxx/&#x27;</span></span><br></pre></td></tr></table></figure>
+
+<p>方法三，<code>XHLHttpRequest</code> 对象，这种方法有跨域问题</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> xmlhttprequest = <span class="keyword">new</span> XMLHttpRequest()</span><br><span class="line"></span><br><span class="line">xmlhttprequest.onreadystatechange = callback</span><br><span class="line">xmlhttprequest.onprogress = progressCallback</span><br><span class="line">xmlhttprequest.open(<span class="string">&#x27;GET&#x27;</span>, <span class="string">&#x27;http://image.baidu.com/mouse.jpg&#x27;</span>, <span class="literal">true</span>)</span><br><span class="line">xmlhttprequest.send()</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">callback</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">if</span> (xmlhttprequest.readyState == <span class="number">4</span> &amp;&amp; xmlhttprequest.status == <span class="number">200</span> ) &#123;</span><br><span class="line">    <span class="keyword">var</span> reponseText = xmlhttprequest.responseText</span><br><span class="line">  &#125;<span class="keyword">else</span>&#123;</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&#x27;Request was unsuccessful:&#x27;</span> + xmlhttprequest.status)</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">progressCallback</span> (<span class="params">e</span>) </span>&#123;</span><br><span class="line">  e = e || event</span><br><span class="line">  <span class="keyword">if</span> ( e.lengthComputable) <span class="built_in">console</span>.log(<span class="string">`Receievd <span class="subst">$&#123;e.loaded&#125;</span> of <span class="subst">$&#123;e.total&#125;</span> bytes`</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>方法四，使用库 <a target="_blank" rel="noopener" href="http://www.createjs.cc/preloadjs/"><code>PreloadJS</code></a> 进行预加载</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">var</span> queue = <span class="keyword">new</span> createjs.LoadQueue(<span class="literal">false</span>)</span><br><span class="line"></span><br><span class="line">queue.on(<span class="string">&#x27;complete&#x27;</span>, handleComplete, <span class="built_in">this</span>)</span><br><span class="line"></span><br><span class="line">queue.loadManifest([</span><br><span class="line">  &#123;<span class="attr">id</span>: <span class="string">&#x27;myImg&#x27;</span>, <span class="attr">src</span>:<span class="string">&#x27;http://pic26.nipic.com/20121213/6168183_004444903000_2.jpg&#x27;</span>&#125;,</span><br><span class="line">  &#123;<span class="attr">id</span>: <span class="string">&#x27;myImg2&#x27;</span>, <span class="attr">src</span>:<span class="string">&#x27;http://pic9.nipic.com/20100814/2839526_193147158170_2.jpg&#x27;</span>&#125;,</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">handleComplete</span> (<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">var</span> img = queue.getResult(<span class="string">&#x27;myImg&#x27;</span>)</span><br><span class="line">  <span class="built_in">document</span>.body.appendChild(img)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="Server-服务端优化"><a href="#Server-服务端优化" class="headerlink" title="Server 服务端优化"></a>Server 服务端优化</h2><h3 id="Use-a-Content-Delivery-Network-CDN"><a href="#Use-a-Content-Delivery-Network-CDN" class="headerlink" title="Use a Content Delivery Network (CDN) *"></a>Use a Content Delivery Network (CDN) *</h3><p>CDN，内容分发网络，用于静态资源的加载，选择离用户近的服务器节点，节省物理上的距离，让资源到达用户的物理距离缩短</p>
+<p>那么请求CDN内容时，如果请求头携带cookie是没用的，所以请求CDN时，cookie最好去掉，CDN的域名如果和主站域名一样，就会携带Cookie过去，所以找CDN时最好不要和主站的域名一样</p>
+<p>例如淘宝的页面，直接在头部加DNS script标签即可。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;dns-prefetch&quot;</span> <span class="attr">href</span>=<span class="string">&quot;//g.alicdn.com&quot;</span> /&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Add-Expires-or-Cache-Control-Header"><a href="#Add-Expires-or-Cache-Control-Header" class="headerlink" title="Add Expires or Cache-Control Header *"></a>Add Expires or Cache-Control Header *</h3><blockquote>
+<p>There are two aspects to this rule:</p>
+<ul>
+<li>For static components: implement “Never expire” policy by setting far future Expires &gt; header</li>
+<li>For dynamic components: use an appropriate Cache-Control header to help the browser &gt; with conditional requests</li>
+</ul>
+</blockquote>
+<p>雅虎建议将 <code>Expires</code> 字段用于所有组件，不单止于图片：</p>
+<blockquote>
+<p>Expires headers are most often used with images, but they should be used on all components including scripts, stylesheets, and Flash components.</p>
+</blockquote>
+<p>静态文件，请求头可以设置永不过期或者把时间设置的长一些</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">expires: never</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> or</span></span><br><span class="line">Expires: Thu, 15 Apr 2099 20:00:00 GMT</span><br></pre></td></tr></table></figure>
+
+<p>对于动态组件，利用请求头的<code>Cache-Control</code> 控制，例如</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cache-control: max-age&#x3D;2592000</span><br></pre></td></tr></table></figure>
+
+<p><code>Cache-Control</code>的值有以下几种情况：</p>
+<p>no-cache 直接要服务的新内容，不拿缓存的<br>no-store 不缓存请求或响应的任何内容<br>max-age 响应的最大Age值<br>min-fresh 期望在指定时间内的响应扔有效<br>only-if-chache 从缓存获取资源<br>max-stale 接收已过期响应<br>min-fresh 期望在指定时间内的响应仍有效<br>no-transform 代理不可更改媒体类型<br>cache-extension 新指令标记（token）   </p>
+<p>其中，最常用的是 <code>no-cache</code>，<code>no-store</code>，<code>max-age</code> 3个值</p>
+<h3 id="Gzip-Components"><a href="#Gzip-Components" class="headerlink" title="Gzip Components *"></a>Gzip Components *</h3><p>网页中重复的内容，会用Gzip压缩，显著减少文件大小，在 <a href="https://zyzy.info/2021/05/28/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/#Gzip%E5%8E%8B%E7%BC%A9">Nginx</a> 里有Nigix配置Gzip的介绍</p>
+<p>请求头中添加：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Accept-Encoding: gzip, deflate</span><br></pre></td></tr></table></figure>
+<p>相应头中添加：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Content-Encoding: gzip</span><br></pre></td></tr></table></figure>
+
+<h3 id="Configure-ETags"><a href="#Configure-ETags" class="headerlink" title="Configure ETags"></a>Configure ETags</h3><blockquote>
+<p>Entity tags (ETags) are a mechanism that web servers and  browsers use to determine whether the component in the browser’s cache matches the one on the origin server. </p>
+</blockquote>
+<p><code>ETags</code> 是一种机制，用来确定浏览器的缓存内容和服务器的是否匹配，如匹配，则用浏览器的内容，如不匹配，则请求服务器新的内容</p>
+<p>请求时的头部字段：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Last-Modified: Tue, 12 Dec 2006 03:03:59 GMT</span><br><span class="line">ETag: &quot;10c24bc-4ab-457e1c1f&quot;</span><br></pre></td></tr></table></figure>
+
+<p>响应的头部字段：</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">If-Modified-Since: Tue, 12 Dec 2006 03:03:59 GMT</span><br><span class="line">If-None-Match: &quot;10c24bc-4ab-457e1c1f&quot;</span><br><span class="line">HTTP/1.1 304 Not Modified</span><br></pre></td></tr></table></figure>
+
+<h2 id="Browser-Storage-浏览器存储优化"><a href="#Browser-Storage-浏览器存储优化" class="headerlink" title="Browser Storage * 浏览器存储优化"></a>Browser Storage * 浏览器存储优化</h2><h3 id="Reduce-Cookie-Size"><a href="#Reduce-Cookie-Size" class="headerlink" title="Reduce Cookie Size *"></a>Reduce Cookie Size *</h3><blockquote>
+<p>Eliminate unnecessary cookies<br>Keep cookie sizes as low as possible to minimize the impact on the user response &gt; time<br>Be mindful of setting cookies at the appropriate domain level so other &gt; sub-domains are not affected<br>Set an Expires date appropriately. An earlier Expires date or none removes the cookie sooner, improving the user response time   </p>
+</blockquote>
+<ol>
+<li>Cookie是请求头的一个字段，如果存储的信息过多过大，必然会影响性能，减少Cookie体积大小，只存储用户id等简单信息    </li>
+<li>设置合适的 <code>expire</code> 字段让cookie过期</li>
+<li>设置cookie时，应注意设置头部字段 <code>Set-Cookie：httponly</code>，只允许http通信，这样才不会被js篡改 </li>
+<li>cookie由于是种在域名下的，请求头的一个字段，所以单独带在域名中会造成CDN的流量产生不必要的损耗，解决方法是 <strong>CDN域名和主站域名独立开来</strong></li>
+</ol>
+<h3 id="LocalStorage"><a href="#LocalStorage" class="headerlink" title="LocalStorage *"></a>LocalStorage *</h3><ol>
+<li>HTML5专门设计出来用于浏览器存储的</li>
+<li>大小为5Mb左右，比cookie的4kb大很多</li>
+<li>不进行通信</li>
+<li>接口封装相较于cookie较好</li>
+<li>浏览器本地缓存方案 </li>
+</ol>
+<h3 id="SessionStorage"><a href="#SessionStorage" class="headerlink" title="SessionStorage *"></a>SessionStorage *</h3><ol>
+<li>会话级别的浏览器存储</li>
+<li>大小5M左右</li>
+<li>不进行通信</li>
+<li>接口封装相</li>
+<li>对于表单信息的维护，关闭浏览器的标签页，SessionStorage会自动清空<br>优化点：</li>
+<li>例如用户注册页面，需要填写很多东西，如果用户还没提交但刷新了该页面，用户体验会不好</li>
+<li>而此时可将用户所填的信息存储到SessionStorage里，用户刷新页面时，所填写的东西也不会清空。</li>
+</ol>
+<h3 id="IndexDB"><a href="#IndexDB" class="headerlink" title="IndexDB"></a>IndexDB</h3><ol>
+<li>是一种低级API，用于客户端存储大量结构化数据。说白了，就是浏览器的数据库</li>
+<li>使用的网站较少</li>
+</ol>
+<h3 id="Service-Worker"><a href="#Service-Worker" class="headerlink" title="Service Worker *"></a>Service Worker *</h3><ol>
+<li>Service Worker 是运行在浏览器背后的独立线程，一般可以用来实现缓存功能。</li>
+<li>使用 Service Worker的话，传输协议必须为 HTTPS。因为 Service Worker 有拦截和处理网络请求的能力，所以必须使用 HTTPS 协议来保障安全。</li>
+<li>简单点说，就是缓存js文件到浏览器里，让客户端有大量处理js的能力。</li>
+<li>例如，现在的Three.js 或 WebGL可以用于3D的渲染，但3D图的js脚本及数据占用资源比较多，一个脚本可达几Mb，可以用Service Worker将其缓存起来执行。</li>
+<li>利用拦截和处理网络请求的能力，可以实现离线应用功能。</li>
+</ol>
+<p>检查工具：在chrome浏览器输入<br><code>chrome://serviceworker-internals/</code> 检查所有 service worker<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/06.png" alt="sprite cow 复制上面这块代码去粘贴即可"></p>
+<p><code>chrome://inspect/#service-workers</code> 检查正在运行的 service worker<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/05.png" alt="sprite cow 复制上面这块代码去粘贴即可"></p>
+<h3 id="Progressive-Web-Apps-渐进式-Web-应用"><a href="#Progressive-Web-Apps-渐进式-Web-应用" class="headerlink" title="Progressive Web Apps 渐进式 Web 应用"></a><a id="PWA标准">Progressive Web Apps 渐进式 Web 应用</a></h3><ol>
+<li>PWA 标准由 谷歌提出的移动端的标准。例如，在移动端的弱网环境下，你站点的加载速度。离线环境下，能不能有基本的页面访问</li>
+<li>可靠：在没有网络环境中也能提供基本的页面访问</li>
+<li>快速：因为Web App是一个增量加载的过程，不同于iOS或者安卓的原生开发，Web App加载必受到网络条件的制约</li>
+<li>融入（Engaging）：将其能力对标原生APP，应用可以被添加到手机桌面，并和普通应用一样有全屏，推送等特性</li>
+</ol>
+<h2 id="CSS"><a href="#CSS" class="headerlink" title="CSS"></a>CSS</h2><p>CSS是存在CSS阻塞的，</p>
+<ul>
+<li>css 如果在 head 中以 link 方式引入会阻塞页面的渲染</li>
+<li>css 阻塞js的执行</li>
+<li>但 css 不阻塞外部脚本的加载</li>
+</ul>
+<h3 id="Put-Stylesheets-at-Top"><a href="#Put-Stylesheets-at-Top" class="headerlink" title="Put Stylesheets at Top *"></a>Put Stylesheets at Top *</h3><blockquote>
+<p>While researching performance at Yahoo!, we discovered that moving stylesheets to the document HEAD makes pages appear to be loading faster. This is because putting stylesheets in the HEAD allows the page to render progressively.</p>
+</blockquote>
+<p>将样式表放在头部，可以让页面逐步呈现</p>
+<h3 id="Choose-lt-link-gt-Over-import"><a href="#Choose-lt-link-gt-Over-import" class="headerlink" title="Choose &lt;link&gt; Over @import"></a>Choose <code>&lt;link&gt;</code> Over @import</h3><blockquote>
+<p>In IE @import behaves the same as using <link> at the bottom of the page, so it’s best not to use it.</p>
+</blockquote>
+<p>在IE浏览器中 <code>@import</code> 和 <code>&lt;link&gt;</code> 是一样的，位于底部执行，这和我们推荐的CSS放在HEAD中执行背道而驰，所以少用 <code>@import</code></p>
+<h2 id="JavaScript"><a href="#JavaScript" class="headerlink" title="JavaScript"></a>JavaScript</h2><p>JS 阻塞</p>
+<ul>
+<li>直接引入js阻塞页面的渲染，所以才有后面</li>
+<li>js不阻塞资源加载</li>
+<li>js按顺序执行，阻塞后续js逻辑执行</li>
+</ul>
+<h3 id="Put-Scripts-at-Bottom"><a href="#Put-Scripts-at-Bottom" class="headerlink" title="Put Scripts at Bottom *"></a>Put Scripts at Bottom *</h3><blockquote>
+<p>The problem caused by scripts is that they block parallel downloads.</p>
+</blockquote>
+<blockquote>
+<p>While a script is downloading, however, the browser won’t start any other downloads, even on different hostnames.</p>
+</blockquote>
+<p>JS的加载本身就是一种阻塞，所以尽量让HTML+CSS先把页面渲染出来，再执行 底部的<code>&lt;script&gt;&lt;/script&gt;</code> 标签</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;!DOCTYPE <span class="meta-keyword">HTML</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">html</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">head</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">title</span>&gt;</span> <span class="tag">&lt;/<span class="name">title</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">head</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">body</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">script</span> <span class="attr">type</span>=<span class="string">&quot;text/javascript&quot;</span> <span class="attr">src</span>=<span class="string">&quot;&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span>    </span><br><span class="line">    <span class="tag">&lt;/<span class="name">body</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">html</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Make-JavaScript-and-CSS-External"><a href="#Make-JavaScript-and-CSS-External" class="headerlink" title="Make JavaScript and CSS External"></a>Make JavaScript and CSS External</h3><blockquote>
+<p>if the JavaScript and CSS are in external files cached by the browser, the size of the HTML document is reduced without increasing the number of HTTP requests.</p>
+</blockquote>
+<p>(除了主页) 使用CSS或JS的外部链接，浏览器会缓存 JavaScript 和 CSS 文件，而不会增加 HTTP 请求数。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;stylesheet&quot;</span> <span class="attr">href</span>=<span class="string">&quot;/static/css/xxx.min.css&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">script</span> <span class="attr">nonce</span>=<span class="string">&quot;b3/zKeoFCfru0lTFQr8Dyg==&quot;</span> <span class="attr">src</span>=<span class="string">&quot;https://s.yimg.com/ss/rapid-3.41.3.js&quot;</span>&gt;</span><span class="tag">&lt;/<span class="name">script</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+<h3 id="Minify-JavaScript-and-CSS"><a href="#Minify-JavaScript-and-CSS" class="headerlink" title="Minify JavaScript and CSS *"></a>Minify JavaScript and CSS *</h3><blockquote>
+<p>Minification is the practice of removing unnecessary characters from code to reduce its size thereby improving load times. </p>
+</blockquote>
+<p>最小化 JS 和 CSS，现在我们多用 webpack等打包工具来做到这一步</p>
+<h3 id="Minimize-DOM-Access"><a href="#Minimize-DOM-Access" class="headerlink" title="Minimize DOM Access *"></a>Minimize DOM Access *</h3><blockquote>
+<p>Accessing DOM elements with JavaScript is slow so in order to have a more responsive page, you should:</p>
+<ul>
+<li>Cache references to accessed elements   </li>
+<li>Update nodes “offline” and then add them to the tree   </li>
+<li>Avoid fixing layout with JavaScript  </li>
+</ul>
+</blockquote>
+<p>最小化DOM访问，尽可能少的进行DOM操作，这点可以从现在的<code>React</code> <code>Vue</code>等MVVM框架体现出来</p>
+
+
+<div class="article-footer fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div></section></div>
+
+</article>
+
+<div class="related-wrap" id="read-next"><section class="header cap theme"><span>接下来阅读</span></section><section class="body"><div class="post-title h2"><a href="/2021/05/28/%E3%80%902021-05-28%E3%80%91Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/">Nginx自学笔记</a></div><div class="post-title fs14"><a href="/2021/06/08/%E3%80%902021-06-08%E3%80%91Electron%E9%85%8D%E7%BD%AEReact%E6%88%96Vue%E5%AE%9E%E8%B7%B5/">上一篇：Electron配置React或Vue实践（Vue部分待更新）</a></div></section></div>
+
+
+
+
+
+
+  <div class='related-wrap md' id="comments">
+    <div class='cmt-title cap theme'>
+      快来参与讨论吧
+    </div>
+    <div class='cmt-body utterances'>
+      
+
+<svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg>
+
+<div id="utterances" repo="xaoxuu/blog-comments" issue-term="pathname" theme="github-light"></div>
+
+    </div>
+  </div>
+
+
+
+      
+<footer class="page-footer fs12"><hr><div><p>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+<p>本站由 <a href="https://zyzy.info/">@自由の翼</a> 创建，使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.1.0">Stellar</a> 作为主题。</p>
+</div></footer>
+
+      <div class='float-panel mobile-only' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" viewBox="0 0 1228 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2849"><path d="M0 0m97.390199 0l973.901995 0q97.390199 0 97.390199 97.390199l0 0q0 97.390199-97.390199 97.3902l-973.901995 0q-97.390199 0-97.390199-97.3902l0 0q0-97.390199 97.390199-97.390199Z" p-id="2850"></path><path d="M0 389.560798m97.390199 0l973.901995 0q97.390199 0 97.390199 97.390199l0 0q0 97.390199-97.390199 97.3902l-973.901995 0q-97.390199 0-97.390199-97.3902l0 0q0-97.390199 97.390199-97.390199Z" p-id="2851"></path><path d="M0 779.121596m97.390199 0l973.901995 0q97.390199 0 97.390199 97.390199l0 0q0 97.390199-97.390199 97.390199l-973.901995 0q-97.390199 0-97.390199-97.390199l0 0q0-97.390199 97.390199-97.390199Z" p-id="2852"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script')
+      script.src = src
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.1.0';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js',
+    sitesjs: '/js/plugins/sites.js',
+    friendsjs: '/js/plugins/friends.js',
+  };
+
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.3.1/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper/swiper-bundle.min.css","js":"https://unpkg.com/swiper/swiper-bundle.min.js"});
+  }
+  if ('' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://cdn.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function utterances(){
+    if(!document.getElementById("utterances"))return;
+    setTimeout(function() {
+      var checkUtterances = setInterval(function () {
+        var el = document.getElementById("utterances");
+        if (!el) return
+        clearInterval(checkUtterances)
+        try {
+          el.innerHTML="";
+        } catch (error) {}
+        var script = document.createElement('script');
+        script.src = 'https://utteranc.es/client.js';
+        const keys = ['repo', 'issue-term', 'issue-number', 'theme', 'label', 'crossorigin'];
+        keys.forEach((key, i) => {
+          if (el.attributes[key] && el.attributes[key].value) {
+            script.setAttribute(key, el.attributes[key].value);
+          }
+        });
+        el.appendChild(script);
+       }, 200)
+    });
+  }
+  utterances();
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>

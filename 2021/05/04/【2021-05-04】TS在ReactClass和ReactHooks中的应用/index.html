@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang='zh-CN'>
+
+<head>
+  <meta name="generator" content="Hexo 5.4.0">
+  <meta charset="utf-8">
+  
+
+  <meta http-equiv='x-dns-prefetch-control' content='on' />
+  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+
+  <meta name="renderer" content="webkit">
+  <meta name="force-rendering" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
+  <meta name="HandheldFriendly" content="True" >
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+
+  <title>TS在ReactClass和ReactHooks中的应用 - 自由の翼小栈</title>
+
+  
+    <meta name="description" content="对于现行的ES规范，已经具有很好的规范性与可读性，type script虽当下大行其道，其实我觉得意义不算很大，ts最重要的功能就是类型检查，包括 interface, type 等也是一种类型检查，但一不小心就会写成 any script。鉴于将来的项目或者现行的项目可能会用到，这里结合 React Hooks 写个 tsx 版的 demo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="TS在ReactClass和ReactHooks中的应用">
+<meta property="og:url" content="https://zyzy.info/2021/05/04/%E3%80%902021-05-04%E3%80%91TS%E5%9C%A8ReactClass%E5%92%8CReactHooks%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/index.html">
+<meta property="og:site_name" content="自由の翼小栈">
+<meta property="og:description" content="对于现行的ES规范，已经具有很好的规范性与可读性，type script虽当下大行其道，其实我觉得意义不算很大，ts最重要的功能就是类型检查，包括 interface, type 等也是一种类型检查，但一不小心就会写成 any script。鉴于将来的项目或者现行的项目可能会用到，这里结合 React Hooks 写个 tsx 版的 demo">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.22/articles/TS%E5%9C%A8ReactClass%E5%92%8CReactHooks%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/0.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.22/articles/TS%E5%9C%A8ReactClass%E5%92%8CReactHooks%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/3.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.22/articles/TS%E5%9C%A8ReactClass%E5%92%8CReactHooks%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/4.gif">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.22/articles/TS%E5%9C%A8ReactClass%E5%92%8CReactHooks%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/1.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.22/articles/TS%E5%9C%A8ReactClass%E5%92%8CReactHooks%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/2.png">
+<meta property="article:published_time" content="2021-05-03T17:15:25.000Z">
+<meta property="article:modified_time" content="2021-10-14T03:42:59.911Z">
+<meta property="article:author" content="自由の翼">
+<meta property="article:tag" content="React">
+<meta property="article:tag" content="type script">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.22/articles/TS%E5%9C%A8ReactClass%E5%92%8CReactHooks%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/0.png">
+  
+  
+
+  <!-- feed -->
+  
+
+  
+    
+<link rel="stylesheet" href="/css/main.css">
+
+  
+
+  
+</head>
+
+<body>
+  
+
+
+  <div class='l_body' id='start'>
+    <aside class='l_left'>
+    
+
+<header class='header'>
+  <div class='logo-wrap'>
+  
+    <a class='avatar' href='/about/'>
+      
+        <img no-lazy class='bg' src='https://cdn.jsdelivr.net/gh/cdn-x/placeholder@1.0.2/avatar/round/rainbow64@3x.webp'/>
+      
+      <img no-lazy class='avatar' src='https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.12/avatar/宇航员.svg'/>
+    </a>
+  
+  
+    <a class='title' href='/'>
+      自由の翼小栈
+    </a>
+  
+</div>
+
+  <nav class="menu dis-select"></nav>
+</header>
+
+<div class='widgets'>
+  
+    
+      
+      
+<div class="widget-wrap" id="toc"><div class="widget-header h4 dis-select"><span class="name">本文目录</span></div><div class="widget-body fs14 post"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%B7%B1%E5%86%99%E7%9A%84-TypeScript-demo%EF%BC%8CTS%E5%9F%BA%E7%A1%80%E5%86%85%E5%AE%B9%E5%8F%AF%E4%BB%A5%E7%BF%BB%E7%9C%8B%E8%AF%A5%E4%BB%93%E5%BA%93"><span class="toc-text">自己写的 TypeScript demo，TS基础内容可以翻看该仓库</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E9%A1%B9%E7%9B%AE%EF%BC%8C%E5%8F%AA%E9%9C%80%E5%B8%A6-template-typescript%E5%8F%82%E6%95%B0%E5%8D%B3%E5%8F%AF%EF%BC%9A"><span class="toc-text">新项目，只需带--template typescript参数即可：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%80%81%E9%A1%B9%E7%9B%AE%EF%BC%8C%E5%9C%A8%E5%8E%9F%E6%9C%89JSX%E9%A1%B9%E7%9B%AEcreate-react-app%E5%9F%BA%E7%A1%80%E4%B8%8A%E5%A2%9E%E5%8A%A0typescript%E5%86%85%E5%AE%B9%EF%BC%9A"><span class="toc-text">老项目，在原有JSX项目create-react-app基础上增加typescript内容：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E4%B8%80%E4%B8%AA%E6%96%B0%E7%9A%84%E5%BA%93%EF%BC%8C%E9%9C%80%E9%85%8D%E7%BD%AE-d-ts-%E6%96%87%E4%BB%B6%EF%BC%9A"><span class="toc-text">安装一个新的库，需配置 *.d.ts 文件：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%9D%E5%AD%A6%E8%80%85%E7%9A%84%E7%BC%96%E5%86%99%E5%88%A9%E5%99%A8-%E2%80%94%E2%80%94-vs-code-%E4%B8%AD%E7%9A%84%E6%8F%90%E7%A4%BA"><span class="toc-text">初学者的编写利器 —— vs code 中的提示</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%A4%96%E5%B1%82-index-tsx"><span class="toc-text">最外层 index.tsx</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6"><span class="toc-text">组件</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Function-%E7%BB%84%E4%BB%B6"><span class="toc-text">Function 组件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Class-%E7%BB%84%E4%BB%B6"><span class="toc-text">Class 组件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#props"><span class="toc-text">props</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Function-%E7%BB%84%E4%BB%B6%E9%87%8C%E7%9A%84props"><span class="toc-text">Function 组件里的props</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Class-%E7%BB%84%E4%BB%B6%E9%87%8C%E7%9A%84-props"><span class="toc-text">Class 组件里的 props</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BB%84%E4%BB%B6%E9%87%8C%E7%9A%84%E5%87%BD%E6%95%B0"><span class="toc-text">组件里的函数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E7%BB%84%E4%BB%B6%E7%9A%84-hooks"><span class="toc-text">函数组件的 hooks</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#useState"><span class="toc-text">useState</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#useRef"><span class="toc-text">useRef</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#useReducer"><span class="toc-text">useReducer</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#hooks-%E7%9A%84-render-props"><span class="toc-text">hooks 的 render props</span></a></li></ol></div></div></div>
+
+    
+  
+</div>
+
+
+    </aside>
+    <div class='l_main'>
+      
+
+      
+
+
+  <div class='bread-nav fs12'>
+  
+    
+    <div id='breadcrumb'>
+      <a class='cap breadcrumb' href='/'>主页</a>
+      <span class="sep"></span>
+      <a class='cap breadcrumb' href='/'>文章</a>
+      
+    </div>
+    <div id='post-meta'>
+      发布于&nbsp;<time datetime='2021-05-03T17:15:25.000Z'>2021-05-04</time>
+    </div>
+  
+  </div>
+
+
+<article class='content md post'>
+<h1 class="article-title"><span>TS在ReactClass和ReactHooks中的应用</span></h1>
+<p>对于现行的ES规范，已经具有很好的规范性与可读性，type script虽当下大行其道，其实我觉得意义不算很大，ts最重要的功能就是类型检查，包括 interface, type 等也是一种类型检查，但一不小心就会写成 any script。<br>鉴于将来的项目或者现行的项目可能会用到，这里结合 React Hooks 写个 tsx 版的 <a target="_blank" rel="noopener" href="https://github.com/ys558/tech-blog-code/tree/master/2021/06-0328-ts-react">demo</a></p>
+<span id="more"></span>
+
+<h2 id="自己写的-TypeScript-demo，TS基础内容可以翻看该仓库"><a href="#自己写的-TypeScript-demo，TS基础内容可以翻看该仓库" class="headerlink" title="自己写的 TypeScript demo，TS基础内容可以翻看该仓库"></a>自己写的 <a target="_blank" rel="noopener" href="https://github.com/ys558/typescript-learning">TypeScript demo</a>，TS基础内容可以翻看该仓库</h2><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="新项目，只需带-template-typescript参数即可："><a href="#新项目，只需带-template-typescript参数即可：" class="headerlink" title="新项目，只需带--template typescript参数即可："></a>新项目，只需带<code>--template typescript</code>参数即可：</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">create-react-app &lt;app name&gt; --template typescript</span><br><span class="line"><span class="meta">#</span><span class="bash">or</span> </span><br><span class="line">yarn create-react-app &lt;app name&gt; --template typescript</span><br></pre></td></tr></table></figure>
+
+<h3 id="老项目，在原有JSX项目create-react-app基础上增加typescript内容："><a href="#老项目，在原有JSX项目create-react-app基础上增加typescript内容：" class="headerlink" title="老项目，在原有JSX项目create-react-app基础上增加typescript内容："></a>老项目，在原有JSX项目<code>create-react-app</code>基础上增加typescript内容：</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">npm install --save typescript @types/node @types/react @types/react-dom @types/jest</span><br><span class="line"> </span><br><span class="line"><span class="meta">#</span><span class="bash"> or</span></span><br><span class="line"> </span><br><span class="line">yarn add typescript @types/node @types/react @types/react-dom @types/jest</span><br></pre></td></tr></table></figure>
+
+<h3 id="安装一个新的库，需配置-d-ts-文件："><a href="#安装一个新的库，需配置-d-ts-文件：" class="headerlink" title="安装一个新的库，需配置 *.d.ts 文件："></a>安装一个新的库，需配置 <code>*.d.ts</code> 文件：</h3><p>外部<code>npm install</code>一个库时，需要单独创建一个<code>.d.ts</code>结尾的文件, 否则报错, 如：<br><code>touch lib.d.ts</code>:</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">declare</span> <span class="built_in">module</span> <span class="string">&#x27;lodash&#x27;</span></span><br></pre></td></tr></table></figure>
+<h2 id="初学者的编写利器-——-vs-code-中的提示"><a href="#初学者的编写利器-——-vs-code-中的提示" class="headerlink" title="初学者的编写利器 —— vs code 中的提示"></a>初学者的编写利器 —— <code>vs code</code> 中的提示</h2><p>可以利用好 <code>vs code</code> 中自带的提示，例如下面的提示，下面的例子会截图此类提示框：<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.22/articles/TS%E5%9C%A8ReactClass%E5%92%8CReactHooks%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/0.png" alt="vs code 提示"></p>
+<h2 id="最外层-index-tsx"><a href="#最外层-index-tsx" class="headerlink" title="最外层 index.tsx"></a>最外层 <strong>index.tsx</strong></h2><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> ReactDOM <span class="keyword">from</span> <span class="string">&#x27;react-dom&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> App <span class="keyword">from</span> <span class="string">&#x27;./App&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 全局变量，如有：</span></span><br><span class="line"><span class="keyword">declare</span> <span class="built_in">global</span> &#123;</span><br><span class="line">  <span class="keyword">interface</span> Window &#123;</span><br><span class="line">    API: <span class="built_in">any</span>,</span><br><span class="line">    _store: <span class="built_in">any</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">ReactDOM.render(</span><br><span class="line">  &lt;React.StrictMode&gt;</span><br><span class="line">    &lt;App /&gt;</span><br><span class="line">  &lt;/React.StrictMode&gt;,</span><br><span class="line">  <span class="comment">// HTMLElement 接口：</span></span><br><span class="line">  <span class="built_in">document</span>.getElementById(<span class="string">&#x27;root&#x27;</span>) <span class="keyword">as</span> HTMLElement</span><br><span class="line">);</span><br></pre></td></tr></table></figure>
+
+<h2 id="组件"><a href="#组件" class="headerlink" title="组件"></a>组件</h2><h3 id="Function-组件"><a href="#Function-组件" class="headerlink" title="Function 组件"></a>Function 组件</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> App: React.FC = <span class="function">() =&gt;</span> <span class="literal">null</span></span><br></pre></td></tr></table></figure>
+
+<p>vs code 里的提示：</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.22/articles/TS%E5%9C%A8ReactClass%E5%92%8CReactHooks%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/3.png" alt="vs code 提示"></p>
+<h3 id="Class-组件"><a href="#Class-组件" class="headerlink" title="Class 组件"></a>Class 组件</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这个没什么好说的，写到烂了</span></span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassTS</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> </span>&#123;</span><br><span class="line">  <span class="keyword">public</span> render(): React.ReactNode &#123;</span><br><span class="line">    <span class="keyword">return</span> <span class="literal">null</span></span><br><span class="line">  &#125;</span><br><span class="line"> &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="props"><a href="#props" class="headerlink" title="props"></a>props</h2><h3 id="Function-组件里的props"><a href="#Function-组件里的props" class="headerlink" title="Function 组件里的props"></a>Function 组件里的props</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1，直接写：</span></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> TextField: React.FC&lt;&#123; <span class="attr">text</span>: <span class="built_in">string</span> &#125;&gt; = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span>/&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 2. 将 &#123; text: string &#125; 独立为接口类：</span></span><br><span class="line"><span class="keyword">interface</span> Props &#123;</span><br><span class="line">  text: <span class="built_in">string</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> TextField: React.FC&lt;Props&gt; = <span class="function">() =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">return</span> <span class="xml"><span class="tag">&lt;<span class="name">div</span>&gt;</span><span class="tag">&lt;<span class="name">input</span> <span class="attr">type</span>=<span class="string">&quot;text&quot;</span>/&gt;</span><span class="tag">&lt;/<span class="name">div</span>&gt;</span></span></span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>其中，接口也可随意扩展及定义子接口，如：  </p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> Person &#123;</span><br><span class="line">  firstName: <span class="built_in">string</span></span><br><span class="line">  lastName: <span class="built_in">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">interface</span> Props &#123;</span><br><span class="line">  text: <span class="built_in">string</span></span><br><span class="line">  ok?: <span class="built_in">boolean</span></span><br><span class="line">  i?: <span class="built_in">number</span></span><br><span class="line">  fn?: <span class="function">(<span class="params">bob: <span class="built_in">string</span></span>) =&gt;</span> <span class="built_in">string</span></span><br><span class="line">  <span class="comment">// </span></span><br><span class="line">  person: Person</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="Class-组件里的-props"><a href="#Class-组件里的-props" class="headerlink" title="Class 组件里的 props"></a>Class 组件里的 props</h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 1，直接写, 两个参数间用逗号或分号隔开均可：</span></span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassTS</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> &lt;</span>&#123; text: <span class="built_in">string</span>, age?: <span class="built_in">number</span> &#125;&gt; &#123; &#125;</span><br><span class="line"> </span><br><span class="line"><span class="comment">// 2. 将props的参数独立为接口类：</span></span><br><span class="line"><span class="keyword">interface</span> IProps &#123;</span><br><span class="line">  text: <span class="built_in">string</span></span><br><span class="line">  age?: <span class="built_in">number</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// 3. 顺带一提state，只有interface的写法：</span></span><br><span class="line"><span class="keyword">interface</span> IState &#123;</span><br><span class="line">  email: <span class="built_in">string</span></span><br><span class="line">  name: <span class="built_in">string</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="class"><span class="keyword">class</span> <span class="title">ClassTS</span> <span class="keyword">extends</span> <span class="title">React</span>.<span class="title">Component</span> &lt;<span class="title">IProps</span>&gt; </span>&#123;</span><br><span class="line">  state: IState = &#123;</span><br><span class="line">    name: <span class="string">&#x27;&#x27;</span>,</span><br><span class="line">    email: <span class="string">&#x27;&#x27;</span></span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="组件里的函数"><a href="#组件里的函数" class="headerlink" title="组件里的函数"></a>组件里的函数</h2><p>React特有的类型，React.FormEvent<HTMLInputElement>，虚拟DOM把所有原生函数都撸了个遍:</p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.22/articles/TS%E5%9C%A8ReactClass%E5%92%8CReactHooks%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/4.gif" alt="vs code 提示"></p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">handleChange = <span class="function">(<span class="params"> e : React.FormEvent&lt;HTMLInputElement&gt; </span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> &#123; name, value &#125; : <span class="built_in">any</span> = e.target</span><br><span class="line">  <span class="built_in">this</span>.setState(&#123; [name]: value &#125;)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+
+<h2 id="函数组件的-hooks"><a href="#函数组件的-hooks" class="headerlink" title="函数组件的 hooks"></a>函数组件的 hooks</h2><h3 id="useState"><a href="#useState" class="headerlink" title="useState"></a><em><strong>useState</strong></em></h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 或用 | ，不用 ||</span></span><br><span class="line"><span class="keyword">const</span> [count, setCount] = useState &lt; <span class="built_in">string</span> | <span class="literal">null</span> | &#123; <span class="attr">text</span>: <span class="built_in">string</span> &#125; &gt;(&#123; <span class="attr">text</span>: <span class="string">&#x27;hello&#x27;</span> &#125;)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 或 独立为接口：</span></span><br><span class="line"><span class="keyword">interface</span> TextNode &#123;</span><br><span class="line">  text: <span class="built_in">string</span></span><br><span class="line">&#125;</span><br><span class="line"><span class="keyword">const</span> [count, setCount] = useState &lt; <span class="built_in">number</span> | TextNode &gt;(<span class="number">5</span>)</span><br></pre></td></tr></table></figure>
+
+<h3 id="useRef"><a href="#useRef" class="headerlink" title="useRef"></a><em><strong>useRef</strong></em></h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 因为ref的目标是一个input框，所以用 &lt;HTMLInputElement&gt;</span></span><br><span class="line"><span class="comment">// 如果打上ref的是&lt;div&gt;&lt;/div&gt;, 则用 &lt;HTMLDivElement&gt;</span></span><br><span class="line"><span class="keyword">const</span> inputRef = useRef&lt;HTMLInputElement&gt;(<span class="literal">null</span>)</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>另外，handleChange</p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 如果是Props传过来，并且定义了interface接口，则要注明：</span></span><br><span class="line"><span class="keyword">interface</span> Props &#123;</span><br><span class="line">  handleChange: <span class="function">(<span class="params"> event: React.ChangeEvent&lt;HTMLInputElement&gt; </span>) =&gt;</span> <span class="built_in">void</span></span><br><span class="line">  <span class="comment">// 或者如下定义为any，但不建议，因失去了检查的作用：</span></span><br><span class="line">  <span class="comment">// handleChange: ( event: any ) =&gt; void</span></span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="useReducer"><a href="#useReducer" class="headerlink" title="useReducer"></a><em><strong>useReducer</strong></em></h3><figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> Todos &#123;</span><br><span class="line">  text: <span class="built_in">string</span></span><br><span class="line">  complete: <span class="built_in">boolean</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="comment">// type State = Array&lt;Todos&gt;</span></span><br><span class="line"><span class="comment">// 或下面这种，更形象化：</span></span><br><span class="line"><span class="keyword">type</span> State = Todos[]</span><br><span class="line"><span class="keyword">type</span> Actions = &#123; <span class="attr">type</span>: <span class="string">&#x27;add&#x27;</span>, <span class="attr">text</span>: <span class="built_in">string</span> &#125; | &#123; <span class="attr">type</span>:<span class="string">&#x27;remove&#x27;</span>, <span class="attr">idx</span>: <span class="built_in">number</span> &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> TodoReducer = <span class="function">(<span class="params"> state: State, action: Actions </span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">switch</span> (action.type) &#123;</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;add&#x27;</span>:</span><br><span class="line">      <span class="keyword">return</span> [...state, &#123; <span class="attr">text</span>: action.text, <span class="attr">complete</span>: <span class="literal">false</span> &#125;]</span><br><span class="line">    <span class="keyword">case</span> <span class="string">&#x27;remove&#x27;</span>:</span><br><span class="line">      <span class="keyword">return</span> state.filter(<span class="function">(<span class="params">_, i</span>) =&gt;</span> action.idx !== i)</span><br><span class="line">    <span class="keyword">default</span>:</span><br><span class="line">      <span class="keyword">return</span> state;</span><br><span class="line">  &#125; </span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">const</span> [todos, dispatch] = useReducer(TodoReducer, [])</span><br></pre></td></tr></table></figure>
+
+<h2 id="hooks-的-render-props"><a href="#hooks-的-render-props" class="headerlink" title="hooks 的 render props"></a>hooks 的 render props</h2><p>将 hooks 函数 <code>setXXX</code> 作为参数传参，这种props是react独有的，<code>React.Dispatch&lt;React.SetStateAction&lt;number&gt;&gt;</code> </p>
+<figure class="highlight ts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">interface</span> Props &#123;</span><br><span class="line">  children:(</span><br><span class="line">    count: <span class="built_in">number</span>,</span><br><span class="line">    <span class="comment">// 将`setCount`作为props进行传参：</span></span><br><span class="line">    setCount: React.Dispatch&lt;React.SetStateAction&lt;<span class="built_in">number</span>&gt;&gt;</span><br><span class="line">    <span class="comment">// 返回值为React独有的：JSX.Element</span></span><br><span class="line">  ) =&gt; JSX.Element | <span class="literal">null</span></span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">const</span> Counter: React.FC&lt;Props&gt; = <span class="function">(<span class="params">&#123; children &#125;</span>) =&gt;</span> &#123;</span><br><span class="line">  <span class="keyword">const</span> [count, setCount] = useState(<span class="number">0</span>)</span><br><span class="line">  <span class="keyword">return</span> &lt;div&gt;</span><br><span class="line">    &#123;children(count, setCount)&#125;</span><br><span class="line">  &lt;/div&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>另一种，原生的函数在虚拟DOM里的函数：</p>
+<p>写的时候 vs code 里的提示：<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.22/articles/TS%E5%9C%A8ReactClass%E5%92%8CReactHooks%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/1.png" alt="vs code 提示"></p>
+<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.22/articles/TS%E5%9C%A8ReactClass%E5%92%8CReactHooks%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/2.png" alt="vs code 提示"></p>
+
+
+<div class="article-footer fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
+</div></section></div>
+
+</article>
+
+<div class="related-wrap" id="read-next"><section class="header cap theme"><span>接下来阅读</span></section><section class="body"><div class="post-title h2"><a href="/2021/04/26/%E3%80%902021-04-26%E3%80%91%E9%80%9A%E8%BF%87ReactHooks%E7%9B%B4%E6%8E%A5%E6%93%8D%E4%BD%9Capi%E7%A5%9E%E5%BA%93%EF%BC%9AReactQuery/">通过ReactHooks直接操作api神库：ReactQuery</a></div><div class="post-title fs14"><a href="/2021/05/04/%E3%80%902021-05-04%E3%80%91%E8%84%B1%E7%A6%BB%E8%84%9A%E6%89%8B%E6%9E%B6webpack%E9%85%8D%E5%88%B6React+typescript%E9%A1%B9%E7%9B%AE%EF%BC%88%E4%B8%80%EF%BC%89/">上一篇：脱离脚手架webpack配制React+typescript项目（一）</a></div></section></div>
+
+
+
+
+
+
+  <div class='related-wrap md' id="comments">
+    <div class='cmt-title cap theme'>
+      快来参与讨论吧
+    </div>
+    <div class='cmt-body utterances'>
+      
+
+<svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg>
+
+<div id="utterances" repo="xaoxuu/blog-comments" issue-term="pathname" theme="github-light"></div>
+
+    </div>
+  </div>
+
+
+
+      
+<footer class="page-footer fs12"><hr><div><p>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
+<p>本站由 <a href="https://zyzy.info/">@自由の翼</a> 创建，使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.1.0">Stellar</a> 作为主题。</p>
+</div></footer>
+
+      <div class='float-panel mobile-only' style='display:none'>
+  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
+    <svg class="icon" viewBox="0 0 1228 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2849"><path d="M0 0m97.390199 0l973.901995 0q97.390199 0 97.390199 97.390199l0 0q0 97.390199-97.390199 97.3902l-973.901995 0q-97.390199 0-97.390199-97.3902l0 0q0-97.390199 97.390199-97.390199Z" p-id="2850"></path><path d="M0 389.560798m97.390199 0l973.901995 0q97.390199 0 97.390199 97.390199l0 0q0 97.390199-97.390199 97.3902l-973.901995 0q-97.390199 0-97.390199-97.3902l0 0q0-97.390199 97.390199-97.390199Z" p-id="2851"></path><path d="M0 779.121596m97.390199 0l973.901995 0q97.390199 0 97.390199 97.390199l0 0q0 97.390199-97.390199 97.390199l-973.901995 0q-97.390199 0-97.390199-97.390199l0 0q0-97.390199 97.390199-97.390199Z" p-id="2852"></path></svg>
+  </button>
+</div>
+
+    </div>
+  </div>
+  <div class='scripts'>
+    <script type="text/javascript">
+  stellar = {
+    // 懒加载 css https://github.com/filamentgroup/loadCSS
+    loadCSS: (href, before, media, attributes) => {
+      var doc = window.document;
+      var ss = doc.createElement("link");
+      var ref;
+      if (before) {
+        ref = before;
+      } else {
+        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
+        ref = refs[refs.length - 1];
+      }
+      var sheets = doc.styleSheets;
+      if (attributes) {
+        for (var attributeName in attributes) {
+          if (attributes.hasOwnProperty(attributeName)) {
+            ss.setAttribute(attributeName, attributes[attributeName]);
+          }
+        }
+      }
+      ss.rel = "stylesheet";
+      ss.href = href;
+      ss.media = "only x";
+      function ready(cb) {
+        if (doc.body) {
+          return cb();
+        }
+        setTimeout(function () {
+          ready(cb);
+        });
+      }
+      ready(function () {
+        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
+      });
+      var onloadcssdefined = function (cb) {
+        var resolvedHref = ss.href;
+        var i = sheets.length;
+        while (i--) {
+          if (sheets[i].href === resolvedHref) {
+            return cb();
+          }
+        }
+        setTimeout(function () {
+          onloadcssdefined(cb);
+        });
+      };
+      function loadCB() {
+        if (ss.addEventListener) {
+          ss.removeEventListener("load", loadCB);
+        }
+        ss.media = media || "all";
+      }
+      if (ss.addEventListener) {
+        ss.addEventListener("load", loadCB);
+      }
+      ss.onloadcssdefined = onloadcssdefined;
+      onloadcssdefined(loadCB);
+      return ss;
+    },
+
+    // 从 butterfly 和 volantis 获得灵感
+    loadScript: (src, opt) => new Promise((resolve, reject) => {
+      var script = document.createElement('script')
+      script.src = src
+      if (opt) {
+        for (let key of Object.keys(opt)) {
+          script[key] = opt[key]
+        }
+      } else {
+        // 默认异步，如果需要同步，第二个参数传入 {} 即可
+        script.async = true
+      }
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    }),
+
+    // https://github.com/jerryc127/hexo-theme-butterfly
+    jQuery: (fn) => {
+      if (typeof jQuery === 'undefined') {
+        stellar.loadScript(stellar.plugins.jQuery).then(fn)
+      } else {
+        fn()
+      }
+    }
+  };
+  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.1.0';
+  stellar.config = {
+    date_suffix: {
+      just: '刚刚',
+      min: '分钟前',
+      hour: '小时前',
+      day: '天前',
+      month: '个月前',
+    },
+  };
+
+  // required plugins (only load if needs)
+  stellar.plugins = {
+    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js',
+    sitesjs: '/js/plugins/sites.js',
+    friendsjs: '/js/plugins/friends.js',
+  };
+
+  // optional plugins
+  if ('true' == 'true') {
+    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.3.1/dist/lazyload.min.js","transition":"blur"});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper/swiper-bundle.min.css","js":"https://unpkg.com/swiper/swiper-bundle.min.js"});
+  }
+  if ('' == 'true') {
+    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://cdn.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
+  }
+  if ('true' == 'true') {
+    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
+  }
+</script>
+
+<!-- required -->
+
+  
+<script src="/js/main.js" async></script>
+
+
+
+<!-- optional -->
+
+  <script>
+  function utterances(){
+    if(!document.getElementById("utterances"))return;
+    setTimeout(function() {
+      var checkUtterances = setInterval(function () {
+        var el = document.getElementById("utterances");
+        if (!el) return
+        clearInterval(checkUtterances)
+        try {
+          el.innerHTML="";
+        } catch (error) {}
+        var script = document.createElement('script');
+        script.src = 'https://utteranc.es/client.js';
+        const keys = ['repo', 'issue-term', 'issue-number', 'theme', 'label', 'crossorigin'];
+        keys.forEach((key, i) => {
+          if (el.attributes[key] && el.attributes[key].value) {
+            script.setAttribute(key, el.attributes[key].value);
+          }
+        });
+        el.appendChild(script);
+       }, 200)
+    });
+  }
+  utterances();
+</script>
+
+
+
+
+<!-- inject -->
+
+
+  </div>
+</body>
+</html>
