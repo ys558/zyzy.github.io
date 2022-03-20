@@ -1,5 +1,5 @@
 ---
-title: 用esbuil创建React项目
+title: esbuil用于create-react-app项目的热更新开发
 date: 2021-10-28 14:53:06
 tags:
   - esbuild
@@ -21,7 +21,7 @@ webpack 用于大型项目中，特别是开发时候的热更新，速度太慢
 
 用 `create-react-app` 生成项目后，然后对原来的项目作了如下改动：
 
-- 核心配置在 `devBuild.js` 文件，如下：
+- 生成 `devBuild.js` 文件，进行如下改动：
 
 ```js
 import browserSync from "browser-sync";
@@ -108,7 +108,7 @@ del.sync("./public/dist");
   获取当前可用端口：`get-port`
   美化：`chalk`
 
-- `package.json` 的 `script` 增加了 `dev` 命令，为了跑 `devBuild.js` 文件
+- `package.json` 的 `script` 增加了 `dev` 命令，为跑 `devBuild.js` 文件
 
 - `package.json` 增加了 `{"type": "module"}` 让 node 可以编译 esm 语法
 
