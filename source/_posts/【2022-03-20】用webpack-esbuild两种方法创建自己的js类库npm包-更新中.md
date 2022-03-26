@@ -1,6 +1,6 @@
 ---
-title: 用webpack, esbuild两种方法创建自己的js类库npm包(更新中)
-date: 2021-03-20 09:46:15
+title: 用webpack, esbuild两种方法创建自己的js类库npm包(更新中,未完)
+date: 2022-03-20 09:46:15
 tags:
   - esbuild
   - webpack
@@ -12,7 +12,7 @@ tags:
 
 <!-- more -->
 
-前端的变化实在是快, 1年多前仍是webpack的天下, 现在又杀出个用go语言编写的 `esbuild` , 
+前端的变化实在是快, 1年多前仍是babel的天下, 现在杀出个 `esbuild` , babel用js编写, 而 `esbuild`用更快的go语音编写, 他俩在webpack中均有对应的插件
 关于新的打包工具 [`esbuild`](https://esbuild.github.io/), 他支持最原生的es module语法. 
 在我的[这篇文章](https://zyzy.info/2021/10/28/%E3%80%902021-10-28%E3%80%91%E7%94%A8esbuil%E5%88%9B%E5%BB%BAReact%E9%A1%B9%E7%9B%AE/)里已有将其配置于CRA热更新的操作, 大家可以做参考.
 写这篇文章的目的在于结合esbuild官网, 走一遍自己的配置的过程, 顺便把webpack的配置进一下对比.
@@ -116,4 +116,3 @@ dist
     |__myLib.webpack.bundle.js
     |__myLib.esbuild.bundle.js
 ```
-
