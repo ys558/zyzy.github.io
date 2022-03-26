@@ -1,0 +1,326 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  
+  
+  <title>创建自己的node cli | 自由の翼小栈</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="经常使用create-react-app作为命令行生成项目，总想着自己能配置一个属于自己的命令行工具，很酷炫的样子。最近有时间，终于来实现了">
+<meta property="og:type" content="article">
+<meta property="og:title" content="创建自己的node cli">
+<meta property="og:url" content="https://zyzy.info/2021/10/17/%E3%80%902021-10-17%E3%80%91%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84node-cli/index.html">
+<meta property="og:site_name" content="自由の翼小栈">
+<meta property="og:description" content="经常使用create-react-app作为命令行生成项目，总想着自己能配置一个属于自己的命令行工具，很酷炫的样子。最近有时间，终于来实现了">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2021-10-17T14:18:15.000Z">
+<meta property="article:modified_time" content="2022-03-26T02:15:30.413Z">
+<meta property="article:author" content="自由の翼">
+<meta property="article:tag" content="node cli">
+<meta name="twitter:card" content="summary">
+  
+    <link rel="alternate" href="/atom.xml" title="自由の翼小栈" type="application/atom+xml">
+  
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
+
+  
+  
+<link rel="stylesheet" href="/css/style.css">
+
+  
+    
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
+
+  
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">自由の翼小栈</a>
+      </h1>
+      
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">技术&amp;生活分享</a>
+        </h2>
+      
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://zyzy.info"></form>
+      </div>
+    </div>
+  </div>
+</header>
+
+      <div class="outer">
+        <section id="main"><article id="post-【2021-10-17】创建自己的node-cli" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/10/17/%E3%80%902021-10-17%E3%80%91%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84node-cli/" class="article-date">
+  <time class="dt-published" datetime="2021-10-17T14:18:15.000Z" itemprop="datePublished">2021-10-17</time>
+</a>
+    
+  </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      创建自己的node cli
+    </h1>
+  
+
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>经常使用<code>create-react-app</code>作为命令行生成项目，总想着自己能配置一个属于自己的命令行工具，很酷炫的样子。最近有时间，终于来实现了</p>
+<span id="more"></span>
+
+<h2 id="初始化项目"><a href="#初始化项目" class="headerlink" title="初始化项目"></a>初始化项目</h2><figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">mkdir y-cli &amp;&amp; <span class="built_in">cd</span> y-cli</span><br><span class="line">npm init -y</span><br></pre></td></tr></table></figure>
+
+<h2 id="核心步骤-npm-link"><a href="#核心步骤-npm-link" class="headerlink" title="核心步骤 npm link"></a>核心步骤 <code>npm link</code></h2><p>新建一个文件 <code>./bin/yyt.js</code>，并写一点简单的东西  </p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">// 这里告诉系统要以node环境执行：</span></span><br><span class="line"><span class="meta">#!/usr/bin/env node</span></span><br><span class="line"></span><br><span class="line"><span class="built_in">console</span>.log(<span class="string">&#x27;hello,node cli!&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>再在 <code>package.json</code> 里添加 <code>bin</code> 配置，需要指定一个自定义命令，如 <code>y-cli</code></p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&quot;bin&quot;: &#123;</span><br><span class="line">  &quot;y-cli&quot;: &quot;./bin/yyt.js&quot;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p>在命令行里运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">npm link</span><br><span class="line"><span class="comment"># 或者在全局install：</span></span><br><span class="line">npm install . -g</span><br></pre></td></tr></table></figure>
+
+<p>可以看到如下，npm将命令作为软链接连接至对应的js文件</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">xxx@xxxMBP y-cli % sudo npm link</span><br><span class="line">npm WARN y-cli@1.0.0 No description</span><br><span class="line">npm WARN y-cli@1.0.0 No repository field.</span><br><span class="line"></span><br><span class="line">up to date <span class="keyword">in</span> 0.832s</span><br><span class="line">found 0 vulnerabilities</span><br><span class="line"></span><br><span class="line">/usr/<span class="built_in">local</span>/bin/yyt -&gt; /usr/<span class="built_in">local</span>/lib/node_modules/y-cli/bin/yyt.js</span><br><span class="line">/usr/<span class="built_in">local</span>/lib/node_modules/y-cli -&gt; /Users/xxx/Documents/code/y-cli</span><br></pre></td></tr></table></figure>
+
+<h2 id="所用到的库"><a href="#所用到的库" class="headerlink" title="所用到的库"></a>所用到的库</h2><p>cli需要获取用户的输入，选择并做相应的事情，就需要使用到一些库来帮忙我们更方便的写cli</p>
+<p>核心：</p>
+<ul>
+<li>commander - 处理核心命令 主要模块，在终端输出各种信息全靠这个模块</li>
+<li>download-git-repo - 下载git模块</li>
+</ul>
+<p>美化：</p>
+<ul>
+<li>chalk  —  美化终端字符显示</li>
+<li>figlet  —  在终端输出大型字符</li>
+<li>inquirer  —  命令行参数输入交互</li>
+<li>shelljs  —  在js文件写命令行</li>
+<li>ora - 实行loading效果</li>
+</ul>
+<p>让我们来把这些库全部安装一遍</p>
+<h2 id="commander"><a href="#commander" class="headerlink" title="commander"></a>commander</h2><p>根据<a target="_blank" rel="noopener" href="https://github.com/tj/commander.js/blob/master/Readme_zh-CN.md#%e5%b8%b8%e7%94%a8%e9%80%89%e9%a1%b9%e7%b1%bb%e5%9e%8bboolean-%e5%9e%8b%e9%80%89%e9%a1%b9%e5%92%8c%e5%b8%a6%e5%8f%82%e6%95%b0%e9%80%89%e9%a1%b9">commander文档</a>的一些参数，我们来编写脚本 <code>yyt.js</code></p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#!/usr/bin/env node</span></span><br><span class="line"><span class="keyword">const</span> program = <span class="built_in">require</span>(<span class="string">&#x27;commander&#x27;</span>)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 获取package.json中的版本信息</span></span><br><span class="line">program.version(<span class="built_in">require</span>(<span class="string">&quot;../package.json&quot;</span>).version)</span><br><span class="line"></span><br><span class="line"><span class="comment">// 解析指令，这点很重要  不解析指令则无效</span></span><br><span class="line">program.parse(process.argv)</span><br></pre></td></tr></table></figure>
+
+<p>commander自带 <code>-V</code> 和 <code>-h</code> 两个命令，运行 <code>yyt -h</code>可看到：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">xxx@xxxdeMacBook-Pro y-cli % yyt -h</span><br><span class="line">Usage: yyt [options]</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">  -V, --version  output the version number</span><br><span class="line">  -h, --<span class="built_in">help</span>     display <span class="built_in">help</span> <span class="keyword">for</span> <span class="built_in">command</span></span><br></pre></td></tr></table></figure>
+
+<p><code>.option()</code> 加入自定义命令</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">program.option(<span class="string">&#x27;-d, --description&#x27;</span>, <span class="string">&#x27;yyt 脚手架简介：。。。。&#x27;</span>)</span><br></pre></td></tr></table></figure>
+
+<p>可以发现已经加上该命令：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">xxx@xxxdeMacBook-Pro y-cli % yyt -h</span><br><span class="line">Usage: yyt [options]</span><br><span class="line"></span><br><span class="line">Options:</span><br><span class="line">  -V, --version      output the version number</span><br><span class="line">  -d, --description  yyt 脚手架简介：。。。。</span><br><span class="line">  -h, --<span class="built_in">help</span>         display <span class="built_in">help</span> <span class="keyword">for</span> <span class="built_in">command</span></span><br></pre></td></tr></table></figure>
+
+<p><code>.command()</code> 自定义命令，</p>
+<p>基础格式：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">program.option(&#39;hello &lt;param1&gt; [param2]&#39;)</span><br></pre></td></tr></table></figure>
+
+<p>值得注意的是，尖括号<code>&lt;&gt;</code>里的参数是必填参数，方括号<code>[]</code>里的参数是可选参数</p>
+<p>利用<code>.command()</code>写一个简单的demo，弄清整个基础流程：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">program</span><br><span class="line">	.command(<span class="string">&#x27;hello &lt;param1&gt; [param2]&#x27;</span>)</span><br><span class="line">  <span class="comment">// 命令里利用.usage()参数化，供后面的.action()回调使用：</span></span><br><span class="line">	.usage(<span class="string">&#x27;&lt;command&gt; &lt;param1&gt; [param2]&#x27;</span>)</span><br><span class="line">  <span class="comment">// 回调处理：</span></span><br><span class="line">	.action(<span class="function">(<span class="params">param1, param2</span>)=&gt;</span>&#123;</span><br><span class="line">		<span class="built_in">console</span>.log(param1);</span><br><span class="line">		<span class="built_in">console</span>.log(param2);</span><br><span class="line">	&#125;)</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">ziyouzhiyi@ziyouzhiyideMacBook-Pro y-cli % yyt hello</span><br><span class="line">error: missing required argument <span class="string">&#x27;param1&#x27;</span></span><br><span class="line">ziyouzhiyi@ziyouzhiyideMacBook-Pro y-cli % yyt hello t </span><br><span class="line">t</span><br><span class="line">undefined</span><br><span class="line">ziyouzhiyi@ziyouzhiyideMacBook-Pro y-cli % yyt hello t y</span><br><span class="line">t</span><br><span class="line">y</span><br></pre></td></tr></table></figure>
+
+<p>上面这些参数也可通过<code>.option()</code>来实现，但需要加上<code>-</code>，如<code>-react</code>，如以下的例子，利用参数创建项目：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">program.command(<span class="string">&#x27;create &lt;projectName&gt;&#x27;</span>)</span><br><span class="line">	.option(<span class="string">&#x27;-react&#x27;</span>)</span><br><span class="line">	.option(<span class="string">&#x27;-vue&#x27;</span>)</span><br><span class="line">	.action(<span class="function">(<span class="params">projectName, option</span>) =&gt;</span> &#123;</span><br><span class="line">		<span class="keyword">const</span> type = <span class="built_in">Object</span>.keys(option)[<span class="number">0</span>]</span><br><span class="line">		<span class="keyword">switch</span>(type) &#123;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">&quot;Vue&quot;</span>:</span><br><span class="line">				<span class="built_in">console</span>.log(<span class="string">&quot;创建vue项目&quot;</span>)</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">case</span> <span class="string">&quot;React&quot;</span>:</span><br><span class="line">				<span class="built_in">console</span>.log(<span class="string">&quot;创建react项目&quot;</span>)</span><br><span class="line">				<span class="keyword">break</span>;</span><br><span class="line">			<span class="keyword">default</span>:</span><br><span class="line">				<span class="built_in">console</span>.log(<span class="string">&quot;未添加参数，不能下载&quot;</span>)</span><br><span class="line">		&#125;</span><br><span class="line">	&#125;)</span><br></pre></td></tr></table></figure>
+
+<p>执行命令后可以看到打印：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ziyouzhiyi@ziyouzhiyideMacBook-Pro y-cli % yyt create <span class="built_in">test</span> -react</span><br><span class="line">创建react项目</span><br></pre></td></tr></table></figure>
+
+<h2 id="download-git-repo"><a href="#download-git-repo" class="headerlink" title="download-git-repo"></a>download-git-repo</h2><p>下载的步骤把他替换成真的仓库，需要用到 <code>download-git-repo</code> 库</p>
+<p>把console.log替换成真实的git仓库</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">...</span><br><span class="line">  <span class="keyword">case</span> <span class="string">&quot;React&quot;</span>:</span><br><span class="line">    download(</span><br><span class="line">			<span class="comment">// 此处应加上 #main 分支名称，否则控制台会显示报错</span></span><br><span class="line">      <span class="string">&#x27;direct:git@github.com:ys558/yyt-template.git#main&#x27;</span>,</span><br><span class="line">      projectName,</span><br><span class="line">      &#123; <span class="attr">clone</span>: <span class="literal">true</span> &#125;,</span><br><span class="line">      (err, x) =&gt; &#123;</span><br><span class="line">        <span class="comment">// 错误回调：</span></span><br><span class="line">        <span class="keyword">if</span> (err) <span class="built_in">console</span>.log(err)</span><br><span class="line">        <span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;projectName&#125;</span> 项目创建成功`</span>)</span><br><span class="line">      &#125;</span><br><span class="line">    )</span><br><span class="line">    <span class="keyword">break</span>;</span><br><span class="line">  <span class="keyword">default</span>:</span><br><span class="line">    <span class="built_in">console</span>.log(<span class="string">&quot;未添加参数，不能下载&quot;</span>)</span><br><span class="line">...</span><br></pre></td></tr></table></figure>
+
+<h2 id="inquirer"><a href="#inquirer" class="headerlink" title="inquirer"></a><a target="_blank" rel="noopener" href="https://github.com/SBoudrias/Inquirer.js">inquirer</a></h2><p>👆的步骤下载的仓库是在命令行下直接完成的，如果要像vue一样能让用户输入生成的，可以用该库，我们把代码改造一下，实际上就是在 <code>.action()</code> 的回调中进行处理</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> questions = [</span><br><span class="line">	&#123;</span><br><span class="line">		type: <span class="string">&#x27;input&#x27;</span>,</span><br><span class="line">		name: <span class="string">&#x27;projectName&#x27;</span>,</span><br><span class="line">		message: <span class="string">&#x27;请输入项目名称&#x27;</span>,</span><br><span class="line">	&#125;,</span><br><span class="line">	&#123;</span><br><span class="line">		type: <span class="string">&#x27;list&#x27;</span>,</span><br><span class="line">		name: <span class="string">&#x27;frameWork&#x27;</span>,</span><br><span class="line">		message: <span class="string">&#x27;请选择框架&#x27;</span>,</span><br><span class="line">		<span class="keyword">default</span>: <span class="string">&#x27;React&#x27;</span>,</span><br><span class="line">		choices: [<span class="string">&#x27;React&#x27;</span>,<span class="string">&#x27;Vue&#x27;</span>]</span><br><span class="line">	&#125;,</span><br><span class="line">]</span><br><span class="line"></span><br><span class="line">program</span><br><span class="line">	.command(<span class="string">&#x27;create&#x27;</span>)</span><br><span class="line">	.action(<span class="function">() =&gt;</span> &#123;</span><br><span class="line">		inquirer.prompt(questions)</span><br><span class="line">			.then(<span class="function">(<span class="params">&#123;projectName, frameWork&#125;</span>) =&gt;</span> &#123;</span><br><span class="line">				<span class="keyword">switch</span> (frameWork) &#123;</span><br><span class="line">					<span class="keyword">case</span> <span class="string">&#x27;React&#x27;</span>:</span><br><span class="line">						download(</span><br><span class="line">							<span class="string">&#x27;direct:git@github.com:ys558/yyt-template.git&#x27;</span>,</span><br><span class="line">							projectName,</span><br><span class="line">							&#123; <span class="attr">clone</span>: <span class="literal">true</span> &#125;,</span><br><span class="line">							(err) =&gt; &#123;</span><br><span class="line">								<span class="comment">// 错误回调：</span></span><br><span class="line">								<span class="keyword">if</span> (err) &#123;</span><br><span class="line">									<span class="built_in">console</span>.log(err)</span><br><span class="line">									<span class="keyword">return</span></span><br><span class="line">								&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">									<span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;projectName&#125;</span> 项目创建成功`</span>)</span><br><span class="line">								&#125;</span><br><span class="line">							&#125;)</span><br><span class="line">						<span class="keyword">break</span>;</span><br><span class="line">					<span class="keyword">case</span> <span class="string">&#x27;Vue&#x27;</span>:</span><br><span class="line">						download(</span><br><span class="line">							<span class="string">&#x27;direct:git@github.com:ys558/yyt-template.git&#x27;</span>,</span><br><span class="line">							projectName,</span><br><span class="line">							&#123; <span class="attr">clone</span>: <span class="literal">true</span> &#125;,</span><br><span class="line">							(err) =&gt; &#123;</span><br><span class="line">								<span class="comment">// 错误回调：</span></span><br><span class="line">								<span class="keyword">if</span> (err) &#123;</span><br><span class="line">									<span class="built_in">console</span>.log(err)</span><br><span class="line">									<span class="keyword">return</span></span><br><span class="line">								&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">									<span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;projectName&#125;</span> 项目创建成功`</span>)</span><br><span class="line">								&#125;</span><br><span class="line">							&#125;)</span><br><span class="line">						<span class="keyword">break</span>;</span><br><span class="line">					<span class="keyword">default</span>:</span><br><span class="line">						<span class="keyword">break</span>;</span><br><span class="line">				&#125;</span><br><span class="line">			&#125;)</span><br><span class="line">	&#125;)</span><br></pre></td></tr></table></figure>
+
+<h2 id="美化"><a href="#美化" class="headerlink" title="美化"></a>美化</h2><h3 id="chalk，figlet"><a href="#chalk，figlet" class="headerlink" title="chalk，figlet"></a><a target="_blank" rel="noopener" href="https://github.com/chalk/chalk"><code>chalk</code></a>，<a target="_blank" rel="noopener" href="https://github.com/patorjk/figlet.js"><code>figlet</code></a></h3><p>美化终端字体，如 <code>chalk</code>:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">if</span> (err) &#123;</span><br><span class="line">	<span class="built_in">console</span>.log(chalk.bgYellow(err))</span><br><span class="line">	<span class="keyword">return</span></span><br><span class="line">&#125;<span class="keyword">else</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(<span class="string">`<span class="subst">$&#123;chalk.bgGrey(projectName)&#125;</span> <span class="subst">$&#123;chalk.greenBright(<span class="string">&#x27;项目创建成功&#x27;</span>)&#125;</span>`</span>)</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><code>figlet</code>:</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">figlet.defaults(&#123;<span class="attr">font</span>: <span class="string">&#x27;Standard&#x27;</span>&#125;)</span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">logo</span>(<span class="params"></span>)</span>&#123;</span><br><span class="line">	<span class="built_in">console</span>.log(figlet.textSync(<span class="string">&#x27;hi yyt!&#x27;</span>))</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<h3 id="ora"><a href="#ora" class="headerlink" title="ora"></a><a target="_blank" rel="noopener" href="https://github.com/sindresorhus/ora"><code>ora</code></a></h3><p>这是一个比较麻烦的模块，他是 <code>es module</code> 类型的<code>import</code>导入模块，而 node 用的是<code>commonjs</code> 的 <code>require</code> 导入模块，而且须在 <code>package.json</code> 里添加 <code>&#123; &quot;type&quot; : &quot;module&quot; &#125;</code> 才能正常加载，下面贴上相关代码：</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"></span><br><span class="line"><span class="keyword">const</span> spinner = ora(<span class="string">&quot;下载初始化模板中...&quot;</span>)</span><br><span class="line">spinner.start()</span><br><span class="line">spinner.succeed(<span class="string">`<span class="subst">$&#123;chalk.bgGrey(projectName)&#125;</span> <span class="subst">$&#123;chalk.greenBright(<span class="string">&#x27;项目创建成功&#x27;</span>)&#125;</span>`</span>)</span><br><span class="line">spinner.stop()</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="完整代码仓库"><a href="#完整代码仓库" class="headerlink" title="完整代码仓库"></a><a target="_blank" rel="noopener" href="https://github.com/ys558/my-node-cli-yyt">完整代码仓库</a></h2>
+      
+    </div>
+    <footer class="article-footer">
+      <a data-url="https://zyzy.info/2021/10/17/%E3%80%902021-10-17%E3%80%91%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84node-cli/" data-id="cl178haao001gcn8o1jh52jch" data-title="创建自己的node cli" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/node-cli/" rel="tag">node cli</a></li></ul>
+
+    </footer>
+  </div>
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2021/10/26/%E3%80%902021-05-30%E3%80%91Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          Web性能优化（最后更新时间：2021-10-26）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/08/27/%E3%80%902021-08-27%E3%80%91react-ssr%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%B8%B2%E6%9F%93/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">react-ssr服务端渲染</div>
+    </a>
+  
+</nav>
+
+  
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Babel/" rel="tag">Babel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CDN/" rel="tag">CDN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CJS/" rel="tag">CJS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dart/" rel="tag">Dart</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES/" rel="tag">ES</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6/" rel="tag">ES6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ESM/" rel="tag">ESM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Electron/" rel="tag">Electron</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/" rel="tag">Flutter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github-Page/" rel="tag">Github Page</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HOC/" rel="tag">HOC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IntersectionObserver/" rel="tag">IntersectionObserver</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JWT/" rel="tag">JWT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React-Hooks/" rel="tag">React Hooks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React-Query/" rel="tag">React Query</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swagger-UI/" rel="tag">Swagger UI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Token/" rel="tag">Token</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Type-Script/" rel="tag">Type Script</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" rel="tag">Web性能优化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/conventional-commit/" rel="tag">conventional commit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/esbuild/" rel="tag">esbuild</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eventEmitter/" rel="tag">eventEmitter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flutter/" rel="tag">flutter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lerna/" rel="tag">lerna</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mono-repo/" rel="tag">mono repo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/node/" rel="tag">node</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/node-cli/" rel="tag">node cli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/npm-package/" rel="tag">npm package</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssr/" rel="tag">ssr</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swagger-jsdoc/" rel="tag">swagger-jsdoc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/type-script/" rel="tag">type script</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yarn/" rel="tag">yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/" rel="tag">反向代理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%90%8E%E7%AB%AF/" rel="tag">后端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B7%A8%E7%AB%AF/" rel="tag">跨端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Babel/" style="font-size: 13.33px;">Babel</a> <a href="/tags/CDN/" style="font-size: 10px;">CDN</a> <a href="/tags/CJS/" style="font-size: 10px;">CJS</a> <a href="/tags/Dart/" style="font-size: 13.33px;">Dart</a> <a href="/tags/ES/" style="font-size: 13.33px;">ES</a> <a href="/tags/ES6/" style="font-size: 10px;">ES6</a> <a href="/tags/ESM/" style="font-size: 10px;">ESM</a> <a href="/tags/Electron/" style="font-size: 10px;">Electron</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/Github-Page/" style="font-size: 10px;">Github Page</a> <a href="/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/tags/HOC/" style="font-size: 10px;">HOC</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/IntersectionObserver/" style="font-size: 10px;">IntersectionObserver</a> <a href="/tags/JWT/" style="font-size: 10px;">JWT</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/React/" style="font-size: 20px;">React</a> <a href="/tags/React-Hooks/" style="font-size: 10px;">React Hooks</a> <a href="/tags/React-Query/" style="font-size: 10px;">React Query</a> <a href="/tags/Swagger-UI/" style="font-size: 10px;">Swagger UI</a> <a href="/tags/Token/" style="font-size: 10px;">Token</a> <a href="/tags/Type-Script/" style="font-size: 10px;">Type Script</a> <a href="/tags/Vue/" style="font-size: 13.33px;">Vue</a> <a href="/tags/Webpack/" style="font-size: 16.67px;">Webpack</a> <a href="/tags/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" style="font-size: 10px;">Web性能优化</a> <a href="/tags/conventional-commit/" style="font-size: 10px;">conventional commit</a> <a href="/tags/esbuild/" style="font-size: 13.33px;">esbuild</a> <a href="/tags/eventEmitter/" style="font-size: 10px;">eventEmitter</a> <a href="/tags/flutter/" style="font-size: 10px;">flutter</a> <a href="/tags/lerna/" style="font-size: 10px;">lerna</a> <a href="/tags/mono-repo/" style="font-size: 10px;">mono repo</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/node-cli/" style="font-size: 10px;">node cli</a> <a href="/tags/npm-package/" style="font-size: 10px;">npm package</a> <a href="/tags/react/" style="font-size: 13.33px;">react</a> <a href="/tags/ssr/" style="font-size: 10px;">ssr</a> <a href="/tags/swagger-jsdoc/" style="font-size: 10px;">swagger-jsdoc</a> <a href="/tags/type-script/" style="font-size: 10px;">type script</a> <a href="/tags/webpack/" style="font-size: 13.33px;">webpack</a> <a href="/tags/yarn/" style="font-size: 10px;">yarn</a> <a href="/tags/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/" style="font-size: 10px;">反向代理</a> <a href="/tags/%E5%90%8E%E7%AB%AF/" style="font-size: 13.33px;">后端</a> <a href="/tags/%E8%B7%A8%E7%AB%AF/" style="font-size: 10px;">跨端</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 10px;">面试</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/03/20/%E3%80%902022-03-20%E3%80%91%E7%94%A8webpack-esbuild%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84js%E7%B1%BB%E5%BA%93npm%E5%8C%85-%E6%9B%B4%E6%96%B0%E4%B8%AD/">用webpack, esbuild两种方法创建自己的js类库npm包(更新中,未完)</a>
+          </li>
+        
+          <li>
+            <a href="/2021/11/09/%E3%80%902021-11-09%E3%80%91MonoRepo%E7%AE%80%E4%BB%8B%E5%8F%8A%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95%20copy/">Mono Repo 简介及实现方法</a>
+          </li>
+        
+          <li>
+            <a href="/2021/10/28/%E3%80%902021-10-28%E3%80%91%E7%94%A8esbuil%E5%88%9B%E5%BB%BAReact%E9%A1%B9%E7%9B%AE/">esbuil用于create-react-app项目的热更新开发</a>
+          </li>
+        
+          <li>
+            <a href="/2021/10/26/%E3%80%902021-05-30%E3%80%91Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/">Web性能优化（最后更新时间：2021-10-26）</a>
+          </li>
+        
+          <li>
+            <a href="/2021/10/17/%E3%80%902021-10-17%E3%80%91%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84node-cli/">创建自己的node cli</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 自由の翼<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
+
+
+
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
+
+
+
+
+<script src="/js/script.js"></script>
+
+
+
+
+
+  </div>
+</body>
+</html>

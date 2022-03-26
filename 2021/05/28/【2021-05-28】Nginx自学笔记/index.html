@@ -1,26 +1,12 @@
 <!DOCTYPE html>
-<html lang='zh-CN'>
-
+<html>
 <head>
-  <meta name="generator" content="Hexo 5.4.0">
   <meta charset="utf-8">
   
-
-  <meta http-equiv='x-dns-prefetch-control' content='on' />
-  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-
-  <meta name="renderer" content="webkit">
-  <meta name="force-rendering" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-  <meta name="HandheldFriendly" content="True" >
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-  <title>Nginx自学笔记 - 自由の翼小栈</title>
-
   
-    <meta name="description" content="Ngix这几年太火了，在不久的将来会超过Apache，由于他的底层用epoll，现在多用于服务器端的反向代理和负载均衡 ，强大的并发性能使其基本上没有项目不用他。本篇把 Ngix 的基础配置撸了一遍，记下来以免以后忘了。">
+  <title>Nginx自学笔记 | 自由の翼小栈</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="Ngix这几年太火了，在不久的将来会超过Apache，由于他的底层用epoll，现在多用于服务器端的反向代理和负载均衡 ，强大的并发性能使其基本上没有项目不用他。本篇把 Ngix 的基础配置撸了一遍，记下来以免以后忘了。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Nginx自学笔记">
 <meta property="og:url" content="https://zyzy.info/2021/05/28/%E3%80%902021-05-28%E3%80%91Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/index.html">
@@ -63,94 +49,96 @@
 <meta property="article:tag" content="后端">
 <meta property="article:tag" content="Nginx">
 <meta property="article:tag" content="反向代理">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/00.png">
   
+    <link rel="alternate" href="/atom.xml" title="自由の翼小栈" type="application/atom+xml">
   
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
 
-  <!-- feed -->
   
+  
+<link rel="stylesheet" href="/css/style.css">
 
   
     
-<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
 
   
-
-  
-</head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <body>
-  
-
-
-  <div class='l_body' id='start'>
-    <aside class='l_left'>
-    
-
-<header class='header'>
-  <div class='logo-wrap'>
-  
-    <a class='avatar' href='/about/'>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">自由の翼小栈</a>
+      </h1>
       
-        <img no-lazy class='bg' src='https://cdn.jsdelivr.net/gh/cdn-x/placeholder@1.0.2/avatar/round/rainbow64@3x.webp'/>
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">技术&amp;生活分享</a>
+        </h2>
       
-      <img no-lazy class='avatar' src='https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.12/avatar/宇航员.svg'/>
-    </a>
-  
-  
-    <a class='title' href='/'>
-      自由の翼小栈
-    </a>
-  
-</div>
-
-  <nav class="menu dis-select"></nav>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://zyzy.info"></form>
+      </div>
+    </div>
+  </div>
 </header>
 
-<div class='widgets'>
-  
+      <div class="outer">
+        <section id="main"><article id="post-【2021-05-28】Nginx自学笔记" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/05/28/%E3%80%902021-05-28%E3%80%91Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/" class="article-date">
+  <time class="dt-published" datetime="2021-05-28T01:36:33.000Z" itemprop="datePublished">2021-05-28</time>
+</a>
     
-      
-      
-<div class="widget-wrap" id="toc"><div class="widget-header h4 dis-select"><span class="name">本文目录</span></div><div class="widget-body fs14 post"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%89%E8%A3%85"><span class="toc-text">安装</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9E%E6%8E%A5%E8%BF%9C%E7%A8%8B%E6%9C%8D%E5%8A%A1%E5%99%A8"><span class="toc-text">连接远程服务器</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E4%BA%9B%E5%BF%85%E8%A6%81%E7%9A%84%E5%B7%A5%E5%85%B7"><span class="toc-text">安装些必要的工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%94%E5%9B%9E%E5%AE%B6%E7%9B%AE%E5%88%9B%E5%BB%BANginx%E4%B8%BB%E8%A6%81%E6%96%87%E4%BB%B6%E5%A4%B9"><span class="toc-text">返回家目创建Nginx主要文件夹</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%89%E8%A3%85%E6%9C%80%E6%96%B0%E7%89%88Nginx"><span class="toc-text">安装最新版Nginx</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Nginx%E9%85%8D%E7%BD%AE%E9%A1%B9%E8%AF%A6%E8%A7%A3"><span class="toc-text">Nginx配置项详解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BD%91%E7%AB%99%E6%A0%B9%E7%9B%AE%E5%BD%95"><span class="toc-text">网站根目录</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BF%90%E8%A1%8CNginx"><span class="toc-text">运行Nginx</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%80%E5%90%AF"><span class="toc-text">开启</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B3%E9%97%AD"><span class="toc-text">关闭</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%8D%E8%BD%BD"><span class="toc-text">重载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Linux%E9%80%9A%E7%94%A8%E5%91%BD%E4%BB%A4%E6%89%A7%E8%A1%8C%E5%BC%80%E5%90%AF%EF%BC%8C%E5%85%B3%E9%97%AD%E5%92%8C%E9%87%8D%E8%BD%BD"><span class="toc-text">Linux通用命令执行开启，关闭和重载</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E8%BF%9B%E7%A8%8B"><span class="toc-text">查看进程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E6%89%80%E6%9C%89%E5%BC%80%E5%90%AF%E7%9A%84%E7%AB%AF%E5%8F%A3%E5%8F%B7"><span class="toc-text">查看所有开启的端口号</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%83%E9%99%90%E6%8E%A7%E5%88%B6"><span class="toc-text">权限控制</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A6%81%E6%AD%A2%E6%9F%90%E4%BA%9Bip%E4%B8%8D%E8%83%BD%E8%AE%BF%E9%97%AE"><span class="toc-text">禁止某些ip不能访问</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%B2%BE%E7%A1%AE%E5%8C%B9%E9%85%8D%E8%B7%AF%E5%BE%84%E8%AE%BF%E9%97%AE%E6%9D%83%E9%99%90"><span class="toc-text">精确匹配路径访问权限</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%99%9A%E6%8B%9F%E4%B8%BB%E6%9C%BA"><span class="toc-text">虚拟主机</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E7%AB%AF%E5%8F%A3%E5%8F%B7%E9%85%8D%E7%BD%AE%E8%99%9A%E6%8B%9F%E4%B8%BB%E6%9C%BA"><span class="toc-text">基于端口号配置虚拟主机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8EIP%E9%85%8D%E7%BD%AE%E8%99%9A%E6%8B%9F%E4%B8%BB%E6%9C%BA"><span class="toc-text">基于IP配置虚拟主机</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8E%E5%9F%9F%E5%90%8D%E9%85%8D%E7%BD%AE%E8%99%9A%E6%8B%9F%E4%B8%BB%E6%9C%BA"><span class="toc-text">基于域名配置虚拟主机</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86"><span class="toc-text">反向代理</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86%EF%BC%88Proxy%EF%BC%89"><span class="toc-text">正向代理（Proxy）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%EF%BC%88Reverse-Proxy"><span class="toc-text">反向代理（Reverse Proxy)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Nginx%E7%9A%84%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E5%AE%9E%E6%93%8D"><span class="toc-text">Nginx的反向代理实操</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E5%85%B6%E4%BB%96%E9%85%8D%E7%BD%AE%E5%8F%82%E6%95%B0"><span class="toc-text">反向代理其他配置参数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Nginx%E9%80%82%E9%85%8D%E7%A7%BB%E5%8A%A8%E7%AB%AF"><span class="toc-text">Nginx适配移动端</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Gzip%E5%8E%8B%E7%BC%A9"><span class="toc-text">Gzip压缩</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9F%A5%E7%9C%8B%E4%B8%80%E4%B8%AA%E7%BD%91%E7%AB%99%E6%98%AF%E5%90%A6%E6%9C%89gzip%E5%8E%8B%E7%BC%A9"><span class="toc-text">查看一个网站是否有gzip压缩</span></a></li></ol></li></ol></div></div></div>
-
-    
-  
-</div>
-
-
-    </aside>
-    <div class='l_main'>
-      
-
-      
-
-
-  <div class='bread-nav fs12'>
-  
-    
-    <div id='breadcrumb'>
-      <a class='cap breadcrumb' href='/'>主页</a>
-      <span class="sep"></span>
-      <a class='cap breadcrumb' href='/'>文章</a>
-      
-    </div>
-    <div id='post-meta'>
-      发布于&nbsp;<time datetime='2021-05-28T01:36:33.000Z'>2021-05-28</time>
-    </div>
-  
   </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Nginx自学笔记
+    </h1>
+  
 
-
-<article class='content md post'>
-<h1 class="article-title"><span>Nginx自学笔记</span></h1>
-<p>Ngix这几年太火了，在不久的将来会超过Apache，由于他的底层用epoll，现在多用于服务器端的反向代理和负载均衡 ，强大的并发性能使其基本上没有项目不用他。<br>本篇把 Ngix 的基础配置撸了一遍，记下来以免以后忘了。</p>
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>Ngix这几年太火了，在不久的将来会超过Apache，由于他的底层用epoll，现在多用于服务器端的反向代理和负载均衡 ，强大的并发性能使其基本上没有项目不用他。<br>本篇把 Ngix 的基础配置撸了一遍，记下来以免以后忘了。</p>
 <span id="more"></span>
 
 <h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><p>可查看<a target="_blank" rel="noopener" href="http://nginx.org/en/download.html">Nginx官网</a></p>
 <h3 id="连接远程服务器"><a href="#连接远程服务器" class="headerlink" title="连接远程服务器"></a>连接远程服务器</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ssh root@8.134.120.206</span><br></pre></td></tr></table></figure>
-<p>输入密码后见到登录了<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/00.png" alt="ssh 登录远程服务器"></p>
+<p>输入密码后见到登录了<br><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/00.png" alt="ssh 登录远程服务器"></p>
 <h3 id="安装些必要的工具"><a href="#安装些必要的工具" class="headerlink" title="安装些必要的工具"></a>安装些必要的工具</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">yum -y install gcc gcc-c++ autoconf pcre-devel make automake</span><br><span class="line">yum -y install wget httpd-tools vim</span><br></pre></td></tr></table></figure>
 
 <h3 id="返回家目创建Nginx主要文件夹"><a href="#返回家目创建Nginx主要文件夹" class="headerlink" title="返回家目创建Nginx主要文件夹"></a>返回家目创建Nginx主要文件夹</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">cd ~</span><br><span class="line">mkdir nginx-learn &amp;&amp; cd nginx-learn</span><br><span class="line">mkdir app backup download logs work</span><br></pre></td></tr></table></figure>
@@ -158,21 +146,21 @@
 <h3 id="安装最新版Nginx"><a href="#安装最新版Nginx" class="headerlink" title="安装最新版Nginx"></a>安装最新版Nginx</h3><p>需查看Nginx的yum源的版本，运行以下命令：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">yum list | grep nginx </span><br></pre></td></tr></table></figure>
 
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/01.png" alt="创建nginx主目录并查看yum源的版本"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/01.png" alt="创建nginx主目录并查看yum源的版本"></p>
 <p>yum 源的更新配置，复制Nginx官网<a target="_blank" rel="noopener" href="https://nginx.org/en/linux_packages.html#RHEL-CentOS">这里</a>的配置，我把他粘出来</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">[nginx-stable]</span><br><span class="line">name=nginx stable repo</span><br><span class="line">baseurl=http://nginx.org/packages/centos/$releasever/$basearch/</span><br><span class="line">gpgcheck=1</span><br><span class="line">enabled=1</span><br><span class="line">gpgkey=https://nginx.org/keys/nginx_signing.key</span><br><span class="line">module_hotfixes=true</span><br><span class="line"></span><br><span class="line">[nginx-mainline]</span><br><span class="line">name=nginx mainline repo</span><br><span class="line">baseurl=http://nginx.org/packages/mainline/centos/$releasever/$basearch/</span><br><span class="line">gpgcheck=1</span><br><span class="line">enabled=0</span><br><span class="line">gpgkey=https://nginx.org/keys/nginx_signing.key</span><br><span class="line">module_hotfixes=true</span><br></pre></td></tr></table></figure>
 
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/yum.repos.d/nginx.repo</span><br></pre></td></tr></table></figure>
 
-<p>其中 <code>baseurl=http://nginx.org/packages/centos/$releasever/$basearch/</code> 的 <code>$releasever</code> 我用的是centOS 7的版本，所以我直接改成7，如下：<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/02.png" alt="改动nginx.repo文件"></p>
+<p>其中 <code>baseurl=http://nginx.org/packages/centos/$releasever/$basearch/</code> 的 <code>$releasever</code> 我用的是centOS 7的版本，所以我直接改成7，如下：<br><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/02.png" alt="改动nginx.repo文件"></p>
 <p>这次再安装nginx</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">yum install nginx</span><br><span class="line">nginx -v</span><br><span class="line"><span class="meta">#</span><span class="bash"> or</span></span><br><span class="line">nginx -V</span><br></pre></td></tr></table></figure>
 
-<p>可以发现更新到最新的nginx版本<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/03.png" alt="改动yum源后，安装了nginx最新版1.20.1"></p>
+<p>可以发现更新到最新的nginx版本<br><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/03.png" alt="改动yum源后，安装了nginx最新版1.20.1"></p>
 <p>查看所有 nginx 目录及配置文件的命令：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rpm -ql nginx</span><br></pre></td></tr></table></figure>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/04.png" alt="所有nginx配置文件"></p>
-<h3 id="Nginx配置项详解"><a href="#Nginx配置项详解" class="headerlink" title="Nginx配置项详解"></a>Nginx配置项详解</h3><p>配置项：大部分工作在以下两个文件执行修改：<br>/etc/nginx/nginx.conf<br>cd /etc/nginx<br>cat nginx.conf<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/05.png" alt="所有nginx配置文件"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/04.png" alt="所有nginx配置文件"></p>
+<h3 id="Nginx配置项详解"><a href="#Nginx配置项详解" class="headerlink" title="Nginx配置项详解"></a>Nginx配置项详解</h3><p>配置项：大部分工作在以下两个文件执行修改：<br>/etc/nginx/nginx.conf<br>cd /etc/nginx<br>cat nginx.conf<br><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/05.png" alt="所有nginx配置文件"></p>
 <p>下面解释一下各配置的作用：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br></pre></td><td class="code"><pre><span class="line">user  nginx; # 默认用户</span><br><span class="line">worker_processes  auto; # 进程数，即cpu数</span><br><span class="line"></span><br><span class="line">error_log  /var/log/nginx/error.log notice; # 错误日志</span><br><span class="line">pid        /var/run/nginx.pid; # 进程</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">events &#123;</span><br><span class="line">    worker_connections  1024; # 允许最大连接数</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">http &#123;</span><br><span class="line">    include       /etc/nginx/mime.types; # 文件扩展名的映射表</span><br><span class="line">    default_type  application/octet-stream; # </span><br><span class="line"></span><br><span class="line">    # 设置日志格式：</span><br><span class="line">    log_format  main  &#x27;$remote_addr - $remote_user [$time_local] &quot;$request&quot; &#x27;</span><br><span class="line">                      &#x27;$status $body_bytes_sent &quot;$http_referer&quot; &#x27;</span><br><span class="line">                      &#x27;&quot;$http_user_agent&quot; &quot;$http_x_forwarded_for&quot;&#x27;;</span><br><span class="line"></span><br><span class="line">    # 访问日志存放位置</span><br><span class="line">    access_log  /var/log/nginx/access.log  main;</span><br><span class="line"></span><br><span class="line">    # 开启默认传输模式</span><br><span class="line">    sendfile        on;</span><br><span class="line"></span><br><span class="line">    # 减少网络报文数量</span><br><span class="line">    #tcp_nopush     on;</span><br><span class="line"></span><br><span class="line">    # 超时时间</span><br><span class="line">    keepalive_timeout  65;</span><br><span class="line"></span><br><span class="line">    # 开启压缩</span><br><span class="line">    #gzip  on;</span><br><span class="line"></span><br><span class="line">    # 子配置项</span><br><span class="line">    include /etc/nginx/conf.d/*.conf;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
@@ -182,7 +170,7 @@
 
 <h3 id="网站根目录"><a href="#网站根目录" class="headerlink" title="网站根目录"></a>网站根目录</h3><p>我们改动一点根目录的内容：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /usr/share/nginx/html/index.html</span><br></pre></td></tr></table></figure>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/001.png" alt="利用vim对index.html的内容进行一点改动"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/001.png" alt="利用vim对index.html的内容进行一点改动"></p>
 <h2 id="运行Nginx"><a href="#运行Nginx" class="headerlink" title="运行Nginx"></a>运行Nginx</h2><h3 id="开启"><a href="#开启" class="headerlink" title="开启"></a>开启</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">nginx</span><br></pre></td></tr></table></figure>
 
 <h3 id="关闭"><a href="#关闭" class="headerlink" title="关闭"></a>关闭</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">#</span><span class="bash"> 正常关停</span></span><br><span class="line">nginx -s quit</span><br><span class="line"></span><br><span class="line"><span class="meta">#</span><span class="bash"> 几种强制关停</span></span><br><span class="line">nginx -s stop</span><br><span class="line">killall nginx</span><br></pre></td></tr></table></figure>
@@ -195,23 +183,23 @@
 
 <h3 id="查看进程"><a href="#查看进程" class="headerlink" title="查看进程"></a>查看进程</h3><p>通过查看nginx所有进程确认其已经运行：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ps aux | grep nginx</span><br></pre></td></tr></table></figure>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/10.png" alt="查看所有进程"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/10.png" alt="查看所有进程"></p>
 <h3 id="查看所有开启的端口号"><a href="#查看所有开启的端口号" class="headerlink" title="查看所有开启的端口号"></a>查看所有开启的端口号</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">netstat -tlnp</span><br></pre></td></tr></table></figure>
 
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/11.png" alt="查看所有开启的端口号"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/11.png" alt="查看所有开启的端口号"></p>
 <p>配置一个404页面，修改一个配置如下：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/nginx/conf.d/default.conf</span><br></pre></td></tr></table></figure>
 <p>增加一行，改成这样：   </p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/12.png" alt="添加自定义404页面"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/12.png" alt="添加自定义404页面"></p>
 <p>做一个404页面：   </p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /usr/share/nginx/html/404_error.html</span><br></pre></td></tr></table></figure>
 
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/20.png" alt="自己写的404页面"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/20.png" alt="自己写的404页面"></p>
 <p>写完页面后，地址栏随便输入一地址会发现出现了404页面：</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/21.png" alt="查看404页面效果"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/21.png" alt="查看404页面效果"></p>
 <p>也可以重定向到其他页面，如：</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/nginx/conf.d/default.conf</span><br></pre></td></tr></table></figure>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/13.png" alt="查看所有进程"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/13.png" alt="查看所有进程"></p>
 <h2 id="权限控制"><a href="#权限控制" class="headerlink" title="权限控制"></a>权限控制</h2><h3 id="禁止某些ip不能访问"><a href="#禁止某些ip不能访问" class="headerlink" title="禁止某些ip不能访问"></a>禁止某些ip不能访问</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/nginx/conf.d/default.conf</span><br></pre></td></tr></table></figure>
 
 <ul>
@@ -220,9 +208,9 @@
 <li><code>allow</code> 允许哪些IP可以访问   </li>
 <li>注意！！！<code>default.conf</code> 文件是从上往下执行，如 <code>deny  all;</code> 写在 <code>allow  113.65.137.13;</code>之前，那么<code>113.65.137.13</code>仍不能访问  </li>
 </ul>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/22.png" alt="禁止某些IP访问">      </p>
+<p><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/22.png" alt="禁止某些IP访问">      </p>
 <p>再次在页面打开，就会发现不能访问页面，出现403页面：</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/23.png" alt="禁止某些IP访问后出现403页面">   </p>
+<p><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/23.png" alt="禁止某些IP访问后出现403页面">   </p>
 <h3 id="精确匹配路径访问权限"><a href="#精确匹配路径访问权限" class="headerlink" title="精确匹配路径访问权限"></a>精确匹配路径访问权限</h3><ul>
 <li>在 <code>location</code> 配置某些路径允许哪些IP 进行访问，添加如下：</li>
 <li>都是正则匹配，除了路径，还可匹配不能访问的文件，如 <code>.php</code> 结尾的文件   </li>
@@ -233,14 +221,14 @@
 <h3 id="基于端口号配置虚拟主机"><a href="#基于端口号配置虚拟主机" class="headerlink" title="基于端口号配置虚拟主机"></a>基于端口号配置虚拟主机</h3><p>在 <code>/etc/nginx/conf.d/</code> 下新建 <code>8001.conf</code> 文件，用于配置 <code>8001</code> 端口的虚拟主机</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/nginx/conf.d/8001.conf</span><br></pre></td></tr></table></figure>
 
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/25.png" alt="基于8001配置新的虚拟主机">   </p>
+<p><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/25.png" alt="基于8001配置新的虚拟主机">   </p>
 <p>基于改虚拟主机配置一个 <code>index.html</code> 文件：   </p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">touch /usr/share/nginx/html/html8001/index.html</span><br></pre></td></tr></table></figure>
 
 <p>写下</p>
 <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">h1</span>&gt;</span>welcome to port 8001<span class="tag">&lt;/<span class="name">h1</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p>我这里用的是阿里云做演示，所以返回阿里云界面配置8001端口：<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/26.png" alt="阿里云配置8001端口步骤1"><br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/27.png" alt="阿里云配置8001端口步骤2"><br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/28.png" alt="阿里云配置8001端口步骤3"><br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/29.png" alt="阿里云配置8001端口步骤4"> </p>
+<p>我这里用的是阿里云做演示，所以返回阿里云界面配置8001端口：<br><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/26.png" alt="阿里云配置8001端口步骤1"><br><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/27.png" alt="阿里云配置8001端口步骤2"><br><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/28.png" alt="阿里云配置8001端口步骤3"><br><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/29.png" alt="阿里云配置8001端口步骤4"> </p>
 <h3 id="基于IP配置虚拟主机"><a href="#基于IP配置虚拟主机" class="headerlink" title="基于IP配置虚拟主机"></a>基于IP配置虚拟主机</h3><p>同样是改变 <code>8001.conf</code> 文件的 <code>localhost</code> 项的配置</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/nginx/conf.d/8001.conf</span><br></pre></td></tr></table></figure>
 
@@ -249,9 +237,9 @@
 
 <h3 id="基于域名配置虚拟主机"><a href="#基于域名配置虚拟主机" class="headerlink" title="基于域名配置虚拟主机"></a>基于域名配置虚拟主机</h3><p>在阿里云上申请域名，这里不演示，现在 <code>.top</code> 结尾的域名在做促销，起个稍微长点的域名注册只需9元就能注册一年， 我这里注册了 <code>service-learn.top</code> 花了9元</p>
 <p>点击域名解析：   </p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/32.png" alt="阿里云配置域名解析1"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/32.png" alt="阿里云配置域名解析1"></p>
 <p>输入ip地址，类型选择A类型：</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/33.png" alt="阿里云配置域名解析2"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/33.png" alt="阿里云配置域名解析2"></p>
 <p>在nginx 配置</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/nginx/conf.d/default.conf</span><br></pre></td></tr></table></figure>
 
@@ -264,7 +252,7 @@
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">server&#123;</span><br><span class="line">        listen 80;</span><br><span class="line">        server_name nginx2.service-learn.top;</span><br><span class="line">        root /usr/share/nginx/html/html8001;</span><br><span class="line">        index index.html;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <h2 id="反向代理"><a href="#反向代理" class="headerlink" title="反向代理"></a>反向代理</h2><h3 id="正向代理（Proxy）"><a href="#正向代理（Proxy）" class="headerlink" title="正向代理（Proxy）"></a>正向代理（Proxy）</h3><p>为客户端做的代理服务器，最形象的解释就是，我们平时用vpn翻墙上外网，</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86%E5%9B%BE.jpg" alt="正向代理"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86%E5%9B%BE.jpg" alt="正向代理"></p>
 <h3 id="反向代理（Reverse-Proxy"><a href="#反向代理（Reverse-Proxy" class="headerlink" title="反向代理（Reverse Proxy)"></a>反向代理（Reverse Proxy)</h3><p>为服务端做的代理服务，反向代理最大的好处是</p>
 <ul>
 <li><p>安全性，使用反向代理客户端用户只能通过外来网来访问代理服务器，并且用户并不知道自己访问的真实服务器是那一台，可以很好的提供安全保护。在遭受网络攻击时，会被停留在反向代理上，攻击不到我们真实的服务器。</p>
@@ -272,16 +260,16 @@
 <li><p>功能性，反向代理的主要用途是为多个服务器提供负债均衡、缓存等功能。负载均衡就是一个网站的内容被部署在若干服务器上，可以把这些机子看成一个集群，那Nginx可以将接收到的客户端请求“均匀地”分配到这个集群中所有的服务器上，从而实现服务器压力的平均分配，也叫负载均衡。</p>
 </li>
 </ul>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E5%9B%BE.jpg" alt="反向代理"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E5%9B%BE.jpg" alt="反向代理"></p>
 <h3 id="Nginx的反向代理实操"><a href="#Nginx的反向代理实操" class="headerlink" title="Nginx的反向代理实操"></a>Nginx的反向代理实操</h3><p>这里我们用 8001 的配置来做反向代理，设置也很简单，修改 <code>vim /etc/nginx/conf.d/8001.conf</code> 如下</p>
 <p>我们要访问 8.134.120.206:8001 端口的网站，反向代理到 <a href="http://zyzy.info/">我的博客</a> 这个网站上</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">server&#123;</span><br><span class="line">        listen 8001;</span><br><span class="line">        server_name 8.134.120.206;</span><br><span class="line">        location / &#123;</span><br><span class="line">                proxy_pass http://zyzy.info;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-<p>打开浏览器显示如下，反向代理设置成功：<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/36.png" alt="反向代理"></p>
+<p>打开浏览器显示如下，反向代理设置成功：<br><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/36.png" alt="反向代理"></p>
 <h3 id="反向代理其他配置参数"><a href="#反向代理其他配置参数" class="headerlink" title="反向代理其他配置参数"></a>反向代理其他配置参数</h3><p>proxy_set_header :在将客户端请求发送给后端服务器之前，更改来自客户端的请求头信息。<br>proxy_connect_timeout:配置Nginx与后端代理服务器尝试建立连接的超时时间。<br>proxy_read_timeout : 配置Nginx向后端服务器组发出read请求后，等待相应的超时时间。<br>proxy_send_timeout：配置Nginx向后端服务器组发出write请求后，等待相应的超时时间。<br>proxy_redirect :用于修改后端服务器返回的响应头中的Location和Refresh。</p>
 <h2 id="Nginx适配移动端"><a href="#Nginx适配移动端" class="headerlink" title="Nginx适配移动端"></a>Nginx适配移动端</h2><p>这里和前端的调整页面布局的自适应不是一个概念，现在的移动端适配，是由于不同域名的切换，引起的适配，所以Nginx在这块就能发挥作用，<br>这种通过Nginx的适配，体验效果会更好，包括淘宝京东在内的国内大型网站都是采用Nginx的方案</p>
 <p>我们可以打开浏览器打开京东看到这种适配：</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/37.gif" alt="京东的Nginx移动端适配"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/37.gif" alt="京东的Nginx移动端适配"></p>
 <p>我们来做类似的功能：   </p>
 <p>建立pc和移动端两个文件夹</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mkdir /usr/share/nginx/pc /usr/share/nginx/mobile</span><br></pre></td></tr></table></figure>
@@ -291,227 +279,162 @@
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">server&#123;</span><br><span class="line">        listen 8001;</span><br><span class="line">        server_name 8.134.120.206;</span><br><span class="line">        location / &#123;</span><br><span class="line">                root /usr/share/nginx/pc;</span><br><span class="line">                if ($http_user_agent ~* &#x27;Android|webOS|iPhone|BlackBerry&#x27;) &#123;</span><br><span class="line">                        root /usr/share/nginx/mobile;</span><br><span class="line">                &#125;</span><br><span class="line">                index index.html;</span><br><span class="line">        &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
 <p>打开浏览器看看效果</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/38.gif" alt="京东的Nginx移动端适配"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/38.gif" alt="京东的Nginx移动端适配"></p>
 <h2 id="Gzip压缩"><a href="#Gzip压缩" class="headerlink" title="Gzip压缩"></a>Gzip压缩</h2><p>网页的一种压缩技术，经过Gzip压缩过后的网页，会缩小到原来30%的大小</p>
 <h3 id="查看一个网站是否有gzip压缩"><a href="#查看一个网站是否有gzip压缩" class="headerlink" title="查看一个网站是否有gzip压缩"></a>查看一个网站是否有gzip压缩</h3><p>在<a target="_blank" rel="noopener" href="http://tool.chinaz.com/Gzips/Default.aspx?q=zyzy.info">站长工具</a> 里查看，直接输入域名即可，例如我们查询 <code>8.134.120.206</code><br>还没配置gzip压缩   </p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/39.gif" alt="没有配置gzip的网站"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/39.gif" alt="没有配置gzip的网站"></p>
 <p>Nginx的gzip压缩功能非常丰富，配置也很简单</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">vim /etc/nginx/nginx.conf</span><br></pre></td></tr></table></figure>
 
 <p>添加两行配置如下：   </p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">gzip on;</span><br><span class="line">gzip_types text/plain application/javascript text/css;</span><br></pre></td></tr></table></figure>
 
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/40.gif" alt="Nginx添加gzip配置"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/40.gif" alt="Nginx添加gzip配置"></p>
 <p>改完后重载Nginx服务，再用站长工具查询可看到</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/41.gif" alt="配置了gzip的网站"></p>
-
-
-<div class="article-footer fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
-</div></section></div>
-
-</article>
-
-<div class="related-wrap" id="read-next"><section class="header cap theme"><span>接下来阅读</span></section><section class="body"><div class="post-title h2"><a href="/2021/05/26/%E3%80%902021-05-26%E3%80%91Dart%E8%AF%AD%E6%B3%95%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/">Dart语法自学笔记（二）</a></div><div class="post-title fs14"><a href="/2021/05/30/%E3%80%902021-05-30%E3%80%91Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/">上一篇：Web性能优化（持续更新）</a></div></section></div>
-
-
-
-
-
-
-  <div class='related-wrap md' id="comments">
-    <div class='cmt-title cap theme'>
-      快来参与讨论吧
-    </div>
-    <div class='cmt-body utterances'>
-      
-
-<svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg>
-
-<div id="utterances" repo="xaoxuu/blog-comments" issue-term="pathname" theme="github-light"></div>
-
-    </div>
-  </div>
-
-
+<p><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.35/articles/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/41.gif" alt="配置了gzip的网站"></p>
 
       
-<footer class="page-footer fs12"><hr><div><p>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
-<p>本站由 <a href="https://zyzy.info/">@自由の翼</a> 创建，使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.1.0">Stellar</a> 作为主题。</p>
-</div></footer>
-
-      <div class='float-panel mobile-only' style='display:none'>
-  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
-    <svg class="icon" viewBox="0 0 1228 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2849"><path d="M0 0m97.390199 0l973.901995 0q97.390199 0 97.390199 97.390199l0 0q0 97.390199-97.390199 97.3902l-973.901995 0q-97.390199 0-97.390199-97.3902l0 0q0-97.390199 97.390199-97.390199Z" p-id="2850"></path><path d="M0 389.560798m97.390199 0l973.901995 0q97.390199 0 97.390199 97.390199l0 0q0 97.390199-97.390199 97.3902l-973.901995 0q-97.390199 0-97.390199-97.3902l0 0q0-97.390199 97.390199-97.390199Z" p-id="2851"></path><path d="M0 779.121596m97.390199 0l973.901995 0q97.390199 0 97.390199 97.390199l0 0q0 97.390199-97.390199 97.390199l-973.901995 0q-97.390199 0-97.390199-97.390199l0 0q0-97.390199 97.390199-97.390199Z" p-id="2852"></path></svg>
-  </button>
-</div>
-
     </div>
+    <footer class="article-footer">
+      <a data-url="https://zyzy.info/2021/05/28/%E3%80%902021-05-28%E3%80%91Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/" data-id="cl178haah000xcn8o4ybvgqtw" data-title="Nginx自学笔记" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/" rel="tag">反向代理</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E5%90%8E%E7%AB%AF/" rel="tag">后端</a></li></ul>
+
+    </footer>
   </div>
-  <div class='scripts'>
-    <script type="text/javascript">
-  stellar = {
-    // 懒加载 css https://github.com/filamentgroup/loadCSS
-    loadCSS: (href, before, media, attributes) => {
-      var doc = window.document;
-      var ss = doc.createElement("link");
-      var ref;
-      if (before) {
-        ref = before;
-      } else {
-        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
-        ref = refs[refs.length - 1];
-      }
-      var sheets = doc.styleSheets;
-      if (attributes) {
-        for (var attributeName in attributes) {
-          if (attributes.hasOwnProperty(attributeName)) {
-            ss.setAttribute(attributeName, attributes[attributeName]);
-          }
-        }
-      }
-      ss.rel = "stylesheet";
-      ss.href = href;
-      ss.media = "only x";
-      function ready(cb) {
-        if (doc.body) {
-          return cb();
-        }
-        setTimeout(function () {
-          ready(cb);
-        });
-      }
-      ready(function () {
-        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
-      });
-      var onloadcssdefined = function (cb) {
-        var resolvedHref = ss.href;
-        var i = sheets.length;
-        while (i--) {
-          if (sheets[i].href === resolvedHref) {
-            return cb();
-          }
-        }
-        setTimeout(function () {
-          onloadcssdefined(cb);
-        });
-      };
-      function loadCB() {
-        if (ss.addEventListener) {
-          ss.removeEventListener("load", loadCB);
-        }
-        ss.media = media || "all";
-      }
-      if (ss.addEventListener) {
-        ss.addEventListener("load", loadCB);
-      }
-      ss.onloadcssdefined = onloadcssdefined;
-      onloadcssdefined(loadCB);
-      return ss;
-    },
-
-    // 从 butterfly 和 volantis 获得灵感
-    loadScript: (src, opt) => new Promise((resolve, reject) => {
-      var script = document.createElement('script')
-      script.src = src
-      if (opt) {
-        for (let key of Object.keys(opt)) {
-          script[key] = opt[key]
-        }
-      } else {
-        // 默认异步，如果需要同步，第二个参数传入 {} 即可
-        script.async = true
-      }
-      script.onerror = reject
-      script.onload = script.onreadystatechange = function() {
-        const loadState = this.readyState
-        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-        script.onload = script.onreadystatechange = null
-        resolve()
-      }
-      document.head.appendChild(script)
-    }),
-
-    // https://github.com/jerryc127/hexo-theme-butterfly
-    jQuery: (fn) => {
-      if (typeof jQuery === 'undefined') {
-        stellar.loadScript(stellar.plugins.jQuery).then(fn)
-      } else {
-        fn()
-      }
-    }
-  };
-  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.1.0';
-  stellar.config = {
-    date_suffix: {
-      just: '刚刚',
-      min: '分钟前',
-      hour: '小时前',
-      day: '天前',
-      month: '个月前',
-    },
-  };
-
-  // required plugins (only load if needs)
-  stellar.plugins = {
-    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js',
-    sitesjs: '/js/plugins/sites.js',
-    friendsjs: '/js/plugins/friends.js',
-  };
-
-  // optional plugins
-  if ('true' == 'true') {
-    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.3.1/dist/lazyload.min.js","transition":"blur"});
-  }
-  if ('true' == 'true') {
-    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper/swiper-bundle.min.css","js":"https://unpkg.com/swiper/swiper-bundle.min.js"});
-  }
-  if ('' == 'true') {
-    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://cdn.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
-  }
-  if ('true' == 'true') {
-    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
-  }
-</script>
-
-<!-- required -->
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2021/06/08/%E3%80%902021-06-08%E3%80%91Electron%E9%85%8D%E7%BD%AEReact%E6%88%96Vue%E5%AE%9E%E8%B7%B5/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          Electron配置React或Vue实践（Vue部分待更新）
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/05/26/%E3%80%902021-05-26%E3%80%91Dart%E8%AF%AD%E6%B3%95%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0%EF%BC%88%E4%BA%8C%EF%BC%89/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">Dart语法自学笔记（二）</div>
+    </a>
+  
+</nav>
 
   
-<script src="/js/main.js" async></script>
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Babel/" rel="tag">Babel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CDN/" rel="tag">CDN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CJS/" rel="tag">CJS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dart/" rel="tag">Dart</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES/" rel="tag">ES</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6/" rel="tag">ES6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ESM/" rel="tag">ESM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Electron/" rel="tag">Electron</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/" rel="tag">Flutter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github-Page/" rel="tag">Github Page</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HOC/" rel="tag">HOC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IntersectionObserver/" rel="tag">IntersectionObserver</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JWT/" rel="tag">JWT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React-Hooks/" rel="tag">React Hooks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React-Query/" rel="tag">React Query</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swagger-UI/" rel="tag">Swagger UI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Token/" rel="tag">Token</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Type-Script/" rel="tag">Type Script</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" rel="tag">Web性能优化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/conventional-commit/" rel="tag">conventional commit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/esbuild/" rel="tag">esbuild</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eventEmitter/" rel="tag">eventEmitter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flutter/" rel="tag">flutter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lerna/" rel="tag">lerna</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mono-repo/" rel="tag">mono repo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/node/" rel="tag">node</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/node-cli/" rel="tag">node cli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/npm-package/" rel="tag">npm package</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssr/" rel="tag">ssr</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swagger-jsdoc/" rel="tag">swagger-jsdoc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/type-script/" rel="tag">type script</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yarn/" rel="tag">yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/" rel="tag">反向代理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%90%8E%E7%AB%AF/" rel="tag">后端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B7%A8%E7%AB%AF/" rel="tag">跨端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Babel/" style="font-size: 13.33px;">Babel</a> <a href="/tags/CDN/" style="font-size: 10px;">CDN</a> <a href="/tags/CJS/" style="font-size: 10px;">CJS</a> <a href="/tags/Dart/" style="font-size: 13.33px;">Dart</a> <a href="/tags/ES/" style="font-size: 13.33px;">ES</a> <a href="/tags/ES6/" style="font-size: 10px;">ES6</a> <a href="/tags/ESM/" style="font-size: 10px;">ESM</a> <a href="/tags/Electron/" style="font-size: 10px;">Electron</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/Github-Page/" style="font-size: 10px;">Github Page</a> <a href="/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/tags/HOC/" style="font-size: 10px;">HOC</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/IntersectionObserver/" style="font-size: 10px;">IntersectionObserver</a> <a href="/tags/JWT/" style="font-size: 10px;">JWT</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/React/" style="font-size: 20px;">React</a> <a href="/tags/React-Hooks/" style="font-size: 10px;">React Hooks</a> <a href="/tags/React-Query/" style="font-size: 10px;">React Query</a> <a href="/tags/Swagger-UI/" style="font-size: 10px;">Swagger UI</a> <a href="/tags/Token/" style="font-size: 10px;">Token</a> <a href="/tags/Type-Script/" style="font-size: 10px;">Type Script</a> <a href="/tags/Vue/" style="font-size: 13.33px;">Vue</a> <a href="/tags/Webpack/" style="font-size: 16.67px;">Webpack</a> <a href="/tags/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" style="font-size: 10px;">Web性能优化</a> <a href="/tags/conventional-commit/" style="font-size: 10px;">conventional commit</a> <a href="/tags/esbuild/" style="font-size: 13.33px;">esbuild</a> <a href="/tags/eventEmitter/" style="font-size: 10px;">eventEmitter</a> <a href="/tags/flutter/" style="font-size: 10px;">flutter</a> <a href="/tags/lerna/" style="font-size: 10px;">lerna</a> <a href="/tags/mono-repo/" style="font-size: 10px;">mono repo</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/node-cli/" style="font-size: 10px;">node cli</a> <a href="/tags/npm-package/" style="font-size: 10px;">npm package</a> <a href="/tags/react/" style="font-size: 13.33px;">react</a> <a href="/tags/ssr/" style="font-size: 10px;">ssr</a> <a href="/tags/swagger-jsdoc/" style="font-size: 10px;">swagger-jsdoc</a> <a href="/tags/type-script/" style="font-size: 10px;">type script</a> <a href="/tags/webpack/" style="font-size: 13.33px;">webpack</a> <a href="/tags/yarn/" style="font-size: 10px;">yarn</a> <a href="/tags/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/" style="font-size: 10px;">反向代理</a> <a href="/tags/%E5%90%8E%E7%AB%AF/" style="font-size: 13.33px;">后端</a> <a href="/tags/%E8%B7%A8%E7%AB%AF/" style="font-size: 10px;">跨端</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 10px;">面试</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/03/20/%E3%80%902022-03-20%E3%80%91%E7%94%A8webpack-esbuild%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84js%E7%B1%BB%E5%BA%93npm%E5%8C%85-%E6%9B%B4%E6%96%B0%E4%B8%AD/">用webpack, esbuild两种方法创建自己的js类库npm包(更新中,未完)</a>
+          </li>
+        
+          <li>
+            <a href="/2021/11/09/%E3%80%902021-11-09%E3%80%91MonoRepo%E7%AE%80%E4%BB%8B%E5%8F%8A%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95%20copy/">Mono Repo 简介及实现方法</a>
+          </li>
+        
+          <li>
+            <a href="/2021/10/28/%E3%80%902021-10-28%E3%80%91%E7%94%A8esbuil%E5%88%9B%E5%BB%BAReact%E9%A1%B9%E7%9B%AE/">esbuil用于create-react-app项目的热更新开发</a>
+          </li>
+        
+          <li>
+            <a href="/2021/10/26/%E3%80%902021-05-30%E3%80%91Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/">Web性能优化（最后更新时间：2021-10-26）</a>
+          </li>
+        
+          <li>
+            <a href="/2021/10/17/%E3%80%902021-10-17%E3%80%91%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84node-cli/">创建自己的node cli</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 自由の翼<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
 
 
 
-<!-- optional -->
-
-  <script>
-  function utterances(){
-    if(!document.getElementById("utterances"))return;
-    setTimeout(function() {
-      var checkUtterances = setInterval(function () {
-        var el = document.getElementById("utterances");
-        if (!el) return
-        clearInterval(checkUtterances)
-        try {
-          el.innerHTML="";
-        } catch (error) {}
-        var script = document.createElement('script');
-        script.src = 'https://utteranc.es/client.js';
-        const keys = ['repo', 'issue-term', 'issue-number', 'theme', 'label', 'crossorigin'];
-        keys.forEach((key, i) => {
-          if (el.attributes[key] && el.attributes[key].value) {
-            script.setAttribute(key, el.attributes[key].value);
-          }
-        });
-        el.appendChild(script);
-       }, 200)
-    });
-  }
-  utterances();
-</script>
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
 
 
 
 
-<!-- inject -->
+<script src="/js/script.js"></script>
+
+
+
 
 
   </div>

@@ -1,31 +1,17 @@
 <!DOCTYPE html>
-<html lang='zh-CN'>
-
+<html>
 <head>
-  <meta name="generator" content="Hexo 5.4.0">
   <meta charset="utf-8">
   
-
-  <meta http-equiv='x-dns-prefetch-control' content='on' />
-  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-
-  <meta name="renderer" content="webkit">
-  <meta name="force-rendering" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-  <meta name="HandheldFriendly" content="True" >
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-  <title>Web性能优化（持续更新） - 自由の翼小栈</title>
-
   
-    <meta name="description" content="本文根据这篇文章：Best Practices for Speeding Up Your Web Site，被称作”雅虎35条军规”，虽里面有的东西虽说也已经过时，但可以由此窥探前端发展的历程，一些过时的建议会略去解释">
+  <title>Web性能优化（最后更新时间：2021-10-26） | 自由の翼小栈</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="本文根据这篇文章：Best Practices for Speeding Up Your Web Site，被称作”雅虎35条军规”，虽里面有的东西虽说也已经过时，但可以由此窥探前端发展的历程，一些过时的建议会略去解释。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="Web性能优化（持续更新）">
-<meta property="og:url" content="https://zyzy.info/2021/05/30/%E3%80%902021-05-30%E3%80%91Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/index.html">
+<meta property="og:title" content="Web性能优化（最后更新时间：2021-10-26）">
+<meta property="og:url" content="https://zyzy.info/2021/10/26/%E3%80%902021-05-30%E3%80%91Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/index.html">
 <meta property="og:site_name" content="自由の翼小栈">
-<meta property="og:description" content="本文根据这篇文章：Best Practices for Speeding Up Your Web Site，被称作”雅虎35条军规”，虽里面有的东西虽说也已经过时，但可以由此窥探前端发展的历程，一些过时的建议会略去解释">
+<meta property="og:description" content="本文根据这篇文章：Best Practices for Speeding Up Your Web Site，被称作”雅虎35条军规”，虽里面有的东西虽说也已经过时，但可以由此窥探前端发展的历程，一些过时的建议会略去解释。">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/04.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/00.png">
@@ -34,94 +20,96 @@
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/03.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/06.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/05.png">
-<meta property="article:published_time" content="2021-05-30T09:38:14.000Z">
-<meta property="article:modified_time" content="2021-10-14T03:42:59.912Z">
+<meta property="article:published_time" content="2021-10-26T09:38:14.000Z">
+<meta property="article:modified_time" content="2022-03-26T02:15:30.412Z">
 <meta property="article:author" content="自由の翼">
 <meta property="article:tag" content="面试">
 <meta property="article:tag" content="Web性能优化">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/04.png">
   
+    <link rel="alternate" href="/atom.xml" title="自由の翼小栈" type="application/atom+xml">
   
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
 
-  <!-- feed -->
   
+  
+<link rel="stylesheet" href="/css/style.css">
 
   
     
-<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
 
   
-
-  
-</head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <body>
-  
-
-
-  <div class='l_body' id='start'>
-    <aside class='l_left'>
-    
-
-<header class='header'>
-  <div class='logo-wrap'>
-  
-    <a class='avatar' href='/about/'>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">自由の翼小栈</a>
+      </h1>
       
-        <img no-lazy class='bg' src='https://cdn.jsdelivr.net/gh/cdn-x/placeholder@1.0.2/avatar/round/rainbow64@3x.webp'/>
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">技术&amp;生活分享</a>
+        </h2>
       
-      <img no-lazy class='avatar' src='https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.12/avatar/宇航员.svg'/>
-    </a>
-  
-  
-    <a class='title' href='/'>
-      自由の翼小栈
-    </a>
-  
-</div>
-
-  <nav class="menu dis-select"></nav>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://zyzy.info"></form>
+      </div>
+    </div>
+  </div>
 </header>
 
-<div class='widgets'>
-  
+      <div class="outer">
+        <section id="main"><article id="post-【2021-05-30】Web性能优化（持续更新）" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/10/26/%E3%80%902021-05-30%E3%80%91Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/" class="article-date">
+  <time class="dt-published" datetime="2021-10-26T09:38:14.000Z" itemprop="datePublished">2021-10-26</time>
+</a>
     
-      
-      
-<div class="widget-wrap" id="toc"><div class="widget-header h4 dis-select"><span class="name">本文目录</span></div><div class="widget-body fs14 post"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E9%81%93%E9%9D%A2%E8%AF%95%E9%A2%98%E5%BC%95%E5%8F%91%E7%9A%84%E5%89%8D%E7%AB%AF%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%E6%80%9D%E8%80%83"><span class="toc-text">一道面试题引发的前端性能优化思考</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E9%A1%B5%E6%80%A7%E8%83%BD%E6%A3%80%E6%B5%8B%E5%B7%A5%E5%85%B7"><span class="toc-text">网页性能检测工具</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#window-performance"><span class="toc-text">window.performance</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Chrome%E8%87%AA%E5%B8%A6%E7%9A%84performance%E6%A3%80%E6%B5%8B%E5%B7%A5%E5%85%B7"><span class="toc-text">Chrome自带的performance检测工具</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%87%AA%E5%8A%A8%E5%8C%96%E6%A3%80%E6%B5%8B%E5%88%A9%E5%99%A8%E2%80%94%E2%80%94-lighthouse-%E2%80%94%E2%80%94-%E8%87%AA%E5%8A%A8%E7%94%9F%E6%88%90%E7%BD%91%E9%A1%B5%E6%80%A7%E8%83%BD%E6%8A%A5%E5%91%8A%EF%BC%8C%E5%B9%B6%E6%9C%89%E4%BC%98%E5%8C%96%E5%BB%BA%E8%AE%AE"><span class="toc-text">自动化检测利器—— lighthouse —— 自动生成网页性能报告，并有优化建议</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%B5%8F%E8%A7%88%E5%99%A8%E7%9A%84%E9%87%8D%E7%BB%98%E4%B8%8E%E5%9B%9E%E6%B5%81"><span class="toc-text">浏览器的重绘与回流</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B5%84%E6%BA%90%E5%90%88%E5%B9%B6%E4%B8%8E%E5%8E%8B%E7%BC%A9%EF%BC%9A"><span class="toc-text">资源合并与压缩：</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#HTML%E5%8E%8B%E7%BC%A9"><span class="toc-text">HTML压缩</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#CSS%E5%8E%8B%E7%BC%A9"><span class="toc-text">CSS压缩</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JS%E5%8E%8B%E7%BC%A9%E4%B8%8E%E6%B7%B7%E4%B9%B1"><span class="toc-text">JS压缩与混乱</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#JS%E6%96%87%E4%BB%B6%E5%90%88%E5%B9%B6"><span class="toc-text">JS文件合并</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9B%85%E8%99%8E35%E6%9D%A1%E7%9A%84%E9%93%BE%E6%8E%A5%EF%BC%8C-%E4%BB%8E%E4%B8%AD%E6%8C%91%E5%87%BA%E4%B8%80%E4%BA%9B%E7%82%B9%E6%9D%A5%E8%AE%B2%EF%BC%8C%E5%A6%82%E4%B8%8B%EF%BC%9A"><span class="toc-text">雅虎35条的链接， 从中挑出一些点来讲，如下：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Image"><span class="toc-text">Image *</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Optimize-Images-%E5%9B%BE%E7%89%87%E4%BC%98%E5%8C%96"><span class="toc-text">Optimize Images * 图片优化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Optimize-CSS-Sprites"><span class="toc-text">Optimize CSS Sprites</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Do-Not-Scale-Images-in-HTML"><span class="toc-text">Do Not Scale Images in HTML</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Make-favicon-ico-Small-and-Cacheable"><span class="toc-text">Make favicon.ico Small and Cacheable</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Content"><span class="toc-text">Content</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Make-Fewer-HTTP-Requests"><span class="toc-text">Make Fewer HTTP Requests *</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Reduce-DNS-Lookups"><span class="toc-text">Reduce DNS Lookups</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Avoid-Redirects"><span class="toc-text">Avoid Redirects *</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Postload-Components-%E6%87%92%E5%8A%A0%E8%BD%BD%E7%BB%84%E4%BB%B6"><span class="toc-text">Postload Components * 懒加载组件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Preload-Components-%E9%A2%84%E5%8A%A0%E8%BD%BD%E7%BB%84%E4%BB%B6"><span class="toc-text">Preload Components * 预加载组件</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Server-%E6%9C%8D%E5%8A%A1%E7%AB%AF%E4%BC%98%E5%8C%96"><span class="toc-text">Server 服务端优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Use-a-Content-Delivery-Network-CDN"><span class="toc-text">Use a Content Delivery Network (CDN) *</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Add-Expires-or-Cache-Control-Header"><span class="toc-text">Add Expires or Cache-Control Header *</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Gzip-Components"><span class="toc-text">Gzip Components *</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Configure-ETags"><span class="toc-text">Configure ETags</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Browser-Storage-%E6%B5%8F%E8%A7%88%E5%99%A8%E5%AD%98%E5%82%A8%E4%BC%98%E5%8C%96"><span class="toc-text">Browser Storage * 浏览器存储优化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Reduce-Cookie-Size"><span class="toc-text">Reduce Cookie Size *</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#LocalStorage"><span class="toc-text">LocalStorage *</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SessionStorage"><span class="toc-text">SessionStorage *</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#IndexDB"><span class="toc-text">IndexDB</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Service-Worker"><span class="toc-text">Service Worker *</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Progressive-Web-Apps-%E6%B8%90%E8%BF%9B%E5%BC%8F-Web-%E5%BA%94%E7%94%A8"><span class="toc-text">Progressive Web Apps 渐进式 Web 应用</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#CSS"><span class="toc-text">CSS</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Put-Stylesheets-at-Top"><span class="toc-text">Put Stylesheets at Top *</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Choose-lt-link-gt-Over-import"><span class="toc-text">Choose &lt;link&gt; Over @import</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#JavaScript"><span class="toc-text">JavaScript</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Put-Scripts-at-Bottom"><span class="toc-text">Put Scripts at Bottom *</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Make-JavaScript-and-CSS-External"><span class="toc-text">Make JavaScript and CSS External</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Minify-JavaScript-and-CSS"><span class="toc-text">Minify JavaScript and CSS *</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Minimize-DOM-Access"><span class="toc-text">Minimize DOM Access *</span></a></li></ol></li></ol></div></div></div>
-
-    
-  
-</div>
-
-
-    </aside>
-    <div class='l_main'>
-      
-
-      
-
-
-  <div class='bread-nav fs12'>
-  
-    
-    <div id='breadcrumb'>
-      <a class='cap breadcrumb' href='/'>主页</a>
-      <span class="sep"></span>
-      <a class='cap breadcrumb' href='/'>文章</a>
-      
-    </div>
-    <div id='post-meta'>
-      发布于&nbsp;<time datetime='2021-05-30T09:38:14.000Z'>2021-05-30</time>
-    </div>
-  
   </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      Web性能优化（最后更新时间：2021-10-26）
+    </h1>
+  
 
-
-<article class='content md post'>
-<h1 class="article-title"><span>Web性能优化（持续更新）</span></h1>
-<p>本文根据这篇文章：<a target="_blank" rel="noopener" href="https://developer.yahoo.com/performance/rules.html">Best Practices for Speeding Up Your Web Site</a>，被称作”雅虎35条军规”，虽里面有的东西虽说也已经过时，但可以由此窥探前端发展的历程，一些过时的建议会略去解释</p>
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>本文根据这篇文章：<a target="_blank" rel="noopener" href="https://developer.yahoo.com/performance/rules.html">Best Practices for Speeding Up Your Web Site</a>，被称作”雅虎35条军规”，虽里面有的东西虽说也已经过时，但可以由此窥探前端发展的历程，一些过时的建议会略去解释。</p>
 <span id="more"></span>
 <h2 id="一道面试题引发的前端性能优化思考"><a href="#一道面试题引发的前端性能优化思考" class="headerlink" title="一道面试题引发的前端性能优化思考"></a>一道面试题引发的前端性能优化思考</h2><p>相信大家都碰过这道经典面试题：在浏览器输入url到看到页面的展示，这中间发生了什么？</p>
 <p>总体答案是这样：</p>
@@ -152,6 +140,16 @@
 <li>服务的渲染</li>
 </ul>
 <h2 id="网页性能检测工具"><a href="#网页性能检测工具" class="headerlink" title="网页性能检测工具"></a>网页性能检测工具</h2><p>首先应明确检测网页所需的工具，这里列举了3种方法：</p>
+<h3 id="谷歌推出的性能检测网站web-dev"><a href="#谷歌推出的性能检测网站web-dev" class="headerlink" title="谷歌推出的性能检测网站web.dev"></a>谷歌推出的性能检测网站<a target="_blank" rel="noopener" href="https://web.dev/vitals/">web.dev</a></h3><p>从三个指标对网站性能进行评估</p>
+<ul>
+<li>Largest Contentful Paint (LCP) ：最大内容绘制，测量加载性能。为了提供良好的用户体验，LCP 应在页面首次开始加载后的2.5 秒内发生。</li>
+<li>First Input Delay (FID) ：首次输入延迟，测量交互性。为了提供良好的用户体验，页面的 FID 应为100 毫秒或更短。</li>
+<li>Cumulative Layout Shift (CLS) ：累积布局偏移，测量视觉稳定性。为了提供良好的用户体验，页面的 CLS 应保持在 0.1. 或更少。</li>
+</ul>
+<p>该网站可以输入网址后进行测试，给出一份详细的 <code>lighthouse</code> 报告</p>
+<h3 id="Navigator-sendBeacon-埋点传输数据给服务器记录时间"><a href="#Navigator-sendBeacon-埋点传输数据给服务器记录时间" class="headerlink" title="Navigator.sendBeacon() 埋点传输数据给服务器记录时间"></a><a target="_blank" rel="noopener" href="https://developer.mozilla.org/zh-CN/docs/Web/API/Navigator/sendBeacon">Navigator.sendBeacon()</a> 埋点传输数据给服务器记录时间</h3><p>依据google以上3原则，可以在前端进行埋点，进行统计</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> &#123; getCLS, getFID, getLCP &#125; <span class="keyword">from</span> <span class="string">&#x27;web-vitals&#x27;</span></span><br><span class="line"></span><br><span class="line"><span class="function"><span class="keyword">function</span> <span class="title">sendToAnalytics</span>(<span class="params">metric</span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> body = <span class="built_in">JSON</span>.stringify(metric);</span><br><span class="line">  navigator.sendBeacon(<span class="string">&#x27;/analytics&#x27;</span>, body))</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">getCLS(sendToAnalytics);</span><br><span class="line">getFID(sendToAnalytics);</span><br><span class="line">getLCP(sendToAnalytics);</span><br></pre></td></tr></table></figure>
+
 <h3 id="window-performance"><a href="#window-performance" class="headerlink" title="window.performance"></a><code>window.performance</code></h3><p>打开任意网页，控制台输入以下代码，<br>可以看到 <code>window.performance</code> 所获取到的东西，我们主要看他的<code>timing</code>属性，用开始时间减去结束时间得出各种资源加载的时间。以下的数值都算是比较粗略的数值</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">const</span> t = <span class="built_in">window</span>.performance.timing;</span><br><span class="line"><span class="built_in">console</span>.log(&#123;</span><br><span class="line">    <span class="string">&quot;DNS&quot;</span>: t.domainLookupEnd - t.domainLookupStart,</span><br><span class="line">    <span class="string">&quot;TCP&quot;</span>: t.connectEnd - t.connectStart,</span><br><span class="line">    <span class="string">&quot;获得首字节耗费时间，TTFB&quot;</span>: t.responseStart - t.navigationStart,</span><br><span class="line">    <span class="string">&quot;domReady时间&quot;</span>: t.domContentLoadedEventStart - t.navigationStart,</span><br><span class="line">    <span class="string">&quot;DOM资源下载&quot;</span>: t.responseEnd - t.responseStart</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure>
 <p>第一字节响应时间（TTFB）= 从发送请求到WEB服务器的时间 + WEB服务器处理请求并生成响应花费的时间 + WEB服务器生成响应到浏览器花费的时间</p>
@@ -180,7 +178,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">lighthouse &lt;需要测试的网页链接&gt;</span><br></pre></td></tr></table></figure>
 
 <p>方法二，浏览器也自带 <code>lighthouse</code> 功能，以下是 <code>Edge</code> 浏览器</p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/04.png" alt="文件合并"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/04.png" alt="文件合并"></p>
 <h2 id="浏览器的重绘与回流"><a href="#浏览器的重绘与回流" class="headerlink" title="浏览器的重绘与回流"></a>浏览器的重绘与回流</h2><h2 id="资源合并与压缩："><a href="#资源合并与压缩：" class="headerlink" title="资源合并与压缩："></a>资源合并与压缩：</h2><p>现代化的前端跑不掉资源压缩这一步，平时工程化用的 <code>webpack</code> 就是一款压缩工具</p>
 <h3 id="HTML压缩"><a href="#HTML压缩" class="headerlink" title="HTML压缩"></a>HTML压缩</h3><p>原理：将HTML里的空格，换行符，制表符等去掉</p>
 <p>方法：</p>
@@ -212,7 +210,7 @@
 <li><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/html-minifier">html-minifier</a> 可以对html中的js进行压缩，需配置其中的选项</li>
 <li><a target="_blank" rel="noopener" href="https://www.npmjs.com/package/uglify-js">uglifyjs3</a></li>
 </ol>
-<h3 id="JS文件合并"><a href="#JS文件合并" class="headerlink" title="JS文件合并"></a>JS文件合并</h3><p>如果不合并请求会有以下影响<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/00.png" alt="文件合并"></p>
+<h3 id="JS文件合并"><a href="#JS文件合并" class="headerlink" title="JS文件合并"></a>JS文件合并</h3><p>如果不合并请求会有以下影响<br><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/00.png" alt="文件合并"></p>
 <p>但合并请求也不是万能的，其缺点体现在：</p>
 <ul>
 <li><p>首屏渲染的问题<br>现在的前端都用类似react或者vue等前端框架，如果使用vue或者react没有进行服务端渲染的操作，而且服务端合并请求的JS文件又比较大，那么请求回来的JS加载完成后，才会执行react或vue的框架代码在客户端加载渲染，那么首屏白屏的时间就会比较久</p>
@@ -227,6 +225,30 @@
 <li><p>不同页面的合并<br>这种发生在vue或react的单页面应用，通常我们打包出来的单页应用只有一个js文件，但这种方法在效率提升来说有阻碍，最好的方法是每个页面打包为一个js文件，当某页面被路由到加载到时，才去加载对应页面的js文件，这种方式在webpack中有相应的解决方案，就是<a target="_blank" rel="noopener" href="https://www.webpackjs.com/api/module-methods/#import-"> <code>loadable</code> 异步加载组件</a></p>
 </li>
 </ul>
+<h2 id="传输方面："><a href="#传输方面：" class="headerlink" title="传输方面："></a>传输方面：</h2><h3 id="CDN缓存"><a href="#CDN缓存" class="headerlink" title="CDN缓存"></a>CDN缓存</h3><h3 id="http2"><a href="#http2" class="headerlink" title="http2"></a>http2</h3><h3 id="充分利用HTTP缓存"><a href="#充分利用HTTP缓存" class="headerlink" title="充分利用HTTP缓存"></a>充分利用HTTP缓存</h3><h3 id="压缩html，js，css文件体积，用gzip-brotli"><a href="#压缩html，js，css文件体积，用gzip-brotli" class="headerlink" title="压缩html，js，css文件体积，用gzip/brotli"></a>压缩html，js，css文件体积，用gzip/brotli</h3><p>对 JS、CSS、HTML 等文本资源均有效，但是对图片效果不大。</p>
+<ul>
+<li>gzip 通过 LZ77 算法与 Huffman 编码来压缩文件，重复度越高的文件可压缩的空间就越大。</li>
+<li>brotli 通过变种的 LZ77 算法、Huffman 编码及二阶文本建模来压缩文件，更先进的压缩算法，比 gzip 有更高的性能及压缩率</li>
+</ul>
+<p>可在浏览器的 <code>Content-Encoding</code> 响应头查看该网站是否开启了压缩算法，目前知乎、掘金等已全面开启了 <code>brotli</code> 压缩。</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># Request Header</span></span><br><span class="line">Accept-Encoding: gzip, deflate, br</span><br><span class="line"></span><br><span class="line"><span class="comment"># gzip</span></span><br><span class="line">Content-Encoding: gzip</span><br><span class="line"></span><br><span class="line"><span class="comment"># gzip</span></span><br><span class="line">Content-Encoding: br</span><br></pre></td></tr></table></figure>
+<h3 id="压缩混淆工具"><a href="#压缩混淆工具" class="headerlink" title="压缩混淆工具"></a>压缩混淆工具</h3><ul>
+<li><p><a target="_blank" rel="noopener" href="https://terser.org/docs/api-reference.html#compress-options">terser</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/swc-project/swc">swc</a></p>
+</li>
+<li><p><a target="_blank" rel="noopener" href="https://github.com/terser/html-minifier-terser">html-minifier-terser</a></p>
+<h3 id="JS压缩"><a href="#JS压缩" class="headerlink" title="JS压缩"></a>JS压缩</h3></li>
+<li><p>上述提到的 <code>gzip/brotli</code> 和 <code>terser</code></p>
+</li>
+<li><p><code>webpack</code> 打包  </p>
+<ol>
+<li> <code>webpack-bundle-ananlyze</code>分析打包体积</li>
+<li>使用一些更小体积的库，如 moment -&gt; dayjs</li>
+<li>一些库进行按需加载，如 import lodash -&gt; import lodash-es</li>
+</ol>
+</li>
+</ul>
 <h2 id="雅虎35条的链接，-从中挑出一些点来讲，如下："><a href="#雅虎35条的链接，-从中挑出一些点来讲，如下：" class="headerlink" title="雅虎35条的链接， 从中挑出一些点来讲，如下："></a><a target="_blank" rel="noopener" href="https://developer.yahoo.com/performance/rules.html">雅虎35条的链接</a>， 从中挑出一些点来讲，如下：</h2><h2 id="Image"><a href="#Image" class="headerlink" title="Image *"></a>Image *</h2><p>之所以把图片放在最前，因为优化图片的效率是比较大的</p>
 <h3 id="Optimize-Images-图片优化"><a href="#Optimize-Images-图片优化" class="headerlink" title="Optimize Images * 图片优化"></a>Optimize Images * 图片优化</h3><ol>
 <li><p>各种图片格式的应用场景：<br> 1.1 png 大部分需要使用透明的场景<br> pngcrush 或其他工具压缩png。在线压缩工具 https:/ tinypng.com/   </p>
@@ -235,18 +257,21 @@
 <p> 例如画一个长方形：</p>
  <figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">svg</span> <span class="attr">width</span>=<span class="string">&quot;100%&quot;</span> <span class="attr">height</span>=<span class="string">&quot;100%&quot;</span> <span class="attr">version</span>=<span class="string">&quot;1.1&quot;</span> <span class="attr">xmlns</span>=<span class="string">&quot;http://www.w3.org/2000/svg&quot;</span>&gt;</span></span><br><span class="line"></span><br><span class="line">    <span class="tag">&lt;<span class="name">rect</span> <span class="attr">width</span>=<span class="string">&quot;300&quot;</span> <span class="attr">height</span>=<span class="string">&quot;100&quot;</span></span></span><br><span class="line"><span class="tag">    <span class="attr">style</span>=<span class="string">&quot;fill:rgb(0,0,255);stroke-width:1;</span></span></span><br><span class="line"><span class="tag"><span class="string">    stroke:rgb(0,0,0)&quot;</span> /&gt;</span></span><br><span class="line"></span><br><span class="line"><span class="tag">&lt;/<span class="name">svg</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<p> 1.4 Webp 安卓可全用<br> google在2010年开发的一种全能的图片，但safari浏览器 和 webview 的兼容性不太好   </p>
+<p> 1.4 Webp 可全用<br> google在2010年开发的一种全能的图片，但safari浏览器 和 webview 的兼容性不太好   </p>
 <p> 1.5 png ——&gt; Webp 格式网站：<a target="_blank" rel="noopener" href="https://zhitu.isux.us/">智图</a></p>
 </li>
 </ol>
+<p>webp 比 jpeg/png 更小，而 avif 又比 webp 小一个级别</p>
+<p>为了无缝兼容，可选择 picture/source 进行回退处理</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">picture</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">srcset</span>=<span class="string">&quot;img/photo.avif&quot;</span> <span class="attr">type</span>=<span class="string">&quot;image/avif&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">source</span> <span class="attr">srcset</span>=<span class="string">&quot;img/photo.webp&quot;</span> <span class="attr">type</span>=<span class="string">&quot;image/webp&quot;</span>&gt;</span></span><br><span class="line">  <span class="tag">&lt;<span class="name">img</span> <span class="attr">src</span>=<span class="string">&quot;img/photo.jpg&quot;</span> <span class="attr">width</span>=<span class="string">&quot;360&quot;</span> <span class="attr">height</span>=<span class="string">&quot;240&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">picture</span>&gt;</span></span><br></pre></td></tr></table></figure>
+
+
 <ol start="2">
-<li>Image inline，即将图片内容内嵌到html里，减少网站的HTTP请求数量，多用于移动端和小图标：<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/01.png" alt="淘宝移动端大量使用image inline">   </li>
+<li>Image inline，即将图片内容内嵌到html里，减少网站的HTTP请求数量，多用于移动端和小图标：<br><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/01.png" alt="淘宝移动端大量使用image inline">   </li>
 </ol>
 <p>如何将图片转换为base64编码内嵌到html中，有一个<a target="_blank" rel="noopener" href="https://www.vgot.net/test/image2base64.php">在线转换网站</a><br>，在html文件图片所在的src=””中添加data:image/jpg;base64,（注：这里是jpg格式，你可以改写成你编码图片的类型）<br>，将你编码的Base64代码复制到image/jpg;base64, 的后面，然后用浏览器运行即可。</p>
-<p>当然还可以像taobao主页一样，嵌入到css的属性中使用：<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/02.png" alt="inline image 可以通过css属性设置"></p>
-<p><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/03.png" alt="sprite cow 复制上面这块代码去粘贴即可"></p>
-<p><a href="#%E6%87%92%E5%8A%A0%E8%BD%BD">3. 懒加载</a></p>
-<p><a href="#%E9%A2%84%E5%8A%A0%E8%BD%BD">4. 预加载</a></p>
+<p>当然还可以像taobao主页一样，嵌入到css的属性中使用：<br><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/02.png" alt="inline image 可以通过css属性设置"></p>
+<p><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/03.png" alt="sprite cow 复制上面这块代码去粘贴即可"></p>
 <h3 id="Optimize-CSS-Sprites"><a href="#Optimize-CSS-Sprites" class="headerlink" title="Optimize CSS Sprites"></a>Optimize CSS Sprites</h3><p><strong>实际上，随着带宽的普遍提高，现在不少网站都不用雪碧图了，特别是PC端，移动端用的还相对比PC端多些。但仍有网站在使用他。而雪碧图在应用上也有缺点，如果过多图标集合在一个图的话，则会出现如果该图片请求后读取不出，所有应用到该图片的图标全部会失效</strong></p>
 <blockquote>
 <ul>
@@ -319,6 +344,7 @@
 <h3 id="Gzip-Components"><a href="#Gzip-Components" class="headerlink" title="Gzip Components *"></a>Gzip Components *</h3><p>网页中重复的内容，会用Gzip压缩，显著减少文件大小，在 <a href="https://zyzy.info/2021/05/28/Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/#Gzip%E5%8E%8B%E7%BC%A9">Nginx</a> 里有Nigix配置Gzip的介绍</p>
 <p>请求头中添加：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Accept-Encoding: gzip, deflate</span><br></pre></td></tr></table></figure>
+
 <p>相应头中添加：</p>
 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Content-Encoding: gzip</span><br></pre></td></tr></table></figure>
 
@@ -368,8 +394,8 @@
 <li>例如，现在的Three.js 或 WebGL可以用于3D的渲染，但3D图的js脚本及数据占用资源比较多，一个脚本可达几Mb，可以用Service Worker将其缓存起来执行。</li>
 <li>利用拦截和处理网络请求的能力，可以实现离线应用功能。</li>
 </ol>
-<p>检查工具：在chrome浏览器输入<br><code>chrome://serviceworker-internals/</code> 检查所有 service worker<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/06.png" alt="sprite cow 复制上面这块代码去粘贴即可"></p>
-<p><code>chrome://inspect/#service-workers</code> 检查正在运行的 service worker<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/05.png" alt="sprite cow 复制上面这块代码去粘贴即可"></p>
+<p>检查工具：在chrome浏览器输入<br><code>chrome://serviceworker-internals/</code> 检查所有 service worker<br><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/06.png" alt="sprite cow 复制上面这块代码去粘贴即可"></p>
+<p><code>chrome://inspect/#service-workers</code> 检查正在运行的 service worker<br><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.36/articles/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/05.png" alt="sprite cow 复制上面这块代码去粘贴即可"></p>
 <h3 id="Progressive-Web-Apps-渐进式-Web-应用"><a href="#Progressive-Web-Apps-渐进式-Web-应用" class="headerlink" title="Progressive Web Apps 渐进式 Web 应用"></a><a id="PWA标准">Progressive Web Apps 渐进式 Web 应用</a></h3><ol>
 <li>PWA 标准由 谷歌提出的移动端的标准。例如，在移动端的弱网环境下，你站点的加载速度。离线环境下，能不能有基本的页面访问</li>
 <li>可靠：在没有网络环境中也能提供基本的页面访问</li>
@@ -424,214 +450,168 @@
 </ul>
 </blockquote>
 <p>最小化DOM访问，尽可能少的进行DOM操作，这点可以从现在的<code>React</code> <code>Vue</code>等MVVM框架体现出来</p>
+<h2 id="渲染优化"><a href="#渲染优化" class="headerlink" title="渲染优化"></a>渲染优化</h2><h3 id="preload-prefetch-dns-prefetch"><a href="#preload-prefetch-dns-prefetch" class="headerlink" title="preload/prefetch dns-prefetch"></a><code>preload/prefetch</code> <code>dns-prefetch</code></h3><p>preload/prefetch 可控制 HTTP 优先级，从而达到关键请求更快响应的目的。</p>
+<p>如当页面出现 Link，可 prefetch 当前 Link 的路由资源。</p>
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;prefetch&quot;</span> <span class="attr">href</span>=<span class="string">&quot;style.css&quot;</span> <span class="attr">as</span>=<span class="string">&quot;style&quot;</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;preload&quot;</span> <span class="attr">href</span>=<span class="string">&quot;main.js&quot;</span> <span class="attr">as</span>=<span class="string">&quot;script&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
+<figure class="highlight html"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="tag">&lt;<span class="name">link</span> <span class="attr">rel</span>=<span class="string">&quot;dns-prefetch&quot;</span> <span class="attr">href</span>=<span class="string">&quot;//shanyue.tech&quot;</span>&gt;</span></span><br></pre></td></tr></table></figure>
 
-<div class="article-footer fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
-</div></section></div>
+<h3 id="防抖与节流"><a href="#防抖与节流" class="headerlink" title="防抖与节流"></a>防抖与节流</h3><ol>
+<li>防抖：防止抖动，单位时间内事件触发会被重置，避免事件被误伤触发多次。代码实现重在清零 clearTimeout。防抖可以比作等电梯，只要有一个人进来，就需要再等一会儿。业务场景有避免登录按钮多次点击的重复提交。</li>
+<li>节流：控制流量，单位时间内事件只能触发一次，与服务器端的限流 (Rate Limit) 类似。代码实现重在开锁关锁 timer=timeout; timer=null。节流可以比作过红绿灯，每等一个红灯时间就可以过一批。</li>
+</ol>
+<p>无论是防抖还是节流都可以大幅度减少渲染次数，在 React 中还可以使用 use-debounce 之类的 hooks 避免重新渲染。</p>
+<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> React, &#123; useState &#125; <span class="keyword">from</span> <span class="string">&#x27;react&#x27;</span>;</span><br><span class="line"><span class="keyword">import</span> &#123; useDebounce &#125; <span class="keyword">from</span> <span class="string">&#x27;use-debounce&#x27;</span>;</span><br><span class="line"></span><br><span class="line"><span class="keyword">export</span> <span class="keyword">default</span> <span class="function"><span class="keyword">function</span> <span class="title">Input</span>(<span class="params"></span>) </span>&#123;</span><br><span class="line">  <span class="keyword">const</span> [text, setText] = useState(<span class="string">&#x27;Hello&#x27;</span>);</span><br><span class="line">  <span class="comment">// 一秒钟渲染一次，大大降低了重新渲染的频率</span></span><br><span class="line">  <span class="keyword">const</span> [value] = useDebounce(text, <span class="number">1000</span>);</span><br><span class="line"></span><br><span class="line">  <span class="keyword">return</span> (</span><br><span class="line">    &lt;div&gt;</span><br><span class="line">      &lt;input</span><br><span class="line">        defaultValue=&#123;<span class="string">&#x27;Hello&#x27;</span>&#125;</span><br><span class="line">        onChange=&#123;<span class="function">(<span class="params">e</span>) =&gt;</span> &#123;</span><br><span class="line">          setText(e.target.value);</span><br><span class="line">        &#125;&#125;</span><br><span class="line">      /&gt;</span><br><span class="line">      &lt;p&gt;Actual value: &#123;text&#125;&lt;/p&gt;</span><br><span class="line">      &lt;p&gt;Debounce value: &#123;value&#125;&lt;/p&gt;</span><br><span class="line">    &lt;/div&gt;</span><br><span class="line">  );</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
 
-</article>
-
-<div class="related-wrap" id="read-next"><section class="header cap theme"><span>接下来阅读</span></section><section class="body"><div class="post-title h2"><a href="/2021/05/28/%E3%80%902021-05-28%E3%80%91Nginx%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0/">Nginx自学笔记</a></div><div class="post-title fs14"><a href="/2021/06/08/%E3%80%902021-06-08%E3%80%91Electron%E9%85%8D%E7%BD%AEReact%E6%88%96Vue%E5%AE%9E%E8%B7%B5/">上一篇：Electron配置React或Vue实践（Vue部分待更新）</a></div></section></div>
-
-
-
-
-
-
-  <div class='related-wrap md' id="comments">
-    <div class='cmt-title cap theme'>
-      快来参与讨论吧
-    </div>
-    <div class='cmt-body utterances'>
-      
-
-<svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg>
-
-<div id="utterances" repo="xaoxuu/blog-comments" issue-term="pathname" theme="github-light"></div>
-
-    </div>
-  </div>
-
-
+<h3 id="虚拟列表优化"><a href="#虚拟列表优化" class="headerlink" title="虚拟列表优化"></a>虚拟列表优化</h3><p>这又是一个老生常谈的话题，一般在视口内维护一个虚拟列表(仅渲染十几条条数据左右)，监听视口位置变化，从而对视口内的虚拟列表进行控制。</p>
+<p>在 React中可以用下列库</p>
+<ul>
+<li><a target="_blank" rel="noopener" href="https://github.com/bvaughn/react-virtualized">react-virtualized</a></li>
+<li><a target="_blank" rel="noopener" href="https://github.com/bvaughn/react-window">react-window</a></li>
+</ul>
 
       
-<footer class="page-footer fs12"><hr><div><p>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
-<p>本站由 <a href="https://zyzy.info/">@自由の翼</a> 创建，使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.1.0">Stellar</a> 作为主题。</p>
-</div></footer>
-
-      <div class='float-panel mobile-only' style='display:none'>
-  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
-    <svg class="icon" viewBox="0 0 1228 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2849"><path d="M0 0m97.390199 0l973.901995 0q97.390199 0 97.390199 97.390199l0 0q0 97.390199-97.390199 97.3902l-973.901995 0q-97.390199 0-97.390199-97.3902l0 0q0-97.390199 97.390199-97.390199Z" p-id="2850"></path><path d="M0 389.560798m97.390199 0l973.901995 0q97.390199 0 97.390199 97.390199l0 0q0 97.390199-97.390199 97.3902l-973.901995 0q-97.390199 0-97.390199-97.3902l0 0q0-97.390199 97.390199-97.390199Z" p-id="2851"></path><path d="M0 779.121596m97.390199 0l973.901995 0q97.390199 0 97.390199 97.390199l0 0q0 97.390199-97.390199 97.390199l-973.901995 0q-97.390199 0-97.390199-97.390199l0 0q0-97.390199 97.390199-97.390199Z" p-id="2852"></path></svg>
-  </button>
-</div>
-
     </div>
+    <footer class="article-footer">
+      <a data-url="https://zyzy.info/2021/10/26/%E3%80%902021-05-30%E3%80%91Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/" data-id="cl178haai0011cn8o4kvugfro" data-title="Web性能优化（最后更新时间：2021-10-26）" class="article-share-link">分享</a>
+      
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" rel="tag">Web性能优化</a></li><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li></ul>
+
+    </footer>
   </div>
-  <div class='scripts'>
-    <script type="text/javascript">
-  stellar = {
-    // 懒加载 css https://github.com/filamentgroup/loadCSS
-    loadCSS: (href, before, media, attributes) => {
-      var doc = window.document;
-      var ss = doc.createElement("link");
-      var ref;
-      if (before) {
-        ref = before;
-      } else {
-        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
-        ref = refs[refs.length - 1];
-      }
-      var sheets = doc.styleSheets;
-      if (attributes) {
-        for (var attributeName in attributes) {
-          if (attributes.hasOwnProperty(attributeName)) {
-            ss.setAttribute(attributeName, attributes[attributeName]);
-          }
-        }
-      }
-      ss.rel = "stylesheet";
-      ss.href = href;
-      ss.media = "only x";
-      function ready(cb) {
-        if (doc.body) {
-          return cb();
-        }
-        setTimeout(function () {
-          ready(cb);
-        });
-      }
-      ready(function () {
-        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
-      });
-      var onloadcssdefined = function (cb) {
-        var resolvedHref = ss.href;
-        var i = sheets.length;
-        while (i--) {
-          if (sheets[i].href === resolvedHref) {
-            return cb();
-          }
-        }
-        setTimeout(function () {
-          onloadcssdefined(cb);
-        });
-      };
-      function loadCB() {
-        if (ss.addEventListener) {
-          ss.removeEventListener("load", loadCB);
-        }
-        ss.media = media || "all";
-      }
-      if (ss.addEventListener) {
-        ss.addEventListener("load", loadCB);
-      }
-      ss.onloadcssdefined = onloadcssdefined;
-      onloadcssdefined(loadCB);
-      return ss;
-    },
-
-    // 从 butterfly 和 volantis 获得灵感
-    loadScript: (src, opt) => new Promise((resolve, reject) => {
-      var script = document.createElement('script')
-      script.src = src
-      if (opt) {
-        for (let key of Object.keys(opt)) {
-          script[key] = opt[key]
-        }
-      } else {
-        // 默认异步，如果需要同步，第二个参数传入 {} 即可
-        script.async = true
-      }
-      script.onerror = reject
-      script.onload = script.onreadystatechange = function() {
-        const loadState = this.readyState
-        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-        script.onload = script.onreadystatechange = null
-        resolve()
-      }
-      document.head.appendChild(script)
-    }),
-
-    // https://github.com/jerryc127/hexo-theme-butterfly
-    jQuery: (fn) => {
-      if (typeof jQuery === 'undefined') {
-        stellar.loadScript(stellar.plugins.jQuery).then(fn)
-      } else {
-        fn()
-      }
-    }
-  };
-  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.1.0';
-  stellar.config = {
-    date_suffix: {
-      just: '刚刚',
-      min: '分钟前',
-      hour: '小时前',
-      day: '天前',
-      month: '个月前',
-    },
-  };
-
-  // required plugins (only load if needs)
-  stellar.plugins = {
-    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js',
-    sitesjs: '/js/plugins/sites.js',
-    friendsjs: '/js/plugins/friends.js',
-  };
-
-  // optional plugins
-  if ('true' == 'true') {
-    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.3.1/dist/lazyload.min.js","transition":"blur"});
-  }
-  if ('true' == 'true') {
-    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper/swiper-bundle.min.css","js":"https://unpkg.com/swiper/swiper-bundle.min.js"});
-  }
-  if ('' == 'true') {
-    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://cdn.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
-  }
-  if ('true' == 'true') {
-    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
-  }
-</script>
-
-<!-- required -->
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2021/10/28/%E3%80%902021-10-28%E3%80%91%E7%94%A8esbuil%E5%88%9B%E5%BB%BAReact%E9%A1%B9%E7%9B%AE/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          esbuil用于create-react-app项目的热更新开发
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/10/17/%E3%80%902021-10-17%E3%80%91%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84node-cli/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">创建自己的node cli</div>
+    </a>
+  
+</nav>
 
   
-<script src="/js/main.js" async></script>
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Babel/" rel="tag">Babel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CDN/" rel="tag">CDN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CJS/" rel="tag">CJS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dart/" rel="tag">Dart</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES/" rel="tag">ES</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6/" rel="tag">ES6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ESM/" rel="tag">ESM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Electron/" rel="tag">Electron</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/" rel="tag">Flutter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github-Page/" rel="tag">Github Page</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HOC/" rel="tag">HOC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IntersectionObserver/" rel="tag">IntersectionObserver</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JWT/" rel="tag">JWT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React-Hooks/" rel="tag">React Hooks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React-Query/" rel="tag">React Query</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swagger-UI/" rel="tag">Swagger UI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Token/" rel="tag">Token</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Type-Script/" rel="tag">Type Script</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" rel="tag">Web性能优化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/conventional-commit/" rel="tag">conventional commit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/esbuild/" rel="tag">esbuild</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eventEmitter/" rel="tag">eventEmitter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flutter/" rel="tag">flutter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lerna/" rel="tag">lerna</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mono-repo/" rel="tag">mono repo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/node/" rel="tag">node</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/node-cli/" rel="tag">node cli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/npm-package/" rel="tag">npm package</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssr/" rel="tag">ssr</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swagger-jsdoc/" rel="tag">swagger-jsdoc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/type-script/" rel="tag">type script</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yarn/" rel="tag">yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/" rel="tag">反向代理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%90%8E%E7%AB%AF/" rel="tag">后端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B7%A8%E7%AB%AF/" rel="tag">跨端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Babel/" style="font-size: 13.33px;">Babel</a> <a href="/tags/CDN/" style="font-size: 10px;">CDN</a> <a href="/tags/CJS/" style="font-size: 10px;">CJS</a> <a href="/tags/Dart/" style="font-size: 13.33px;">Dart</a> <a href="/tags/ES/" style="font-size: 13.33px;">ES</a> <a href="/tags/ES6/" style="font-size: 10px;">ES6</a> <a href="/tags/ESM/" style="font-size: 10px;">ESM</a> <a href="/tags/Electron/" style="font-size: 10px;">Electron</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/Github-Page/" style="font-size: 10px;">Github Page</a> <a href="/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/tags/HOC/" style="font-size: 10px;">HOC</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/IntersectionObserver/" style="font-size: 10px;">IntersectionObserver</a> <a href="/tags/JWT/" style="font-size: 10px;">JWT</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/React/" style="font-size: 20px;">React</a> <a href="/tags/React-Hooks/" style="font-size: 10px;">React Hooks</a> <a href="/tags/React-Query/" style="font-size: 10px;">React Query</a> <a href="/tags/Swagger-UI/" style="font-size: 10px;">Swagger UI</a> <a href="/tags/Token/" style="font-size: 10px;">Token</a> <a href="/tags/Type-Script/" style="font-size: 10px;">Type Script</a> <a href="/tags/Vue/" style="font-size: 13.33px;">Vue</a> <a href="/tags/Webpack/" style="font-size: 16.67px;">Webpack</a> <a href="/tags/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" style="font-size: 10px;">Web性能优化</a> <a href="/tags/conventional-commit/" style="font-size: 10px;">conventional commit</a> <a href="/tags/esbuild/" style="font-size: 13.33px;">esbuild</a> <a href="/tags/eventEmitter/" style="font-size: 10px;">eventEmitter</a> <a href="/tags/flutter/" style="font-size: 10px;">flutter</a> <a href="/tags/lerna/" style="font-size: 10px;">lerna</a> <a href="/tags/mono-repo/" style="font-size: 10px;">mono repo</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/node-cli/" style="font-size: 10px;">node cli</a> <a href="/tags/npm-package/" style="font-size: 10px;">npm package</a> <a href="/tags/react/" style="font-size: 13.33px;">react</a> <a href="/tags/ssr/" style="font-size: 10px;">ssr</a> <a href="/tags/swagger-jsdoc/" style="font-size: 10px;">swagger-jsdoc</a> <a href="/tags/type-script/" style="font-size: 10px;">type script</a> <a href="/tags/webpack/" style="font-size: 13.33px;">webpack</a> <a href="/tags/yarn/" style="font-size: 10px;">yarn</a> <a href="/tags/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/" style="font-size: 10px;">反向代理</a> <a href="/tags/%E5%90%8E%E7%AB%AF/" style="font-size: 13.33px;">后端</a> <a href="/tags/%E8%B7%A8%E7%AB%AF/" style="font-size: 10px;">跨端</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 10px;">面试</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/03/20/%E3%80%902022-03-20%E3%80%91%E7%94%A8webpack-esbuild%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84js%E7%B1%BB%E5%BA%93npm%E5%8C%85-%E6%9B%B4%E6%96%B0%E4%B8%AD/">用webpack, esbuild两种方法创建自己的js类库npm包(更新中,未完)</a>
+          </li>
+        
+          <li>
+            <a href="/2021/11/09/%E3%80%902021-11-09%E3%80%91MonoRepo%E7%AE%80%E4%BB%8B%E5%8F%8A%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95%20copy/">Mono Repo 简介及实现方法</a>
+          </li>
+        
+          <li>
+            <a href="/2021/10/28/%E3%80%902021-10-28%E3%80%91%E7%94%A8esbuil%E5%88%9B%E5%BB%BAReact%E9%A1%B9%E7%9B%AE/">esbuil用于create-react-app项目的热更新开发</a>
+          </li>
+        
+          <li>
+            <a href="/2021/10/26/%E3%80%902021-05-30%E3%80%91Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/">Web性能优化（最后更新时间：2021-10-26）</a>
+          </li>
+        
+          <li>
+            <a href="/2021/10/17/%E3%80%902021-10-17%E3%80%91%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84node-cli/">创建自己的node cli</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 自由の翼<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
 
 
 
-<!-- optional -->
-
-  <script>
-  function utterances(){
-    if(!document.getElementById("utterances"))return;
-    setTimeout(function() {
-      var checkUtterances = setInterval(function () {
-        var el = document.getElementById("utterances");
-        if (!el) return
-        clearInterval(checkUtterances)
-        try {
-          el.innerHTML="";
-        } catch (error) {}
-        var script = document.createElement('script');
-        script.src = 'https://utteranc.es/client.js';
-        const keys = ['repo', 'issue-term', 'issue-number', 'theme', 'label', 'crossorigin'];
-        keys.forEach((key, i) => {
-          if (el.attributes[key] && el.attributes[key].value) {
-            script.setAttribute(key, el.attributes[key].value);
-          }
-        });
-        el.appendChild(script);
-       }, 200)
-    });
-  }
-  utterances();
-</script>
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
 
 
 
 
-<!-- inject -->
+<script src="/js/script.js"></script>
+
+
+
 
 
   </div>

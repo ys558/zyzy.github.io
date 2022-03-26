@@ -1,26 +1,12 @@
 <!DOCTYPE html>
-<html lang='zh-CN'>
-
+<html>
 <head>
-  <meta name="generator" content="Hexo 5.4.0">
   <meta charset="utf-8">
   
-
-  <meta http-equiv='x-dns-prefetch-control' content='on' />
-  <link rel='dns-prefetch' href='https://cdn.jsdelivr.net'>
-  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
-
-  <meta name="renderer" content="webkit">
-  <meta name="force-rendering" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=Edge,chrome=1">
-  <meta name="HandheldFriendly" content="True" >
-  <meta name="apple-mobile-web-app-capable" content="yes">
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
-
-  <title>GraphQL学习 - 自由の翼小栈</title>
-
   
-    <meta name="description" content="去年自学了GraphQL，这里重新整理一下笔记。国内使用GraphQL的项目毕竟还不多，这里写个demo，做个小小的探索。    GraphQL是facebook发明的一套API查询语言，支持多种语言，这里用js演示，官网有详细的说明比起传统的后端API整合">
+  <title>GraphQL学习 | 自由の翼小栈</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <meta name="description" content="去年自学了GraphQL，这里重新整理一下笔记。国内使用GraphQL的项目毕竟还不多，这里写个demo，做个小小的探索。    GraphQL是facebook发明的一套API查询语言，支持多种语言，这里用js演示，官网有详细的说明比起传统的后端API整合">
 <meta property="og:type" content="article">
 <meta property="og:title" content="GraphQL学习">
 <meta property="og:url" content="https://zyzy.info/2021/04/20/%E3%80%902021-04-20%E3%80%91GraphQL%E5%AD%A6%E4%B9%A0/index.html">
@@ -42,103 +28,105 @@
 <meta property="article:modified_time" content="2021-10-14T03:42:59.909Z">
 <meta property="article:author" content="自由の翼">
 <meta property="article:tag" content="GraphQL">
-<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:card" content="summary">
 <meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/0.0.png">
   
+    <link rel="alternate" href="/atom.xml" title="自由の翼小栈" type="application/atom+xml">
   
+  
+    <link rel="shortcut icon" href="/favicon.png">
+  
+  
+    
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/typeface-source-code-pro@0.0.71/index.min.css">
 
-  <!-- feed -->
   
+  
+<link rel="stylesheet" href="/css/style.css">
 
   
     
-<link rel="stylesheet" href="/css/main.css">
+<link rel="stylesheet" href="/fancybox/jquery.fancybox.min.css">
 
   
-
-  
-</head>
+<meta name="generator" content="Hexo 5.4.0"></head>
 
 <body>
-  
-
-
-  <div class='l_body' id='start'>
-    <aside class='l_left'>
-    
-
-<header class='header'>
-  <div class='logo-wrap'>
-  
-    <a class='avatar' href='/about/'>
+  <div id="container">
+    <div id="wrap">
+      <header id="header">
+  <div id="banner"></div>
+  <div id="header-outer" class="outer">
+    <div id="header-title" class="inner">
+      <h1 id="logo-wrap">
+        <a href="/" id="logo">自由の翼小栈</a>
+      </h1>
       
-        <img no-lazy class='bg' src='https://cdn.jsdelivr.net/gh/cdn-x/placeholder@1.0.2/avatar/round/rainbow64@3x.webp'/>
+        <h2 id="subtitle-wrap">
+          <a href="/" id="subtitle">技术&amp;生活分享</a>
+        </h2>
       
-      <img no-lazy class='avatar' src='https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.12/avatar/宇航员.svg'/>
-    </a>
-  
-  
-    <a class='title' href='/'>
-      自由の翼小栈
-    </a>
-  
-</div>
-
-  <nav class="menu dis-select"></nav>
+    </div>
+    <div id="header-inner" class="inner">
+      <nav id="main-nav">
+        <a id="main-nav-toggle" class="nav-icon"></a>
+        
+          <a class="main-nav-link" href="/">Home</a>
+        
+          <a class="main-nav-link" href="/archives">Archives</a>
+        
+      </nav>
+      <nav id="sub-nav">
+        
+          <a id="nav-rss-link" class="nav-icon" href="/atom.xml" title="RSS 订阅"></a>
+        
+        <a id="nav-search-btn" class="nav-icon" title="搜索"></a>
+      </nav>
+      <div id="search-form-wrap">
+        <form action="//google.com/search" method="get" accept-charset="UTF-8" class="search-form"><input type="search" name="q" class="search-form-input" placeholder="搜索"><button type="submit" class="search-form-submit">&#xF002;</button><input type="hidden" name="sitesearch" value="https://zyzy.info"></form>
+      </div>
+    </div>
+  </div>
 </header>
 
-<div class='widgets'>
-  
+      <div class="outer">
+        <section id="main"><article id="post-【2021-04-20】GraphQL学习" class="h-entry article article-type-post" itemprop="blogPost" itemscope itemtype="https://schema.org/BlogPosting">
+  <div class="article-meta">
+    <a href="/2021/04/20/%E3%80%902021-04-20%E3%80%91GraphQL%E5%AD%A6%E4%B9%A0/" class="article-date">
+  <time class="dt-published" datetime="2021-04-20T02:15:27.000Z" itemprop="datePublished">2021-04-20</time>
+</a>
     
-      
-      
-<div class="widget-wrap" id="toc"><div class="widget-header h4 dis-select"><span class="name">本文目录</span></div><div class="widget-body fs14 post"><div class="doc-tree active"><ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E3%80%81HelloWorld"><span class="toc-text">一、HelloWorld</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C"><span class="toc-text">二、基础操作</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E9%80%9A%E8%BF%87%E4%B9%A6%E7%B1%8D%E6%9F%A5%E8%AF%A2%E5%AF%B9%E5%BA%94%E4%BD%9C%E8%80%85%EF%BC%88%E4%B8%80%E5%AF%B9%E4%B8%80%E5%85%B3%E7%B3%BB%E6%9F%A5%E8%AF%A2%EF%BC%89%E5%8F%8A%E4%BD%9C%E8%80%85%E6%9F%A5%E8%AF%A2%E5%AF%B9%E5%BA%94%E7%9A%84%E4%B9%A6%E7%B1%8D%E4%BF%A1%E6%81%AF%EF%BC%88%E4%B8%80%E5%AF%B9%E5%A4%9A%E6%9F%A5%E8%AF%A2%EF%BC%89"><span class="toc-text">三、通过书籍查询对应作者（一对一关系查询）及作者查询对应的书籍信息（一对多查询）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E9%80%9A%E8%BF%87%E4%B9%A6%E7%B1%8Did%E6%9F%A5%E8%AF%A2%E4%B9%A6%E6%9C%AC%E4%BF%A1%E6%81%AF"><span class="toc-text">四、通过书籍id查询书本信息</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E4%BF%AE%E6%94%B9%E6%95%B0%E6%8D%AE%EF%BC%88MutationType%EF%BC%89"><span class="toc-text">五、修改数据（MutationType）</span></a></li></ol></div></div></div>
-
-    
-  
-</div>
-
-
-    </aside>
-    <div class='l_main'>
-      
-
-      
-
-
-  <div class='bread-nav fs12'>
-  
-    
-    <div id='breadcrumb'>
-      <a class='cap breadcrumb' href='/'>主页</a>
-      <span class="sep"></span>
-      <a class='cap breadcrumb' href='/'>文章</a>
-      
-    </div>
-    <div id='post-meta'>
-      发布于&nbsp;<time datetime='2021-04-20T02:15:27.000Z'>2021-04-20</time>
-    </div>
-  
   </div>
+  <div class="article-inner">
+    
+    
+      <header class="article-header">
+        
+  
+    <h1 class="p-name article-title" itemprop="headline name">
+      GraphQL学习
+    </h1>
+  
 
-
-<article class='content md post'>
-<h1 class="article-title"><span>GraphQL学习</span></h1>
-<p>去年自学了GraphQL，这里重新整理一下笔记。国内使用GraphQL的项目毕竟还不多，这里写个demo，做个小小的探索。   </p>
+      </header>
+    
+    <div class="e-content article-entry" itemprop="articleBody">
+      
+        <p>去年自学了GraphQL，这里重新整理一下笔记。国内使用GraphQL的项目毕竟还不多，这里写个demo，做个小小的探索。   </p>
 <p>GraphQL是facebook发明的一套API查询语言，支持多种语言，这里用js演示，<a target="_blank" rel="noopener" href="https://graphql.org/">官网</a>有详细的说明<br>比起传统的后端API整合</p>
 <span id="more"></span>
 
 <blockquote>
 <p>GraphQL为你的API数据提供了一种完整且易于理解的描述。（GraphQL provides a complete and understandable description of the data in your API）</p>
 </blockquote>
-<p>以上是官网对GraphQL的解释，利用GraphQL可以按需取字段给前端利用，不必取到不需要的字段，见下图解释：<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/0.0.png" alt="传统RestAPI效率低"></p>
-<p>GraphQL则可以精确查找想要的字段，效率显著提高：<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/0.1.png" alt="GraphQL效率高"></p>
+<p>以上是官网对GraphQL的解释，利用GraphQL可以按需取字段给前端利用，不必取到不需要的字段，见下图解释：<br><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/0.0.png" alt="传统RestAPI效率低"></p>
+<p>GraphQL则可以精确查找想要的字段，效率显著提高：<br><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/0.1.png" alt="GraphQL效率高"></p>
 <p>下面，结合自己写的demo：<a target="_blank" rel="noopener" href="https://github.com/ys558/tech-blog-code/tree/master/2020/04-graphql-learn">https://github.com/ys558/tech-blog-code/tree/master/2020/04-graphql-learn</a> 完成以下完成本篇博客：</p>
 <h2 id="一、HelloWorld"><a href="#一、HelloWorld" class="headerlink" title="一、HelloWorld"></a>一、HelloWorld</h2><ol>
 <li>将项目拉下来后，cd到对应目录下，用<code>npm install</code>或<code>yarn</code>安装依赖，运行<code>npm run hello</code> 或 <code>yarn hello</code>，先从 <a target="_blank" rel="noopener" href="https://github.com/ys558/tech-blog-code/blob/master/2020/04-graphql-learn/01helloworld.js">01helloworld.js</a> 文件跑起，浏览器运行<code>http://localhost:5000/</code><br>左边输入框输入<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">query &#123;</span><br><span class="line">  message</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
 </ol>
 <p><strong>注意，这种是GraphQL特有的查询语法</strong></p>
-<p>点击运行，( 或快捷键 ctrl+enter ) 后，右边会显示：<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/1.2.png" alt="hello world"></p>
+<p>点击运行，( 或快捷键 ctrl+enter ) 后，右边会显示：<br><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/1.2.png" alt="hello world"></p>
 <ol start="2">
 <li><a target="_blank" rel="noopener" href="https://github.com/ys558/tech-blog-code/blob/master/2020/04-graphql-learn/01helloworld.js">01helloworld.js</a>解析：  </li>
 </ol>
@@ -152,7 +140,7 @@
 <h2 id="二、基础操作"><a href="#二、基础操作" class="headerlink" title="二、基础操作"></a>二、基础操作</h2><ol>
 <li><p>运行<code>npm run ds2</code> 或 <code>yarn ds2</code>，浏览器跑 <code>http://localhost:5000/books</code>，</p>
 <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  books &#123;</span><br><span class="line">    id</span><br><span class="line">    name</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>输入以上条件，<strong>通过 books 字段查询其对应的 id, name</strong> 后运行，可以查询出以下结果：<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/2.png" alt="hello world"></p>
+<p>输入以上条件，<strong>通过 books 字段查询其对应的 id, name</strong> 后运行，可以查询出以下结果：<br><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/2.png" alt="hello world"></p>
 </li>
 <li><p><a target="_blank" rel="noopener" href="https://github.com/ys558/tech-blog-code/blob/master/2020/04-graphql-learn/02base.js">02base.js</a> 解析：</p>
 </li>
@@ -165,7 +153,7 @@
 <h2 id="三、通过书籍查询对应作者（一对一关系查询）及作者查询对应的书籍信息（一对多查询）"><a href="#三、通过书籍查询对应作者（一对一关系查询）及作者查询对应的书籍信息（一对多查询）" class="headerlink" title="三、通过书籍查询对应作者（一对一关系查询）及作者查询对应的书籍信息（一对多查询）"></a>三、通过书籍查询对应作者（一对一关系查询）及作者查询对应的书籍信息（一对多查询）</h2><ol>
 <li><p>跑 <a target="_blank" rel="noopener" href="https://github.com/ys558/tech-blog-code/blob/master/2020/04-graphql-learn/03listQuery.js"><code>03listQuery.js</code></a> 文件，输入</p>
  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  authors &#123;</span><br><span class="line">    books &#123;</span><br><span class="line">      id</span><br><span class="line">      name</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p> 可以得到结果：<br> <img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/3.3.png" alt="hello world"></p>
+<p> 可以得到结果：<br> <img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/3.3.png" alt="hello world"></p>
 </li>
 <li><p>解析<a target="_blank" rel="noopener" href="https://github.com/ys558/tech-blog-code/blob/master/2020/04-graphql-learn/03listQuery.js"><code>03listQuery.js</code></a> ：  </p>
 </li>
@@ -194,9 +182,9 @@
 <li>运行<a target="_blank" rel="noopener" href="https://github.com/ys558/tech-blog-code/blob/master/2020/04-graphql-learn/04singleQuery.js"><code>04singleQuery.js</code></a>，输入以下查询条件：</li>
 </ol>
   <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="function"><span class="title">book</span>(<span class="params">id: <span class="number">4</span></span>)</span> &#123;</span><br><span class="line">    name</span><br><span class="line">    author &#123;</span><br><span class="line">      name</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p>  执行结果如下：<br>  <img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/4.png" alt="单个查询">   </p>
+<p>  执行结果如下：<br>  <img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/4.png" alt="单个查询">   </p>
 <p>  输入以下条件<br>  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">&#123;</span><br><span class="line">  <span class="function"><span class="title">book</span>(<span class="params">id: <span class="number">4</span></span>)</span> &#123;</span><br><span class="line">    name</span><br><span class="line">    author &#123;</span><br><span class="line">      name</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></p>
-<p>  执行结果如下：<br>  <img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/4.png" alt="单个查询">   </p>
+<p>  执行结果如下：<br>  <img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/4.png" alt="单个查询">   </p>
 <ol start="2">
 <li><a target="_blank" rel="noopener" href="https://github.com/ys558/tech-blog-code/blob/master/2020/04-graphql-learn/04singleQuery.js"><code>04singleQuery.js</code></a>解析：</li>
 </ol>
@@ -204,16 +192,16 @@
 <li>从以上的查询条件 <code>book(id: 4)</code> 可看出，通过传参id查询具体书籍信息，这里的id就体现在<code>args</code>参数上：</li>
 <li><code>args</code> 在 <code>resolve</code> 函数里处于第二个参数的位置<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">book: &#123;</span><br><span class="line">  type: BookType,</span><br><span class="line">  description: <span class="string">&#x27;A Single Book&#x27;</span>,</span><br><span class="line">  <span class="comment">// must query this book by params of book id:</span></span><br><span class="line">  args: &#123; <span class="attr">id</span>: &#123; <span class="attr">type</span>: GraphQLInt &#125; &#125;,</span><br><span class="line">  resolve: <span class="function">(<span class="params"> parent, args </span>) =&gt;</span> books.find( <span class="function"><span class="params">book</span> =&gt;</span> book.id === args.id )</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure></li>
 <li>同样的， <code>author</code>也可以按照传入<code>authorId</code>查询得到：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">author: &#123;</span><br><span class="line">  type: AuthorType,</span><br><span class="line">  description: <span class="string">&#x27;A Single Author&#x27;</span>,</span><br><span class="line">  <span class="comment">// query an author by params of author id:</span></span><br><span class="line">  args: &#123; <span class="attr">id</span>: &#123; <span class="attr">type</span>: GraphQLInt &#125; &#125;,</span><br><span class="line">  resolve: <span class="function">(<span class="params"> parent, args </span>) =&gt;</span> authors.find( <span class="function"><span class="params">author</span> =&gt;</span> author.id === args.id )</span><br><span class="line">&#125;,</span><br></pre></td></tr></table></figure>
-用 <code>author(id)</code> 查询结果：<br><img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/4.2.png" alt="单个查询"></li>
+用 <code>author(id)</code> 查询结果：<br><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/4.2.png" alt="单个查询"></li>
 </ul>
 <h2 id="五、修改数据（MutationType）"><a href="#五、修改数据（MutationType）" class="headerlink" title="五、修改数据（MutationType）"></a>五、修改数据（MutationType）</h2><ol>
 <li><p>运行<code>yarn ds5</code>，浏览器输入：</p>
  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">mutation &#123;</span><br><span class="line">  <span class="function"><span class="title">addBook</span>(<span class="params">name: <span class="string">&quot;new book&quot;</span>, authorId: <span class="number">1</span></span>)</span> &#123;</span><br><span class="line">    id</span><br><span class="line">    name</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p> 可以看到增加单本书成功：<br> <img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/5.1.png" alt="单个查询"></p>
+<p> 可以看到增加单本书成功：<br> <img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/5.1.png" alt="单个查询"></p>
 <p> 输入：</p>
  <figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">mutation &#123;</span><br><span class="line">  <span class="function"><span class="title">addAuthor</span>(<span class="params">name: <span class="string">&quot;new author&quot;</span></span>)</span> &#123;</span><br><span class="line">    name</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
-<p> 可以看到增加一个作者成功：<br> <img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/5.2.png" alt="单个查询"></p>
-<p> 点击右上角的 &lt; Docs，可以发现该文件的Mutation函数，其中<code>!</code>意为必要字段：<br> <img class="lazy" src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAYAAAAfFcSJAAAABGdBTUEAALGPC/xhBQAAADhlWElmTU0AKgAAAAgAAYdpAAQAAAABAAAAGgAAAAAAAqACAAQAAAABAAAAAaADAAQAAAABAAAAAQAAAADa6r/EAAAAC0lEQVQIHWNgAAIAAAUAAY27m/MAAAAASUVORK5CYII=" data-src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/5.png" alt="单个查询"></p>
+<p> 可以看到增加一个作者成功：<br> <img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/5.2.png" alt="单个查询"></p>
+<p> 点击右上角的 &lt; Docs，可以发现该文件的Mutation函数，其中<code>!</code>意为必要字段：<br> <img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.21/articles/GraphQL%E5%AD%A6%E4%B9%A0/5.png" alt="单个查询"></p>
 </li>
 </ol>
 <ol start="2">
@@ -224,213 +212,148 @@
 <li>和普通的 <code>Query Type</code> 类似，只不过 <code>Mutation Type</code> 在 <code>resolve</code> 里直接对数据进行改动而已：<figure class="highlight js"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><span class="line">fields: <span class="function">() =&gt;</span> (&#123;</span><br><span class="line">  addBook: &#123;</span><br><span class="line">    type: BookType,</span><br><span class="line">    description: <span class="string">&#x27;Add a book&#x27;</span>,</span><br><span class="line">    args: &#123;</span><br><span class="line">      name: &#123; <span class="attr">type</span>: GraphQLNonNull(GraphQLString) &#125;,</span><br><span class="line">      authorId: &#123; <span class="attr">type</span>: GraphQLNonNull(GraphQLInt) &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    resolve: <span class="function">(<span class="params"> parent, args </span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> book = &#123; <span class="attr">id</span>: books.length + <span class="number">1</span>, <span class="attr">name</span>: args.name, <span class="attr">authorId</span>: args.authorId &#125;</span><br><span class="line">      books.push(book)</span><br><span class="line">      <span class="keyword">return</span> book</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">  addAuthor: &#123;</span><br><span class="line">    type: AuthorType,</span><br><span class="line">    description: <span class="string">&#x27;Add a author&#x27;</span>,</span><br><span class="line">    args: &#123;</span><br><span class="line">      name: &#123; <span class="attr">type</span>: GraphQLNonNull(GraphQLString) &#125;</span><br><span class="line">    &#125;,</span><br><span class="line">    resolve: <span class="function">(<span class="params"> parent, args </span>) =&gt;</span> &#123;</span><br><span class="line">      <span class="keyword">const</span> author = &#123; <span class="attr">id</span>: authors.length + <span class="number">1</span>, <span class="attr">name</span>: args.name &#125;</span><br><span class="line">      authors.push(author)</span><br><span class="line">      <span class="keyword">return</span> author</span><br><span class="line">    &#125;</span><br><span class="line">  &#125;,</span><br><span class="line">&#125;)</span><br></pre></td></tr></table></figure></li>
 </ul>
 
-
-<div class="article-footer fs14"><section id="license"><div class="header"><span>许可协议</span></div><div class="body"><p>本文采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">署名-非商业性使用-相同方式共享 4.0 国际</a> 许可协议，转载请注明出处。</p>
-</div></section></div>
-
-</article>
-
-<div class="related-wrap" id="read-next"><section class="header cap theme"><span>接下来阅读</span></section><section class="body"><div class="post-title h2"><a href="/2021/04/19/%E3%80%902021-04-19%E3%80%91GithubPage%E5%BB%BA%E7%AB%99%E5%BF%83%E5%BE%97%E5%8F%8A%E6%89%80%E8%B8%A9%E7%9A%84%E5%9D%91/">Github Page建站心得及所踩的坑</a></div><div class="post-title fs14"><a href="/2021/04/22/%E3%80%902021-04-22%E3%80%91%E5%8F%91%E7%8E%B0%E4%B8%80%E5%85%8D%E8%B4%B9CDN%EF%BC%8C%E6%88%91%E7%94%A8%E6%9D%A5%E5%AD%98%E8%AF%A5%E7%AB%99%E7%9A%84%E5%9B%BE/">上一篇：发现一免费CDN，我用来存该站的图</a></div></section></div>
-
-
-
-
-
-
-  <div class='related-wrap md' id="comments">
-    <div class='cmt-title cap theme'>
-      快来参与讨论吧
-    </div>
-    <div class='cmt-body utterances'>
       
-
-<svg class="loading" style="vertical-align: middle;fill: currentColor;overflow: hidden;" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2709"><path d="M832 512c0-176-144-320-320-320V128c211.2 0 384 172.8 384 384h-64zM192 512c0 176 144 320 320 320v64C300.8 896 128 723.2 128 512h64z" p-id="2710"></path></svg>
-
-<div id="utterances" repo="xaoxuu/blog-comments" issue-term="pathname" theme="github-light"></div>
-
     </div>
-  </div>
-
-
-
+    <footer class="article-footer">
+      <a data-url="https://zyzy.info/2021/04/20/%E3%80%902021-04-20%E3%80%91GraphQL%E5%AD%A6%E4%B9%A0/" data-id="cl178haa40005cn8og5bk65ws" data-title="GraphQL学习" class="article-share-link">分享</a>
       
-<footer class="page-footer fs12"><hr><div><p>本博客所有文章除特别声明外，均采用 <a target="_blank" rel="noopener" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a> 许可协议，转载请注明出处。</p>
-<p>本站由 <a href="https://zyzy.info/">@自由の翼</a> 创建，使用 <a target="_blank" rel="noopener" href="https://github.com/xaoxuu/hexo-theme-stellar/tree/1.1.0">Stellar</a> 作为主题。</p>
-</div></footer>
+      
+      
+  <ul class="article-tag-list" itemprop="keywords"><li class="article-tag-list-item"><a class="article-tag-list-link" href="/tags/GraphQL/" rel="tag">GraphQL</a></li></ul>
 
-      <div class='float-panel mobile-only' style='display:none'>
-  <button type='button' class='sidebar-toggle mobile' onclick='sidebar.toggle()'>
-    <svg class="icon" viewBox="0 0 1228 1024" version="1.1" xmlns="http://www.w3.org/2000/svg" p-id="2849"><path d="M0 0m97.390199 0l973.901995 0q97.390199 0 97.390199 97.390199l0 0q0 97.390199-97.390199 97.3902l-973.901995 0q-97.390199 0-97.390199-97.3902l0 0q0-97.390199 97.390199-97.390199Z" p-id="2850"></path><path d="M0 389.560798m97.390199 0l973.901995 0q97.390199 0 97.390199 97.390199l0 0q0 97.390199-97.390199 97.3902l-973.901995 0q-97.390199 0-97.390199-97.3902l0 0q0-97.390199 97.390199-97.390199Z" p-id="2851"></path><path d="M0 779.121596m97.390199 0l973.901995 0q97.390199 0 97.390199 97.390199l0 0q0 97.390199-97.390199 97.390199l-973.901995 0q-97.390199 0-97.390199-97.390199l0 0q0-97.390199 97.390199-97.390199Z" p-id="2852"></path></svg>
-  </button>
-</div>
-
-    </div>
+    </footer>
   </div>
-  <div class='scripts'>
-    <script type="text/javascript">
-  stellar = {
-    // 懒加载 css https://github.com/filamentgroup/loadCSS
-    loadCSS: (href, before, media, attributes) => {
-      var doc = window.document;
-      var ss = doc.createElement("link");
-      var ref;
-      if (before) {
-        ref = before;
-      } else {
-        var refs = (doc.body || doc.getElementsByTagName("head")[0]).childNodes;
-        ref = refs[refs.length - 1];
-      }
-      var sheets = doc.styleSheets;
-      if (attributes) {
-        for (var attributeName in attributes) {
-          if (attributes.hasOwnProperty(attributeName)) {
-            ss.setAttribute(attributeName, attributes[attributeName]);
-          }
-        }
-      }
-      ss.rel = "stylesheet";
-      ss.href = href;
-      ss.media = "only x";
-      function ready(cb) {
-        if (doc.body) {
-          return cb();
-        }
-        setTimeout(function () {
-          ready(cb);
-        });
-      }
-      ready(function () {
-        ref.parentNode.insertBefore(ss, before ? ref : ref.nextSibling);
-      });
-      var onloadcssdefined = function (cb) {
-        var resolvedHref = ss.href;
-        var i = sheets.length;
-        while (i--) {
-          if (sheets[i].href === resolvedHref) {
-            return cb();
-          }
-        }
-        setTimeout(function () {
-          onloadcssdefined(cb);
-        });
-      };
-      function loadCB() {
-        if (ss.addEventListener) {
-          ss.removeEventListener("load", loadCB);
-        }
-        ss.media = media || "all";
-      }
-      if (ss.addEventListener) {
-        ss.addEventListener("load", loadCB);
-      }
-      ss.onloadcssdefined = onloadcssdefined;
-      onloadcssdefined(loadCB);
-      return ss;
-    },
-
-    // 从 butterfly 和 volantis 获得灵感
-    loadScript: (src, opt) => new Promise((resolve, reject) => {
-      var script = document.createElement('script')
-      script.src = src
-      if (opt) {
-        for (let key of Object.keys(opt)) {
-          script[key] = opt[key]
-        }
-      } else {
-        // 默认异步，如果需要同步，第二个参数传入 {} 即可
-        script.async = true
-      }
-      script.onerror = reject
-      script.onload = script.onreadystatechange = function() {
-        const loadState = this.readyState
-        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
-        script.onload = script.onreadystatechange = null
-        resolve()
-      }
-      document.head.appendChild(script)
-    }),
-
-    // https://github.com/jerryc127/hexo-theme-butterfly
-    jQuery: (fn) => {
-      if (typeof jQuery === 'undefined') {
-        stellar.loadScript(stellar.plugins.jQuery).then(fn)
-      } else {
-        fn()
-      }
-    }
-  };
-  stellar.github = 'https://github.com/xaoxuu/hexo-theme-stellar/tree/1.1.0';
-  stellar.config = {
-    date_suffix: {
-      just: '刚刚',
-      min: '分钟前',
-      hour: '小时前',
-      day: '天前',
-      month: '个月前',
-    },
-  };
-
-  // required plugins (only load if needs)
-  stellar.plugins = {
-    jQuery: 'https://cdn.jsdelivr.net/npm/jquery@3.5.1/dist/jquery.min.js',
-    sitesjs: '/js/plugins/sites.js',
-    friendsjs: '/js/plugins/friends.js',
-  };
-
-  // optional plugins
-  if ('true' == 'true') {
-    stellar.plugins.lazyload = Object.assign({"enable":true,"js":"https://cdn.jsdelivr.net/npm/vanilla-lazyload@17.3.1/dist/lazyload.min.js","transition":"blur"});
-  }
-  if ('true' == 'true') {
-    stellar.plugins.swiper = Object.assign({"enable":true,"css":"https://unpkg.com/swiper/swiper-bundle.min.css","js":"https://unpkg.com/swiper/swiper-bundle.min.js"});
-  }
-  if ('' == 'true') {
-    stellar.plugins.scrollreveal = Object.assign({"enable":null,"js":"https://cdn.jsdelivr.net/npm/scrollreveal@4.0.9/dist/scrollreveal.min.js","distance":"8px","duration":500,"interval":100,"scale":1});
-  }
-  if ('true' == 'true') {
-    stellar.plugins.preload = Object.assign({"enable":true,"service":"flying_pages","instant_page":"https://cdn.jsdelivr.net/gh/volantis-x/cdn-volantis@4.1.2/js/instant_page.js","flying_pages":"https://cdn.jsdelivr.net/gh/gijo-varghese/flying-pages@2.1.2/flying-pages.min.js"});
-  }
-</script>
-
-<!-- required -->
+  
+    
+<nav id="article-nav">
+  
+    <a href="/2021/04/22/%E3%80%902021-04-22%E3%80%91%E5%8F%91%E7%8E%B0%E4%B8%80%E5%85%8D%E8%B4%B9CDN%EF%BC%8C%E6%88%91%E7%94%A8%E6%9D%A5%E5%AD%98%E8%AF%A5%E7%AB%99%E7%9A%84%E5%9B%BE/" id="article-nav-newer" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">前一篇</strong>
+      <div class="article-nav-title">
+        
+          发现一免费CDN，我用来存该站的图
+        
+      </div>
+    </a>
+  
+  
+    <a href="/2021/04/19/%E3%80%902021-04-19%E3%80%91GithubPage%E5%BB%BA%E7%AB%99%E5%BF%83%E5%BE%97%E5%8F%8A%E6%89%80%E8%B8%A9%E7%9A%84%E5%9D%91/" id="article-nav-older" class="article-nav-link-wrap">
+      <strong class="article-nav-caption">后一篇</strong>
+      <div class="article-nav-title">Github Page建站心得及所踩的坑</div>
+    </a>
+  
+</nav>
 
   
-<script src="/js/main.js" async></script>
+</article>
+
+
+</section>
+        
+          <aside id="sidebar">
+  
+    
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签</h3>
+    <div class="widget">
+      <ul class="tag-list" itemprop="keywords"><li class="tag-list-item"><a class="tag-list-link" href="/tags/Babel/" rel="tag">Babel</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CDN/" rel="tag">CDN</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/CJS/" rel="tag">CJS</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Dart/" rel="tag">Dart</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES/" rel="tag">ES</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ES6/" rel="tag">ES6</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ESM/" rel="tag">ESM</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Electron/" rel="tag">Electron</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Flutter/" rel="tag">Flutter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Github-Page/" rel="tag">Github Page</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/GraphQL/" rel="tag">GraphQL</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/HOC/" rel="tag">HOC</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Hexo/" rel="tag">Hexo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/IntersectionObserver/" rel="tag">IntersectionObserver</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/JWT/" rel="tag">JWT</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nginx/" rel="tag">Nginx</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Nodejs/" rel="tag">Nodejs</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React/" rel="tag">React</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React-Hooks/" rel="tag">React Hooks</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/React-Query/" rel="tag">React Query</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Swagger-UI/" rel="tag">Swagger UI</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Token/" rel="tag">Token</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Type-Script/" rel="tag">Type Script</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Vue/" rel="tag">Vue</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Webpack/" rel="tag">Webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" rel="tag">Web性能优化</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/conventional-commit/" rel="tag">conventional commit</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/esbuild/" rel="tag">esbuild</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/eventEmitter/" rel="tag">eventEmitter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/flutter/" rel="tag">flutter</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/lerna/" rel="tag">lerna</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/mono-repo/" rel="tag">mono repo</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/node/" rel="tag">node</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/node-cli/" rel="tag">node cli</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/npm-package/" rel="tag">npm package</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/react/" rel="tag">react</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/ssr/" rel="tag">ssr</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/swagger-jsdoc/" rel="tag">swagger-jsdoc</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/type-script/" rel="tag">type script</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/webpack/" rel="tag">webpack</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/yarn/" rel="tag">yarn</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/" rel="tag">反向代理</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E5%90%8E%E7%AB%AF/" rel="tag">后端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E8%B7%A8%E7%AB%AF/" rel="tag">跨端</a></li><li class="tag-list-item"><a class="tag-list-link" href="/tags/%E9%9D%A2%E8%AF%95/" rel="tag">面试</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">标签云</h3>
+    <div class="widget tagcloud">
+      <a href="/tags/Babel/" style="font-size: 13.33px;">Babel</a> <a href="/tags/CDN/" style="font-size: 10px;">CDN</a> <a href="/tags/CJS/" style="font-size: 10px;">CJS</a> <a href="/tags/Dart/" style="font-size: 13.33px;">Dart</a> <a href="/tags/ES/" style="font-size: 13.33px;">ES</a> <a href="/tags/ES6/" style="font-size: 10px;">ES6</a> <a href="/tags/ESM/" style="font-size: 10px;">ESM</a> <a href="/tags/Electron/" style="font-size: 10px;">Electron</a> <a href="/tags/Flutter/" style="font-size: 10px;">Flutter</a> <a href="/tags/Github-Page/" style="font-size: 10px;">Github Page</a> <a href="/tags/GraphQL/" style="font-size: 10px;">GraphQL</a> <a href="/tags/HOC/" style="font-size: 10px;">HOC</a> <a href="/tags/Hexo/" style="font-size: 10px;">Hexo</a> <a href="/tags/IntersectionObserver/" style="font-size: 10px;">IntersectionObserver</a> <a href="/tags/JWT/" style="font-size: 10px;">JWT</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Nodejs/" style="font-size: 10px;">Nodejs</a> <a href="/tags/React/" style="font-size: 20px;">React</a> <a href="/tags/React-Hooks/" style="font-size: 10px;">React Hooks</a> <a href="/tags/React-Query/" style="font-size: 10px;">React Query</a> <a href="/tags/Swagger-UI/" style="font-size: 10px;">Swagger UI</a> <a href="/tags/Token/" style="font-size: 10px;">Token</a> <a href="/tags/Type-Script/" style="font-size: 10px;">Type Script</a> <a href="/tags/Vue/" style="font-size: 13.33px;">Vue</a> <a href="/tags/Webpack/" style="font-size: 16.67px;">Webpack</a> <a href="/tags/Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96/" style="font-size: 10px;">Web性能优化</a> <a href="/tags/conventional-commit/" style="font-size: 10px;">conventional commit</a> <a href="/tags/esbuild/" style="font-size: 13.33px;">esbuild</a> <a href="/tags/eventEmitter/" style="font-size: 10px;">eventEmitter</a> <a href="/tags/flutter/" style="font-size: 10px;">flutter</a> <a href="/tags/lerna/" style="font-size: 10px;">lerna</a> <a href="/tags/mono-repo/" style="font-size: 10px;">mono repo</a> <a href="/tags/node/" style="font-size: 10px;">node</a> <a href="/tags/node-cli/" style="font-size: 10px;">node cli</a> <a href="/tags/npm-package/" style="font-size: 10px;">npm package</a> <a href="/tags/react/" style="font-size: 13.33px;">react</a> <a href="/tags/ssr/" style="font-size: 10px;">ssr</a> <a href="/tags/swagger-jsdoc/" style="font-size: 10px;">swagger-jsdoc</a> <a href="/tags/type-script/" style="font-size: 10px;">type script</a> <a href="/tags/webpack/" style="font-size: 13.33px;">webpack</a> <a href="/tags/yarn/" style="font-size: 10px;">yarn</a> <a href="/tags/%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86/" style="font-size: 10px;">反向代理</a> <a href="/tags/%E5%90%8E%E7%AB%AF/" style="font-size: 13.33px;">后端</a> <a href="/tags/%E8%B7%A8%E7%AB%AF/" style="font-size: 10px;">跨端</a> <a href="/tags/%E9%9D%A2%E8%AF%95/" style="font-size: 10px;">面试</a>
+    </div>
+  </div>
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">归档</h3>
+    <div class="widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/03/">三月 2022</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/11/">十一月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/10/">十月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/08/">八月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/07/">七月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/06/">六月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/05/">五月 2021</a></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2021/04/">四月 2021</a></li></ul>
+    </div>
+  </div>
+
+
+  
+    
+  <div class="widget-wrap">
+    <h3 class="widget-title">最新文章</h3>
+    <div class="widget">
+      <ul>
+        
+          <li>
+            <a href="/2022/03/20/%E3%80%902022-03-20%E3%80%91%E7%94%A8webpack-esbuild%E4%B8%A4%E7%A7%8D%E6%96%B9%E6%B3%95%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84js%E7%B1%BB%E5%BA%93npm%E5%8C%85-%E6%9B%B4%E6%96%B0%E4%B8%AD/">用webpack, esbuild两种方法创建自己的js类库npm包(更新中,未完)</a>
+          </li>
+        
+          <li>
+            <a href="/2021/11/09/%E3%80%902021-11-09%E3%80%91MonoRepo%E7%AE%80%E4%BB%8B%E5%8F%8A%E5%AE%9E%E7%8E%B0%E6%96%B9%E6%B3%95%20copy/">Mono Repo 简介及实现方法</a>
+          </li>
+        
+          <li>
+            <a href="/2021/10/28/%E3%80%902021-10-28%E3%80%91%E7%94%A8esbuil%E5%88%9B%E5%BB%BAReact%E9%A1%B9%E7%9B%AE/">esbuil用于create-react-app项目的热更新开发</a>
+          </li>
+        
+          <li>
+            <a href="/2021/10/26/%E3%80%902021-05-30%E3%80%91Web%E6%80%A7%E8%83%BD%E4%BC%98%E5%8C%96%EF%BC%88%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0%EF%BC%89/">Web性能优化（最后更新时间：2021-10-26）</a>
+          </li>
+        
+          <li>
+            <a href="/2021/10/17/%E3%80%902021-10-17%E3%80%91%E5%88%9B%E5%BB%BA%E8%87%AA%E5%B7%B1%E7%9A%84node-cli/">创建自己的node cli</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+  
+</aside>
+        
+      </div>
+      <footer id="footer">
+  
+  <div class="outer">
+    <div id="footer-info" class="inner">
+      
+      &copy; 2022 自由の翼<br>
+      Powered by <a href="https://hexo.io/" target="_blank">Hexo</a>
+    </div>
+  </div>
+</footer>
+
+    </div>
+    <nav id="mobile-nav">
+  
+    <a href="/" class="mobile-nav-link">Home</a>
+  
+    <a href="/archives" class="mobile-nav-link">Archives</a>
+  
+</nav>
+    
+
+
+<script src="/js/jquery-3.4.1.min.js"></script>
 
 
 
-<!-- optional -->
-
-  <script>
-  function utterances(){
-    if(!document.getElementById("utterances"))return;
-    setTimeout(function() {
-      var checkUtterances = setInterval(function () {
-        var el = document.getElementById("utterances");
-        if (!el) return
-        clearInterval(checkUtterances)
-        try {
-          el.innerHTML="";
-        } catch (error) {}
-        var script = document.createElement('script');
-        script.src = 'https://utteranc.es/client.js';
-        const keys = ['repo', 'issue-term', 'issue-number', 'theme', 'label', 'crossorigin'];
-        keys.forEach((key, i) => {
-          if (el.attributes[key] && el.attributes[key].value) {
-            script.setAttribute(key, el.attributes[key].value);
-          }
-        });
-        el.appendChild(script);
-       }, 200)
-    });
-  }
-  utterances();
-</script>
+  
+<script src="/fancybox/jquery.fancybox.min.js"></script>
 
 
 
 
-<!-- inject -->
+<script src="/js/script.js"></script>
+
+
+
 
 
   </div>
