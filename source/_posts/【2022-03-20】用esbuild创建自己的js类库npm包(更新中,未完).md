@@ -6,6 +6,8 @@ tags:
   - webpack
 ---
 
+![](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@1.48.0/articles/【2022-03-20】用esbuild创建自己的js类库npm包/esbuild.png)
+
 很久没有更新, 这次趁着周末有空, 赶紧把工作中碰到的问题进行一次总结. 并记录下来.
 最近碰到需要创建npm包的需求, 这里把他形成文档记录下来. 
 
