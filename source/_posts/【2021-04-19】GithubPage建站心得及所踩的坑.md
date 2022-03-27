@@ -7,6 +7,8 @@ tags:
 cover: https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.23/articles/GithubPage建站心得及所踩的坑/cover.jpg
 
 ---
+![](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.23/articles/GithubPage建站心得及所踩的坑/cover.jpg
+)
 
 最近想用 `github.io` 建立我的个人博客站点，具体步骤我参考了[知乎上的一篇文章](https://zhuanlan.zhihu.com/p/26625249)，里面写的够清楚了，下面就建站时碰到的坑写的不完全总结，估计以后陆续增加
 
