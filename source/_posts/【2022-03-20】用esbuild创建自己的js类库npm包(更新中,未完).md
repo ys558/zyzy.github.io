@@ -1,5 +1,5 @@
 ---
-title: 用webpack, esbuild两种方法创建自己的js类库npm包(更新中,未完)
+title: 用esbuild创建自己的js类库npm包(更新中,未完)
 date: 2022-03-20 09:46:15
 tags:
   - esbuild
