@@ -8,6 +8,9 @@ tags:
     - Vue
 cover: https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.39/articles/Electron配置React或Vue实践/cover3.png
 ---
+
+![](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.39/articles/Electron配置React或Vue实践/cover3.png)
+
 本篇介绍在 `Electron` 中配置 `React` 或者 `Vue` 框架开发，毕竟现在前端多是用框架开发，其实已早有[现成的模板配置](#模板配置)，自己动手用 `Webpack` 来搭建能更好的熟悉配置的过程。
 <!-- more -->
 

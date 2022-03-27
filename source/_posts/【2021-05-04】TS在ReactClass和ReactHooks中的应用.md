@@ -6,7 +6,7 @@ tags:
     - React
 cover: https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.23/articles/TS在ReactClass和ReactHooks中的应用/cover.jpg
 ---
-
+![](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.23/articles/TS在ReactClass和ReactHooks中的应用/cover.jpg)
 
 对于现行的ES规范，已经具有很好的规范性与可读性，type script虽当下大行其道，其实我觉得意义不算很大，ts最重要的功能就是类型检查，包括 interface, type 等也是一种类型检查，但一不小心就会写成 any script。   
 鉴于将来的项目或者现行的项目可能会用到，这里结合 React Hooks 写个 tsx 版的 [demo](https://github.com/ys558/tech-blog-code/tree/master/2021/06-0328-ts-react)

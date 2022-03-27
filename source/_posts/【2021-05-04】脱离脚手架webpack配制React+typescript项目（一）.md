@@ -8,6 +8,8 @@ tags:
 cover: https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.26/articles/脱离脚手架webpack配制React+typescript项目/cover2.png
 ---
 
+![](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.26/articles/脱离脚手架webpack配制React+typescript项目/cover2.png)
+
 如题。以前配过，但没直接支持ts的，这次复习一遍记录下来，webpack 这东西，在项目开始时整一次后经常就很少碰了，更要动手记录下来。
 
 <!-- more -->

@@ -6,6 +6,7 @@ cover: https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.23/articles/通过ReactH
 date: 2021-04-26 10:17:07
 ---
 
+![](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.23/articles/通过ReactHooks直接操作api神库：ReactQuery/cover.png)
 
 [React Query](https://react-query.tanstack.com/) 是一个以react hooks为基础进行异步获取，缓存和更改数据的库，[react query仓库](https://github.com/tannerlinsley/react-query)文档原文描述：
 

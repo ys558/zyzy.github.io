@@ -6,6 +6,8 @@ tags:
 cover: https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.41/articles/发布自己的npm-package流程/cover.png
 ---
 
+![](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.41/articles/发布自己的npm-package流程/cover.png)
+
 最近工作需要，需发布自己的npm包，这里写一个简单的demo，做一个简单的记录。
 
 <!-- more -->

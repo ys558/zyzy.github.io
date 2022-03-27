@@ -6,6 +6,8 @@ tags:
 cover: https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.31/articles/标签模板（Tagged Template)——ES知识点补漏系列（2）/cover.jpg
 ---
 
+![](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.31/articles/标签模板（Tagged Template)——ES知识点补漏系列（2）/cover.jpg)
+
 字符串模板相信大家用的挺多了，这里不赘述，今天解锁字符串模板的另一个功能，标签模板（Tagged Template）
 
 <!-- more -->

@@ -9,6 +9,7 @@ tags:
 cover: https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.26/articles/脱离脚手架webpack配制React+typescript项目/cover2.png
 ---
 
+![](https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.26/articles/脱离脚手架webpack配制React+typescript项目/cover2.png)
 
 这节会着重介绍TS的配置，这个是对应的 [repo](https://github.com/ys558/react-without-create-react-app/tree/%40babel/preset-typescript)
 
