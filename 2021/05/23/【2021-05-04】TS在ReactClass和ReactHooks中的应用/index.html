@@ -13,18 +13,19 @@
 <meta property="og:site_name" content="自由の翼小栈">
 <meta property="og:description" content="对于现行的ES规范，已经具有很好的规范性与可读性，type script虽当下大行其道，其实我觉得意义不算很大，ts最重要的功能就是类型检查，包括 interface, type 等也是一种类型检查，但一不小心就会写成 any script。鉴于将来的项目或者现行的项目可能会用到，这里结合 React Hooks 写个 tsx 版的 demo">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.23/articles/TS%E5%9C%A8ReactClass%E5%92%8CReactHooks%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/cover.jpg">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.22/articles/TS%E5%9C%A8ReactClass%E5%92%8CReactHooks%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/0.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.22/articles/TS%E5%9C%A8ReactClass%E5%92%8CReactHooks%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/3.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.22/articles/TS%E5%9C%A8ReactClass%E5%92%8CReactHooks%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/4.gif">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.22/articles/TS%E5%9C%A8ReactClass%E5%92%8CReactHooks%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/1.png">
 <meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.22/articles/TS%E5%9C%A8ReactClass%E5%92%8CReactHooks%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/2.png">
 <meta property="article:published_time" content="2021-05-23T00:43:25.000Z">
-<meta property="article:modified_time" content="2022-03-26T02:15:30.412Z">
+<meta property="article:modified_time" content="2022-03-27T04:38:42.802Z">
 <meta property="article:author" content="自由の翼">
 <meta property="article:tag" content="type script">
 <meta property="article:tag" content="React">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.22/articles/TS%E5%9C%A8ReactClass%E5%92%8CReactHooks%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/0.png">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.23/articles/TS%E5%9C%A8ReactClass%E5%92%8CReactHooks%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/cover.jpg">
   
     <link rel="alternate" href="/atom.xml" title="自由の翼小栈" type="application/atom+xml">
   
@@ -107,7 +108,8 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>对于现行的ES规范，已经具有很好的规范性与可读性，type script虽当下大行其道，其实我觉得意义不算很大，ts最重要的功能就是类型检查，包括 interface, type 等也是一种类型检查，但一不小心就会写成 any script。<br>鉴于将来的项目或者现行的项目可能会用到，这里结合 React Hooks 写个 tsx 版的 <a target="_blank" rel="noopener" href="https://github.com/ys558/tech-blog-code/tree/master/2021/06-0328-ts-react">demo</a></p>
+        <p><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.23/articles/TS%E5%9C%A8ReactClass%E5%92%8CReactHooks%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/cover.jpg"></p>
+<p>对于现行的ES规范，已经具有很好的规范性与可读性，type script虽当下大行其道，其实我觉得意义不算很大，ts最重要的功能就是类型检查，包括 interface, type 等也是一种类型检查，但一不小心就会写成 any script。<br>鉴于将来的项目或者现行的项目可能会用到，这里结合 React Hooks 写个 tsx 版的 <a target="_blank" rel="noopener" href="https://github.com/ys558/tech-blog-code/tree/master/2021/06-0328-ts-react">demo</a></p>
 <span id="more"></span>
 
 <h2 id="自己写的-TypeScript-demo，TS基础内容可以翻看该仓库"><a href="#自己写的-TypeScript-demo，TS基础内容可以翻看该仓库" class="headerlink" title="自己写的 TypeScript demo，TS基础内容可以翻看该仓库"></a>自己写的 <a target="_blank" rel="noopener" href="https://github.com/ys558/typescript-learning">TypeScript demo</a>，TS基础内容可以翻看该仓库</h2><h2 id="安装"><a href="#安装" class="headerlink" title="安装"></a>安装</h2><h3 id="新项目，只需带-template-typescript参数即可："><a href="#新项目，只需带-template-typescript参数即可：" class="headerlink" title="新项目，只需带--template typescript参数即可："></a>新项目，只需带<code>--template typescript</code>参数即可：</h3><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">create-react-app &lt;app name&gt; --template typescript</span><br><span class="line"><span class="meta">#</span><span class="bash">or</span> </span><br><span class="line">yarn create-react-app &lt;app name&gt; --template typescript</span><br></pre></td></tr></table></figure>
@@ -155,7 +157,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://zyzy.info/2021/05/23/%E3%80%902021-05-04%E3%80%91TS%E5%9C%A8ReactClass%E5%92%8CReactHooks%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" data-id="cl18se3ql000gy88o3q7bbhgd" data-title="TS在ReactClass和ReactHooks中的应用（更新）" class="article-share-link">分享</a>
+      <a data-url="https://zyzy.info/2021/05/23/%E3%80%902021-05-04%E3%80%91TS%E5%9C%A8ReactClass%E5%92%8CReactHooks%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8/" data-id="cl18sopq7000gwz8o7kkq9fev" data-title="TS在ReactClass和ReactHooks中的应用（更新）" class="article-share-link">分享</a>
       
       
       

@@ -6,20 +6,22 @@
   
   <title>Dart语法自学笔记（一） | 自由の翼小栈</title>
   <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-  <meta name="description" content="flutter框架从19年开始就火了，主要用于跨端解决方案，一套代码可以覆盖ios，Android和Web，据说法执行效率很高，因去掉了像React Native那样的转译层，直接作用于底层，那必须学起来。 flutter其framework层面调用的是Dart，一新的静态语言，和js炒鸡像，本文从着重讲解Dart的基础语法，包括基础数据解构，常用api及循环，不罗列所有基础语法点，只挑一些有特点">
+  <meta name="description" content="flutter框架从19年开始就火了，主要用于跨端解决方案，一套代码可以覆盖ios，Android和Web，据说法执行效率很高，因去掉了像React Native那样的转译层，直接作用于底层，那必须学起来。 flutter其framework层面调用的是Dart，一新的静态语言，和js炒鸡像，本文从着重讲解Dart的基础语法，包括基础数据解构，常用api及循环，不罗列所有基础语法点，只挑一些有特">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Dart语法自学笔记（一）">
 <meta property="og:url" content="https://zyzy.info/2021/05/25/%E3%80%902021-05-25%E3%80%91Dart%E8%AF%AD%E6%B3%95%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/index.html">
 <meta property="og:site_name" content="自由の翼小栈">
-<meta property="og:description" content="flutter框架从19年开始就火了，主要用于跨端解决方案，一套代码可以覆盖ios，Android和Web，据说法执行效率很高，因去掉了像React Native那样的转译层，直接作用于底层，那必须学起来。 flutter其framework层面调用的是Dart，一新的静态语言，和js炒鸡像，本文从着重讲解Dart的基础语法，包括基础数据解构，常用api及循环，不罗列所有基础语法点，只挑一些有特点">
+<meta property="og:description" content="flutter框架从19年开始就火了，主要用于跨端解决方案，一套代码可以覆盖ios，Android和Web，据说法执行效率很高，因去掉了像React Native那样的转译层，直接作用于底层，那必须学起来。 flutter其framework层面调用的是Dart，一新的静态语言，和js炒鸡像，本文从着重讲解Dart的基础语法，包括基础数据解构，常用api及循环，不罗列所有基础语法点，只挑一些有特">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.33/articles/Dart%E8%AF%AD%E6%B3%95%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/cover3.jpg">
 <meta property="article:published_time" content="2021-05-25T00:22:49.000Z">
-<meta property="article:modified_time" content="2021-10-14T03:42:59.912Z">
+<meta property="article:modified_time" content="2022-03-27T04:39:30.969Z">
 <meta property="article:author" content="自由の翼">
 <meta property="article:tag" content="Dart">
 <meta property="article:tag" content="Flutter">
 <meta property="article:tag" content="跨端">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.33/articles/Dart%E8%AF%AD%E6%B3%95%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/cover3.jpg">
   
     <link rel="alternate" href="/atom.xml" title="自由の翼小栈" type="application/atom+xml">
   
@@ -102,7 +104,8 @@
     
     <div class="e-content article-entry" itemprop="articleBody">
       
-        <p>flutter框架从19年开始就火了，主要用于跨端解决方案，一套代码可以覆盖ios，Android和Web，据说法执行效率很高，因去掉了像React Native那样的转译层，直接作用于底层，那必须学起来。</p>
+        <p><img src="https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.33/articles/Dart%E8%AF%AD%E6%B3%95%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/cover3.jpg"></p>
+<p>flutter框架从19年开始就火了，主要用于跨端解决方案，一套代码可以覆盖ios，Android和Web，据说法执行效率很高，因去掉了像React Native那样的转译层，直接作用于底层，那必须学起来。</p>
 <p>flutter其framework层面调用的是Dart，一新的静态语言，和js炒鸡像，本文从着重讲解Dart的基础语法，包括基础数据解构，常用api及循环，<br>不罗列所有基础语法点，只挑一些有特点演示。</p>
 <span id="more"></span>
 
@@ -226,7 +229,7 @@
       
     </div>
     <footer class="article-footer">
-      <a data-url="https://zyzy.info/2021/05/25/%E3%80%902021-05-25%E3%80%91Dart%E8%AF%AD%E6%B3%95%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/" data-id="cl18se3qr000xy88oef865vcw" data-title="Dart语法自学笔记（一）" class="article-share-link">分享</a>
+      <a data-url="https://zyzy.info/2021/05/25/%E3%80%902021-05-25%E3%80%91Dart%E8%AF%AD%E6%B3%95%E8%87%AA%E5%AD%A6%E7%AC%94%E8%AE%B0%EF%BC%88%E4%B8%80%EF%BC%89/" data-id="cl18sopqd000swz8oegwpeosh" data-title="Dart语法自学笔记（一）" class="article-share-link">分享</a>
       
       
       
