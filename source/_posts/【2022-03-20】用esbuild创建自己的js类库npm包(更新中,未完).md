@@ -32,7 +32,7 @@ tags:
   "main": "index.js",
   "author": "ys558",
   "scripts": {
-    "wp-build": "webpack",
+    "wp-build": "webpack --mode=production",
     "es-build": "esbuild --bundle src/index.js --outfile=dist/myLib.esbuild.bundle.js --minify"
   },
   "devDependencies": {
