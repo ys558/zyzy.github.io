@@ -5,7 +5,7 @@ tags:
     - React
     - Webpack
     - Babel
-    - Type Script
+    - type script
 cover: https://cdn.jsdelivr.net/gh/ys558/my-blog-imgs@0.26/articles/脱离脚手架webpack配制React+typescript项目/cover2.png
 ---
 

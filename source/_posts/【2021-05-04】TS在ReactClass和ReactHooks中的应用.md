@@ -1,5 +1,5 @@
 ---
-title: TS在ReactClass和ReactHooks中的应用（更新）
+title: 【2021-05-04】ts在ReactClass和ReactHooks的应用
 date: 2021-05-23 08:43:25
 tags:
     - type script
@@ -35,11 +35,23 @@ npm install --save typescript @types/node @types/react @types/react-dom @types/j
 yarn add typescript @types/node @types/react @types/react-dom @types/jest
 ```
 
-### 安装一个新的库，需配置 `*.d.ts` 文件：
-外部`npm install`一个库时，需要单独创建一个`.d.ts`结尾的文件, 否则报错, 如：  
-`touch lib.d.ts`:
-```ts
+### 创建`*.d.ts` 文件，专门用于各种依赖的声明
+
+详细的用法可参考掘金答神[这篇文章](https://juejin.cn/post/6987735091925483551#heading-5)，我这里简单的说明一下：
+
+- 外部`npm install`一个库时:
+```typeScript
 declare module 'lodash'
+```
+
+- `interface` 声明
+
+```typeScript
+interface xxxProps {
+  name: string;
+  age?: number;
+  method(f: string): string;
+}
 ```
 ## 初学者的编写利器 —— `vs code` 中的提示  
 
